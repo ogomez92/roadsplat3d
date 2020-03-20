@@ -15,11 +15,14 @@ class Game {
 			update: () => this.update(),
 			render: () => this.render()
 		}, 1 / 45);
+		this.score = 0
+		this.level = 0
+		this.spawnTime = 3000-(level*100)
 	}
 
 	start() {
 		this.timer.start();
-		this.world = new World()
+		this.world = new World(this,100)
 	}
 	update(dt) {
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_D)) {
