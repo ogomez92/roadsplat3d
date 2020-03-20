@@ -33,10 +33,17 @@ class Game {
 		speech.speak(strings.get("upArrowMove"))
 	}
 	update(dt) {
-		if (this.input.isJustPressed(KeyEvent.DOM_VK_D)) {
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_D) && debug) {
 			let debugRoad = new Road(this.world, 1)
 			debugRoad.generateCar(content.numberOfVehicles)
 		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_UP)) {
+			this.world.player.speedUp()
+		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_DOWN)) {
+			this.world.player.slowDown()
+		}
+
 		this.world.update()
 	}
 	render() {

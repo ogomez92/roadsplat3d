@@ -1,6 +1,6 @@
 export const debug = false
 import { strings } from './strings'
-export const _ = strings.get
+export let _
 export let content = {
 	numberOfVehicles: 3,
 }
@@ -31,7 +31,7 @@ async function setup() {
 	let langs = new LanguageSelector("langSelect", (result) => {
 		lang = result;
 		speech.setLanguage(lang);
-
+		_ = strings.get
 		const game = new Game();
 		game.start();
 		console.log("Success!");
