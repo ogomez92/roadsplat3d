@@ -1,4 +1,10 @@
-export var gameID = "";
+export const debug = false
+import { strings } from './strings'
+export const _ = strings.get
+export let content = {
+	numberOfVehicles: 3,
+}
+export var gameID = "road";
 import { speech } from './tts'
 import { LanguageSelector } from './languageSelector'
 import { Game } from './game';

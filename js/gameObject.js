@@ -1,5 +1,8 @@
-export class GameObject {
+const EventEmitter = require('events')
+export class GameObject extends EventEmitter {
+
     constructor(world, sound, x, y, z, width, height, depth) {
+        super()
         this.world = world
         this.alive = true
         this.x = x

@@ -1,8 +1,8 @@
 import { GameObject } from './gameObject'
 import { speech } from './tts'
 export class Car extends GameObject {
-    constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side) {
-        super(world, sound, x, y, 1, width, height, depth)
+    constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side,z=1) {
+        super(world, sound, x, y, z, width, height, depth)
         this.speed = speed;
         this.side = side;
         this.tile = tile;
