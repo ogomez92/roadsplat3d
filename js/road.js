@@ -1,11 +1,13 @@
 import { GameObject } from './gameObject'
+import { utils } from './utilities'
 import { Tile } from './tile'
-export class Road expands Tile {
+import {Car} from './car'
+export class Road extends Tile {
     constructor(world, pos) {
-        super(world, pos, 1)
+        super(world, pos, 1, "steps/road")
         setTimeout(() => {
             this.generateCar()
-        }, this.world.game.spawnTime)
+        }, utils.randomInt(this.world.game.spawnTime - (this.world.game.level * 300), this.world.game.spawnTime + 300))
     }
     generateCar() {
         setTimeout(() => {

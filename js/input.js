@@ -45,7 +45,6 @@ class KeyboardInput extends EventEmitter {
 	}
 
 	handleChar(char) {
-		console.log("char handled", char)
 		if (char.which < 48 || char.which > 122) {
 			return;
 		}
