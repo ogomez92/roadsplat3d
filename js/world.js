@@ -19,7 +19,7 @@ export class World {
 		let size = this.size / 2
 		if (side == 1) size = size * 1
 		if (side == 2) size = size * -1
-		this.dynamicObjects.push(new Car(this, size, 2, 5, 1, 0.5, "car", 0.2, side))
+		this.dynamicObjects.push(new Car(this, size, 2, 20, 1, 0.5, "car", 0.2, side))
 	}
 	update() {
 		for (let i = 0; i < this.dynamicObjects.length; i++) {
