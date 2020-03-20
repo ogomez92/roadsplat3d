@@ -8,11 +8,17 @@ export class Tile {
         this.hasSomething = false
         this.world = world;
         this.name = name;
+        this.world.player.on("step" + this.y, (() => {
+            this.step()
+        }))
     }
     step() {
-        this.world.game.pool.playStatic("./steps/"+name+utils.randomInt(1,3), 0)
+        this.world.game.pool.playStatic("steps/" + name + utils.randomInt(1, 3), 0)
     }
     update() {
+
+    }
+    destroy() {
 
     }
 }

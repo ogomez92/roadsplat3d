@@ -6,7 +6,7 @@ import { utils } from './utilities'
 import 'resonance-audio';
 const { ResonanceAudio } = require('resonance-audio')
 import { Player } from './player'
-import {content} from './main'
+import { content } from './main'
 export class World {
 	constructor(game, size = 100) {
 		this.size = size;
@@ -19,7 +19,10 @@ export class World {
 		this.player = new Player(this)
 	}
 	generateTiles() {
-		this.tiles=[]
+		for (let i = 0; i < this.tiles.length; i++) {
+			this.tiles[i].destroy();
+		}
+		this.tiles = []
 		let lastStreet;
 		for (let i = 1; i <= 3; i++) {
 			this.tiles.push(new Street(this, i))

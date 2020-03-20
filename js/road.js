@@ -4,19 +4,16 @@ import { content } from './main'
 import { utils } from './utilities'
 import { Tile } from './tile'
 import { Bus, BusFaster, Biker } from './vehicles'
-import {speech} from './tts'
+import { speech } from './tts'
 export class Road extends Tile {
     constructor(world, pos) {
         super(world, pos, 1, "road")
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
-        this.world.player.on("step" + this.y, (() => {
-            speech.speak("Stepped on tile " + this.y)
-        }))
     }
     generateCar(force) {
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
 
@@ -39,5 +36,8 @@ export class Road extends Tile {
 
             default: break;
         }
+    }
+    destroy() {
+        if (typeof this.timeout !== "undefined") clearTimeout(this.timeout)
     }
 }
