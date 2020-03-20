@@ -13,6 +13,7 @@ export class Road extends Tile {
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
     }
     generateCar(force) {
+
         this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
@@ -31,11 +32,12 @@ export class Road extends Tile {
                 this.world.dynamicObjects.push(new BusFaster(this.world, this, size, this.y, 2, 1, 2, side))
                 break;
             case 3:
-                this.world.dynamicObjects.push(new Biker(this.world, this, size, this.y, 2, 1, 2, side))
+                this.world.dynamicObjects.push(new Biker(this.world, this, size, this.y, 1, 1, 1, side))
                 break;
 
             default: break;
         }
+        this.hasSomething = true
     }
     destroy() {
         if (typeof this.timeout !== "undefined") clearTimeout(this.timeout)

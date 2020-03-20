@@ -1,14 +1,19 @@
 import { GameObject } from './gameObject'
-import {so} from './soundObject'
+import { so } from './soundObject'
 import { speech } from './tts';
-import {utils} from './utilities'
+import { utils } from './utilities'
+import { debug } from './main'
 const EventEmitter = require('events');
 export class Player extends GameObject {
     constructor(world) {
         super(world, "", 0, 0, 1.6, 1, 0.5, 1.6)
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
-        this.speedUpSound=so.create("ui/speedUp")
-        this.speedDownSound=so.create("ui/speedDown")
+        this.hp=100
+        this.speedUpSound = so.create("ui/speedUp")
+        this.nearestStreet = 0
+        this.nearestRoad = 0
+        this.nearestObjective = 0
+        this.speedDownSound = so.create("ui/speedDown")
         this.speed = 650
         //speed 0 is unused, speeds 1 to 5 are manually attainable, speed 6 is a crawl and speed 7 is super speed.
         this.speeds = [
@@ -28,12 +33,14 @@ export class Player extends GameObject {
     }
     speedUp(number = 1) {
         if (this.currentSpeed == 0) {
+            this.speedUpSound.pitch = utils.getProportion(1, 1, 5, 0.8, 1.2)
+            this.speedUpSound.replay()
             this.move()
             return;
         }
         this.currentSpeed += number;
         if (this.currentSpeed > 5) this.currentSpeed = 5
-        this.speedUpSound.pitch=utils.getProportion(this.currentSpeed,1,5,0.8,1.2)
+        this.speedUpSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
         this.speedUpSound.replay()
 
     }
@@ -45,16 +52,13 @@ export class Player extends GameObject {
             this.currentSpeed = 0;
             if (typeof this.speedTimeout !== "undefined") clearTimeout(this.speedTimeout)
         }
-        this.speedDownSound.pitch=utils.getProportion(this.currentSpeed,1,5,0.8,1.2)
+        this.speedDownSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
         this.speedDownSound.replay()
     }
-    findNearestRoad() {
-        let distance = 100;
-        this.world.tiles.forEach((v, i) => {
-            if (v.type != 1) return;
-            if (v.x < this.x) return;
-            if (v.x - this.x < distance) distance = v.x - this.x;
-        })
-        return distance;
+    hit() {
+        this.y = this.nearestRoad
+        this.z = 0
+        this.world.scene.setListenerPosition(this.x, this.y, this.z)
+        this.slowDown(10)
     }
 }

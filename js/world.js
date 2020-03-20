@@ -7,6 +7,7 @@ import 'resonance-audio';
 const { ResonanceAudio } = require('resonance-audio')
 import { Player } from './player'
 import { content } from './main'
+import { speech } from './tts';
 export class World {
 	constructor(game, size = 100) {
 		this.size = size;
@@ -23,17 +24,21 @@ export class World {
 			this.tiles[i].destroy();
 		}
 		this.tiles = []
-		let lastStreet;
-		for (let i = 1; i <= 3; i++) {
+		let lastStreet = this.player.y;
+		let lastStreetLimit = lastStreet + 4
+		this.player.nearestStreet=lastStreet+1
+		for (let i = lastStreet + 1; i <= lastStreetLimit; i++) {
 			this.tiles.push(new Street(this, i))
 			lastStreet = i;
 		}
-		let tiles = Math.round(lastStreet + utils.randomInt(this.game.roadsPerLevel, lastStreet + this.game.roadsPerLevel + (this.game.level / 2)))
+		let tiles = Math.round(utils.randomInt(this.game.roadsPerLevel, this.game.roadsPerLevel + (this.game.level / 2)))
 		let lastRoad = 0;
-		for (let i = lastStreet + 1; i <= tiles; i++) {
+		this.player.nearestRoad=lastStreet+1
+		for (let i = lastStreet + 1; i <= lastStreet+tiles; i++) {
 			this.tiles.push(new Road(this, i))
 			lastRoad = i;
 		}
+		this.player.nearestObjective=lastRoad+1
 		this.tiles.push(new Objective(this, lastRoad + 1))
 	}
 	update() {

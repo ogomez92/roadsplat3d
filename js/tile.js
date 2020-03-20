@@ -1,5 +1,5 @@
 import { GameObject } from './gameObject'
-import utils from 'sono/core/utils/utils';
+import {utils} from './utilities'
 
 export class Tile {
     constructor(world, pos, type, name) {
@@ -13,7 +13,7 @@ export class Tile {
         }))
     }
     step() {
-        this.world.game.pool.playStatic("steps/" + name + utils.randomInt(1, 3), 0)
+        this.world.game.pool.playStatic("steps/" + this.name + utils.randomInt(1, 3), 0)
     }
     update() {
 

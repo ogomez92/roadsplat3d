@@ -12,7 +12,7 @@ export class BusFaster extends Car {
 }
 //bus
 export class Bus extends Car {
-    constructor(world, tile, x, y, width, height, depth, side) {
+    constructor(world, tile, x, y, width=2, height=1, depth=2, side) {
         super(world, tile, x, y, width, height, depth, "/vehicles/bus", 0.05, side,2)
         this.name = "bus"
         this.speed = 0.35;

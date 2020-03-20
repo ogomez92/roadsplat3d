@@ -1,5 +1,5 @@
 import { speech } from './tts';
-import {strings} from './strings'
+import { strings } from './strings'
 import { debug, _, content } from './main'
 import { SoundHandler } from './soundHandler'
 import Timer from './timer';
@@ -13,6 +13,8 @@ import { World } from './world'
 import { Road } from './road';
 class Game {
 	constructor() {
+		this.scoreSound=so.create("scoreCounter")
+		this.scoreSound.volume=0.4
 		this.input = new KeyboardInput();
 		this.pool = new SoundHandler()
 		this.input.init();
@@ -24,6 +26,7 @@ class Game {
 		this.level = 1
 		this.spawnTime = 3000 - (this.level * 100)
 		this.roadsPerLevel = 4
+		this.coins = 0
 	}
 
 	start() {
@@ -35,13 +38,28 @@ class Game {
 	update(dt) {
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_D) && debug) {
 			let debugRoad = new Road(this.world, 1)
-			debugRoad.generateCar(content.numberOfVehicles)
+			let number=content.numberOfVehicles
+			number=2
+			debugRoad.generateCar(number)
+			this.world.player.y = 1
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_UP)) {
 			this.world.player.speedUp()
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_DOWN)) {
-			this.world.player.slowDown()
+			this.world.player.slowDown(10)
+		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_C)) {
+			speech.speak(this.coins + strings.get("coins"))
+		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_S)) {
+			speech.speak(this.score + strings.get("points"))
+		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
+			speech.speak(strings.get("level") + this.level)
+		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_H)) {
+			speech.speak(this.world.player.hp + " " + strings.get("hp"))
 		}
 
 		this.world.update()

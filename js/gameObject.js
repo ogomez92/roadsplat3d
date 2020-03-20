@@ -13,7 +13,6 @@ export class GameObject extends EventEmitter {
             this.sound.src = "./sounds/" + sound + ".ogg"
             this.mediaSource = this.world.context.createMediaElementSource(this.sound)
             this.source = this.world.scene.createSource();
-            console.log(this.source)
             this.source.sourceWidth = width;
             this.source.sourceHeight = height
             this.source.sourceDepth = depth;
