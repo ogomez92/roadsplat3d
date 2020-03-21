@@ -93,11 +93,11 @@ export class Player extends GameObject {
         this.interval = setInterval(() => {
             if (!jump) this.x += (x * utils.randomInt(3, 5))
             if (this.x < 0 - this.world.size / 2) {
-                side = 2
+                x=1
                 this.world.game.pool.playStatic("player/wall" + utils.randomInt(1, 3), 0)
             }
             if (this.x > this.world.size / 2) {
-                side = 1
+                x=-1
                 this.world.game.pool.playStatic("player/wall" + utils.randomInt(1, 3), 0)
             }
             sound.pitch += 0.07
