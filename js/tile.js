@@ -14,6 +14,7 @@ export class Tile {
     }
     step() {
         this.world.game.pool.playStatic("steps/" + this.name + utils.randomInt(1, 3), 0)
+        this.world.player.tileType=this.type
     }
     update() {
 

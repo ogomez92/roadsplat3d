@@ -3,5 +3,7 @@ Bonuses
 health (found in epic stock media one of the advanced game bonuses I think, was very good
 expansion (considered a good bonus, only attainable on higher levels to expand the world back to original 80 squares)
 shrink (bad bonus because it speeds everything up)
-jukebox (spawns some loud music a few squares away and to the right)
+jukebox (spawns some loud music a few squares away and to the right or left). Times out after a few seconds but does not die with the tile generation.
 reverse targetting
+stop at objectives, but code score decrease
+remove key 0 to stop (debug only)

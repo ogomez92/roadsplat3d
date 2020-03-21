@@ -7,8 +7,11 @@ const EventEmitter = require('events');
 export class Player extends GameObject {
     constructor(world) {
         super(world, "", 0, 0, 1.6, 1, 0.5, 1.6)
+        this.playerHitSound = so.create("player/hit")
+        this.fallTime = 75
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
-        this.hp=100
+        this.unableToMove = false
+        this.hp = 100
         this.speedUpSound = so.create("ui/speedUp")
         this.nearestStreet = 0
         this.nearestRoad = 0
@@ -23,6 +26,7 @@ export class Player extends GameObject {
         this.currentSpeed = 0
     }
     move() {
+        if (this.unableToMove) return;
         this.speedTimeout = setTimeout(() => {
             this.move()
         }, this.speeds[this.currentSpeed] - this.speedModifier)
@@ -32,19 +36,20 @@ export class Player extends GameObject {
         this.emit("step" + this.y)
     }
     speedUp(number = 1) {
+        if (this.unableToMove) return;
         if (this.currentSpeed == 0) {
             this.speedUpSound.pitch = utils.getProportion(1, 1, 5, 0.8, 1.2)
             this.speedUpSound.replay()
             this.move()
-            return;
         }
-        this.currentSpeed += number;
+        this.currentSpeed += (number - 1);
         if (this.currentSpeed > 5) this.currentSpeed = 5
         this.speedUpSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
         this.speedUpSound.replay()
-
+        speech.speak(this.currentSpeed)
     }
     slowDown(number = 1) {
+        if (this.unableToMove) return;
         this.currentSpeed -= number;
         //we don't want the player to be able to stop with the down arrow key, but if some item is forcing the player to stop, we can allow it.
         if (number == 1 && this.currentSpeed == 0) this.currentSpeed = 1;
@@ -52,13 +57,95 @@ export class Player extends GameObject {
             this.currentSpeed = 0;
             if (typeof this.speedTimeout !== "undefined") clearTimeout(this.speedTimeout)
         }
-        this.speedDownSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
-        this.speedDownSound.replay()
+        if (number == 1) this.speedDownSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
+        if (number == 1) this.speedDownSound.replay()
+        speech.speak(this.currentSpeed)
     }
     hit() {
-        this.y = this.nearestRoad
-        this.z = 0
-        this.world.scene.setListenerPosition(this.x, this.y, this.z)
+        this.playerHitSound.play()
+        this.world.game.pool.playStatic("player/impact/" + utils.randomInt(1, 4), 0)
+
+    }
+    flyTo(y, side, snd) {
+        this.unableToMove = true
+        let heart = so.create("player/heart")
+        heart.play()
+        let sound = so.create(snd)
+        sound.loop = true
+        sound.volume = 0.3
+        let land = so.create("player/land")
+        let fall = so.create("player/fall" + utils.randomInt(1, 4))
+        let stand = so.create("player/stand")
+        sound.pitch = 0.7
+        sound.play()
+        sound.loop = true
+        heart.loop = true
         this.slowDown(10)
+        let z = utils.randomInt(7, 17)
+        let x;
+        let jump = false
+        if (side == 1) x = -1;
+        if (side == 2) x = 1
+        if (side == 3) {
+            jump = true;
+            this.jump = true;
+        }
+        this.interval = setInterval(() => {
+            if (!jump) this.x += (x * utils.randomInt(3, 5))
+            if (this.x < 0 - this.world.size / 2) {
+                side = 2
+                this.world.game.pool.playStatic("player/wall" + utils.randomInt(1, 3), 0)
+            }
+            if (this.x > this.world.size / 2) {
+                side = 1
+                this.world.game.pool.playStatic("player/wall" + utils.randomInt(1, 3), 0)
+            }
+            sound.pitch += 0.07
+            if (this.y > y) {
+                this.y -= 0.5;
+            }
+            if (this.y < y) {
+                this.y += 0.5;
+            }
+            this.z += 1;
+            if (this.z >= z) {
+                clearInterval(this.interval)
+                this.interval = setInterval(() => {
+                    this.z -= 1;
+                    sound.pitch -= 0.07
+                    if (this.z <= 0) {
+                        clearInterval(this.interval)
+                        if (jump) {
+                            land.play()
+                            this.z = 1.6
+                        }
+                        if (!jump) {
+                            this.x = 0
+                            fall.play()
+                            this.z = 0
+                            setTimeout(() => {
+                                stand.replay()
+                                stand.sound.on("ended", (() => {
+                                    this.z = 1.6
+                                    speech.speak("stood up")
+                                    this.jump = false
+                                    this.unableToMove = false;
+                                    heart.stop();
+                                    this.slowDown(10)
+                                }))
+                                this.world.scene.setListenerPosition(this.x, this.y, this.z)
+                            }, utils.randomInt(1000, 2000))
+                        }
+                        this.world.scene.setListenerPosition(this.x, this.y, this.z)
+                        sound.stop()
+                        heart.stop()
+                        this.x = 0
+                        this.emit("step" + this.y)
+                    }
+                    this.world.scene.setListenerPosition(this.x, this.y, this.z)
+                }, this.fallTime)
+            }
+            this.world.scene.setListenerPosition(this.x, this.y, this.z)
+        }, this.fallTime * 1.2)
     }
 }

@@ -10,12 +10,15 @@ import { content } from './main'
 import { speech } from './tts';
 export class World {
 	constructor(game, size = 100) {
+
 		this.size = size;
 		this.game = game
 		this.dynamicObjects = []
 		this.tiles = []
 		this.context = new AudioContext()
+		this.convolution=this.context.createConvolver()
 		this.scene = new ResonanceAudio(this.context);
+		this.convolution.connect(this.scene.output)
 		this.scene.output.connect(this.context.destination)
 		this.player = new Player(this)
 	}
@@ -31,7 +34,7 @@ export class World {
 			this.tiles.push(new Street(this, i))
 			lastStreet = i;
 		}
-		let tiles = Math.round(utils.randomInt(this.game.roadsPerLevel, this.game.roadsPerLevel + (this.game.level / 2)))
+		let tiles = Math.round(utils.randomInt(this.game.roadsPerLevel, this.game.roadsPerLevel + (this.game.level/1)))
 		let lastRoad = 0;
 		this.player.nearestRoad=lastStreet+1
 		for (let i = lastStreet + 1; i <= lastStreet+tiles; i++) {
