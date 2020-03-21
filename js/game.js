@@ -60,7 +60,7 @@ class Game {
 			speech.speak(this.score + strings.get("points"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_X)) {
-			speech.speak(this.world.player.x+", "+this.world.player.z)
+			speech.speak(this.world.player.y+", "+this.world.player.x+", "+this.world.player.z)
 		}
 
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {

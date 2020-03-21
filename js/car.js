@@ -1,6 +1,7 @@
 import { GameObject } from './gameObject'
 import { utils } from './utilities'
 import { speech } from './tts'
+import {content} from './main'
 export class Car extends GameObject {
     constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = false, name) {
         super(world, sound, x, y, z, width, height, depth)
@@ -42,6 +43,14 @@ export class Car extends GameObject {
                 if (!this.passed) {
                     if (Math.round(this.x) == this.world.player.x && distance > 0) {
                         this.passed = true
+                        this.tile.hasSomething=false
+                        if (typeof this.tile.timeout!=="undefined") {
+                        clearTimeout(this.tile.timeout)
+                        }
+                                this.tile.timeout = setTimeout(() => {
+             this.tile.generateCar(utils.randomInt(1, content.numberOfVehicles))
+        }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
+
                         //experimental, nifty, score calculation, but only if the player is on the road, we don't want him collecting points while just standing around.
                         if (distance < 6 && this.world.player.tileType == 1) {
                             const score = Math.round(this.speed * 10000 / (this.world.size / 10) / distance)

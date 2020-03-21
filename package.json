@@ -8,7 +8,8 @@
     "watch": "parcel watch ./js/main.js -d . --target=electron --no-hmr",
     "build": "parcel build ./js/main.js -d . --target=electron",
     "start": "electron .",
-    "run": "npm run build && electron ."
+    "run": "npm run build && electron .",
+    "git": "git add . && git commit -a -m 'auto commit' && npm version patch && git push"
   },
   "author": "Oriol Gomez",
   "license": "GPL",

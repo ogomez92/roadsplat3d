@@ -8,7 +8,7 @@ export class Player extends GameObject {
     constructor(world) {
         super(world, "", 0, 0, 1.6, 1, 0.5, 1.6)
         this.playerHitSound = so.create("player/hit")
-        this.fallTime = 75
+        this.fallTime = 55
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
         this.unableToMove = false
         this.hp = 100
@@ -81,7 +81,7 @@ export class Player extends GameObject {
         sound.loop = true
         heart.loop = true
         this.slowDown(10)
-        let z = utils.randomInt(7, 17)
+        let z = utils.randomInt(11, 21)
         let x;
         let jump = false
         if (side == 1) x = -1;
@@ -109,6 +109,7 @@ export class Player extends GameObject {
             }
             this.z += 1;
             if (this.z >= z) {
+            this.y=y;
                 clearInterval(this.interval)
                 this.interval = setInterval(() => {
                     this.z -= 1;
