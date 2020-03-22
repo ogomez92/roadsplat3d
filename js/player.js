@@ -1,13 +1,21 @@
 import { GameObject } from './gameObject'
+import { KeyEvent } from './keycodes.js'
 import { so } from './soundObject'
 import { speech } from './tts';
 import { utils } from './utilities'
-import { debug } from './main'
+import { data, debug } from './main'
 const EventEmitter = require('events');
 export class Player extends GameObject {
     constructor(world) {
         super(world, "", 0, 0, 1.6, 1, 0.5, 1.6)
         this.playerHitSound = so.create("player/hit")
+        this.target = so.create("player/target")
+        this.coins = 0
+        if (data.coins) this.coins = data.coins;
+        this.jumps = 0;
+        if (data.jumps) this.jumps = data.jumps
+        this.center = so.create("ui/center")
+        this.xLimit = Math.ceil(this.world.size / 10)
         this.fallTime = 55
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
         this.unableToMove = false
@@ -37,13 +45,16 @@ export class Player extends GameObject {
         this.emit("step" + this.y)
         if (this.world.game.input.isDown(KeyEvent.DOM_VK_RIGHT)) {
             this.x++;
-            if (this.x > this.world.size / 2 + this.xLimit) this.x = this.world.size / 2 + this.xLimit
+            if (this.x > 0 + this.xLimit) this.x = 0 + this.xLimit
+            if (this.x == this.world.size / 2) this.center.replay();
         }
         if (this.world.game.input.isDown(KeyEvent.DOM_VK_LEFT)) {
             this.x--;
-            if (this.x < this.world.size / 2 - this.xLimit) this.x = this.world.size / 2 - this.xLimit
+            if (this.x < 0 - this.xLimit) this.x = 0 - this.xLimit
+            if (this.x == this.world.size / 2) this.center.replay();
         }
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
+        this.emit("x" + this.x)
     }
     speedUp(number = 1) {
         if (this.unableToMove) return;
@@ -77,6 +88,8 @@ export class Player extends GameObject {
 
     }
     flyTo(y, side, snd) {
+        if (this.unableToMove) return;
+        this.tileType = -1
         this.unableToMove = true
         let heart = so.create("player/heart")
         heart.play()
@@ -92,6 +105,7 @@ export class Player extends GameObject {
         heart.loop = true
         this.slowDown(10)
         let z = utils.randomInt(11, 21)
+
         let x;
         let jump = false
         if (side == 1) x = -1;
@@ -99,6 +113,7 @@ export class Player extends GameObject {
         if (side == 3) {
             jump = true;
             this.jump = true;
+            z = utils.randomInt(5, 10)
         }
         this.interval = setInterval(() => {
             if (!jump) this.x += (x * utils.randomInt(3, 5))
@@ -125,10 +140,14 @@ export class Player extends GameObject {
                     this.z -= 1;
                     sound.pitch -= 0.07
                     if (this.z <= 0) {
+                        this.tileType = 0
                         clearInterval(this.interval)
                         if (jump) {
                             land.play()
                             this.z = 1.6
+                            this.jump = false
+                            this.unableToMove = false;
+                            heart.stop();
                         }
                         if (!jump) {
                             this.x = 0

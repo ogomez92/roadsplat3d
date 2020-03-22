@@ -1,6 +1,6 @@
 import { speech } from './tts';
 import { strings } from './strings'
-import { debug, _, content } from './main'
+import { debug, _, content, data } from './main'
 import { SoundHandler } from './soundHandler'
 import Timer from './timer';
 import $ from 'jquery';
@@ -26,15 +26,14 @@ class Game {
 		this.score = 0
 		this.level = 1
 		this.spawnTime = 3000 - (this.level * 100)
-		this.roadsPerLevel = 3
-		this.coins = 0
+		this.roadsPerLevel = 5
 	}
 
 	start() {
 		this.timer.start();
 		this.world = new World(this, 80)
 		if (!debug) this.world.generateTiles()
-		speech.speak(strings.get("upArrowMove"))
+		//speech.speak(strings.get("upArrowMove"))
 	}
 	update(dt) {
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_0)) {
@@ -43,9 +42,8 @@ class Game {
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_D) && debug) {
 			let debugRoad = new Road(this.world, 1)
 			let number = content.numberOfVehicles
-			number = 2
 			debugRoad.generateCar(number)
-			this.world.player.y = 1
+			this.world.player.y = 0
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_UP)) {
 			this.world.player.speedUp()
@@ -54,15 +52,14 @@ class Game {
 			this.world.player.slowDown()
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_C)) {
-			speech.speak(this.coins + strings.get("coins"))
+			speech.speak(this.world.player.coins + strings.get("coins"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_S)) {
 			speech.speak(this.score + strings.get("points"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_X)) {
-			speech.speak(this.world.player.y+", "+this.world.player.x+", "+this.world.player.z)
+			speech.speak(this.world.player.x + ", " + this.world.player.y + ", " + this.world.player.z)
 		}
-
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
 			speech.speak(strings.get("level") + this.level)
 		}

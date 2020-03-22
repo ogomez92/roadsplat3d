@@ -7,3 +7,4 @@ jukebox (spawns some loud music a few squares away and to the right or left). Ti
 reverse targetting
 stop at objectives, but code score decrease
 remove key 0 to stop (debug only)
+fix spawnTime shouldn't be 0 deal

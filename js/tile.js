@@ -8,6 +8,7 @@ export class Tile {
         this.hasSomething = false
         this.world = world;
         this.name = name;
+        this.alive=true
         this.world.player.on("step" + this.y, (() => {
             this.step()
         }))

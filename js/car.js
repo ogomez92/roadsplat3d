@@ -1,7 +1,7 @@
 import { GameObject } from './gameObject'
 import { utils } from './utilities'
 import { speech } from './tts'
-import {content} from './main'
+import { data, content } from './main'
 export class Car extends GameObject {
     constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = false, name) {
         super(world, sound, x, y, z, width, height, depth)
@@ -30,44 +30,49 @@ export class Car extends GameObject {
             this.tile.hasSomething = false
         } else {
             this.source.setPosition(this.x, this.y, this.z)
-            if (this.passed || (this.canHorn && this.y != this.world.player.y )) {
+            if (this.passed || (this.canHorn && this.y != this.world.player.y)) {
                 this.hornSound.pause()
             }
-            if (!this.passed && this.canHorn && this.y == this.world.player.y) {
+            if (!this.passed && this.canHorn && this.world.player.tileType == 1) {
                 this.hornResonanceSource.setPosition(this.x, this.y, this.z)
                 this.hornSound.play()
             }
-            let distance;
             if (!this.world.player.jump) {
-                if (!this.passed) distance = Math.round(utils.distance(this.world.player.x, this.world.player.y, this.x, this.y))
                 if (!this.passed) {
-                    if (Math.round(this.x) == this.world.player.x && distance > 0) {
+                    if (Math.round(this.x) == this.world.player.x && this.world.player.tileType != 1) {
                         this.passed = true
-                        this.tile.hasSomething=false
-                        if (typeof this.tile.timeout!=="undefined") {
+                        this.tile.hasSomething = false
+                        if (typeof this.tile.timeout !== "undefined") {
+                            clearTimeout(this.tile.timeout)
+                        }
+                        this.tile.timeout = setTimeout(() => {
+                            this.tile.generateCar(utils.randomInt(1, content.numberOfVehicles))
+                        }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
+                    }
+                    if (!this.passed && this.alive && Math.round(this.x) == this.world.player.x && this.world.player.tileType == 1) {
+                        if (this.world.player.jumps >= 1) {
+                            this.world.player.jumps--;
+                            data.jumps = this.world.player.jumps
+                            this.world.player.flyTo(this.world.player.nearestObjective, 3, "air")
+                        } else {
+                            let healthLoss = Math.round(this.speed * 45);
+                            this.world.player.hp -= healthLoss
+                            this.world.player.hit()
+                            this.world.player.flyTo(utils.randomInt(this.world.player.nearestStreet, this.world.player.furthestStreet), this.side, "air")
+                        }
+                        this.passed = true
+                        this.tile.hasSomething = false
+                    }
+                    if (typeof this.tile.timeout !== "undefined") {
                         clearTimeout(this.tile.timeout)
-                        }
-                                this.tile.timeout = setTimeout(() => {
-             this.tile.generateCar(utils.randomInt(1, content.numberOfVehicles))
-        }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
+                    }
+                    this.tile.timeout = setTimeout(() => {
+                        this.tile.generateCar(utils.randomInt(1, content.numberOfVehicles))
+                    }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
 
-                        //experimental, nifty, score calculation, but only if the player is on the road, we don't want him collecting points while just standing around.
-                        if (distance < 6 && this.world.player.tileType == 1) {
-                            const score = Math.round(this.speed * 10000 / (this.world.size / 10) / distance)
-                            this.world.game.score += score
-                            this.world.game.scoreSound.pitch = utils.getProportion(distance, 1, 5, 0.7, 1.3)
-                            this.world.game.scoreSound.replay()
-                        }
-                    }
-                    if (Math.round(this.x) == this.world.player.x && distance == 0) {
-                        this.passed = true
-                        let healthLoss = Math.round(this.speed * 45);
-                        this.world.player.hp -= healthLoss
-                        this.world.player.hit()
-                        this.world.player.flyTo(utils.randomInt(this.world.player.nearestStreet, this.world.player.furthestStreet), this.side, "air")
-                    }
                 }
             }
         }
     }
+}
 }

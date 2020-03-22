@@ -3,17 +3,19 @@ import { debug } from './main'
 import { content } from './main'
 import { utils } from './utilities'
 import { Tile } from './tile'
-import { Bus, BusFaster, Biker } from './vehicles'
+import { Train1, Train2, Gasolina, Rickroll, Bus, BusFaster, Biker } from './vehicles'
 import { speech } from './tts'
 export class Road extends Tile {
-    constructor(world, pos) {
+    constructor(world, pos, generator = false) {
         super(world, pos, 1, "road")
+        this.generator = generator
         this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
     }
     generateCar(force) {
-
+        if (!this.generator || !this.alive) return;
+        if (typeof this.timeout !== "undefined") clearTimeout(this.timeout)
         this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
@@ -34,7 +36,18 @@ export class Road extends Tile {
             case 3:
                 this.world.dynamicObjects.push(new Biker(this.world, this, size, this.y, 1, 1, 1, side))
                 break;
-
+            case 4:
+                this.world.dynamicObjects.push(new Rickroll(this.world, this, size, this.y, 1, 1, 1, side))
+                break;
+            case 5:
+                this.world.dynamicObjects.push(new Gasolina(this.world, this, size, this.y, 1, 1, 1, side))
+                break;
+            case 6:
+                this.world.dynamicObjects.push(new Train1(this.world, this, size, this.y, 1, 1, 1, side))
+                break;
+            case 7:
+                this.world.dynamicObjects.push(new Train2(this.world, this, size, this.y, 1, 1, 1, side))
+                break;
             default: break;
         }
         this.hasSomething = true

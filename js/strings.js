@@ -9,13 +9,16 @@ class Strings {
 		this.strings = {};
 		this.strings[1] = {
 			// New English
+			upArrowMove: "Press the up arrow to start. Change your speed by using the numbers 1 through 5. Letter i check your inventory, and other special keys to use bonus items.",
+			bonus1: "Health bonus!",
+			bonus2: "Hyper jump!",
 			selectVoice: "%1 voices available, use the up and down arrows to select a voice, enter when you're done.",
 			mSelectVoice: "text to speech voice",
 			mLang: 'Change language',
 			newUpdate: 'There is a new version available! You have version %1, version %2 is available.',
 			mSapi: 'Use text to speech for the game',
 			mReader: 'Use your screen reader for the game',
-			upArrowMove: "Press the up arrow to start. Change your speed by using the numbers 1 through 5. Letter i check your inventory, and other special keys to use bonus items.",
+
 			newRate: 'This is a text to speech rate test. Please press enter when done',
 			rating: 'Press right and left arrow keys to change the rate. Press enter when done',
 			mRate: 'Change speech rate',
