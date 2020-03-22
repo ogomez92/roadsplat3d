@@ -26,7 +26,7 @@ class Game {
 		this.score = 0
 		this.level = 1
 		this.spawnTime = 3000 - (this.level * 100)
-		this.roadsPerLevel = 4
+		this.roadsPerLevel = 3
 		this.coins = 0
 	}
 

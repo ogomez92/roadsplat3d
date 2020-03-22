@@ -28,7 +28,7 @@ export class World {
 		}
 		this.tiles = []
 		let lastStreet = this.player.y;
-		let lastStreetLimit = lastStreet + 4
+		let lastStreetLimit = lastStreet + utils.randomInt(10,20)
 		this.player.nearestStreet=lastStreet+1
 		for (let i = lastStreet + 1; i <= lastStreetLimit; i++) {
 			this.tiles.push(new Street(this, i))
@@ -37,6 +37,7 @@ export class World {
 		let tiles = Math.round(utils.randomInt(this.game.roadsPerLevel, this.game.roadsPerLevel + (this.game.level/1)))
 		let lastRoad = 0;
 		this.player.nearestRoad=lastStreet+1
+		this.player.furthestStreet=lastStreet;
 		for (let i = lastStreet + 1; i <= lastStreet+tiles; i++) {
 			this.tiles.push(new Road(this, i))
 			lastRoad = i;

@@ -64,7 +64,7 @@ export class Car extends GameObject {
                         let healthLoss = Math.round(this.speed * 45);
                         this.world.player.hp -= healthLoss
                         this.world.player.hit()
-                        this.world.player.flyTo(this.world.player.nearestStreet, this.side, "air")
+                        this.world.player.flyTo(utils.randomInt(this.world.player.nearestStreet, this.world.player.furthestStreet), this.side, "air")
                     }
                 }
             }
