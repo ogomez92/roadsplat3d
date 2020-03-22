@@ -1,7 +1,7 @@
 {
-  "name": "template",
+  "name": "roadsplat",
   "version": "1.1.2",
-  "description": "Template",
+  "description": "Audio game",
   "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
