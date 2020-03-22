@@ -31,16 +31,17 @@ export class Player extends GameObject {
             this.move()
         }, this.speeds[this.currentSpeed] - this.speedModifier)
         if (this.currentSpeed == 0) this.currentSpeed = 1;
+        this.xLimit = Math.ceil(this.world.size / 8)
         this.y += 1
 
         this.emit("step" + this.y)
         if (this.world.game.input.isDown(KeyEvent.DOM_VK_RIGHT)) {
             this.x++;
-            if (this.x > this.world.size / 2) this.x = world.size / 2;
+            if (this.x > this.world.size / 2 + this.xLimit) this.x = this.world.size / 2 + this.xLimit
         }
         if (this.world.game.input.isDown(KeyEvent.DOM_VK_LEFT)) {
             this.x--;
-            if (this.x < this.0 - this.world.size / 2) this.x = 0 - this.world.size / 2
+            if (this.x < this.world.size / 2 - this.xLimit) this.x = this.world.size / 2 - this.xLimit
         }
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
     }
