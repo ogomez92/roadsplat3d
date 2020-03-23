@@ -51,6 +51,7 @@ export class Car extends GameObject {
                     }
                     if (!this.passed && this.alive && Math.round(this.x) == this.world.player.x && this.world.player.tileType == 1) {
                         if (this.world.player.jumps >= 1) {
+                            this.world.game.pool.playStatic("bonus/hyperjump",0)
                             this.world.player.jumps--;
                             data.jumps = this.world.player.jumps
                             this.world.player.flyTo(this.world.player.nearestObjective, 3, "air")
@@ -69,10 +70,8 @@ export class Car extends GameObject {
                     this.tile.timeout = setTimeout(() => {
                         this.tile.generateCar(utils.randomInt(1, content.numberOfVehicles))
                     }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
-
                 }
             }
         }
     }
-}
 }

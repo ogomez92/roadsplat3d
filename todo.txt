@@ -8,3 +8,4 @@ reverse targetting
 stop at objectives, but code score decrease
 remove key 0 to stop (debug only)
 fix spawnTime shouldn't be 0 deal
+road and street proportion beeps using nearest and furthest street and road
