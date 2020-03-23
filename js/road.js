@@ -55,4 +55,9 @@ export class Road extends Tile {
     destroy() {
         if (typeof this.timeout !== "undefined") clearTimeout(this.timeout)
     }
+    step() {
+        super.step()
+        this.world.player.stepProgress.pitch=utils.getProportion(this.y,this.world.player.nearestRoad,this.world.player.furthestRoad,0.1,2.0)
+        this.world.player.stepProgress.replay()
+    }
 }

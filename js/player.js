@@ -9,6 +9,7 @@ export class Player extends GameObject {
     constructor(world) {
         super(world, "", 0, 0, 1.6, 1, 0.5, 1.6)
         this.playerHitSound = so.create("player/hit")
+        this.stepProgress=so.create("steps/progress")
         this.target = so.create("player/target")
         this.coins = 0
         if (data.coins) this.coins = data.coins;
@@ -24,6 +25,9 @@ export class Player extends GameObject {
         this.nearestStreet = 0
         this.nearestRoad = 0
         this.nearestObjective = 0
+        this.furthestStreet=0
+        this.furthestRoad=0
+        
         this.speedDownSound = so.create("ui/speedDown")
         this.speed = 650
         //speed 0 is unused, speeds 1 to 5 are manually attainable, speed 6 is a crawl and speed 7 is super speed.
