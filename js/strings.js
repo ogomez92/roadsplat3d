@@ -9,7 +9,7 @@ class Strings {
 		this.strings = {};
 		this.strings[1] = {
 			// New English
-			upArrowMove: "Press the up arrow to start. Change your speed by using the numbers 1 through 5. Letter i check your inventory, and other special keys to use bonus items.",
+			upArrowMove: "Press a number between 1 and 5 to start moving, 1 being the slowest speed possible. Letter s to check your score, h checks your health, l to check level.",
 			bonus1: "Health bonus!",
 			bonus2: "Hyper jump!",
 			selectVoice: "%1 voices available, use the up and down arrows to select a voice, enter when you're done.",
