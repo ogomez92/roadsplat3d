@@ -1,6 +1,7 @@
 import { Item } from './item'
+import { Effect } from './effect'
 import { utils } from './utilities'
-import {strings} from './strings'
+import { strings } from './strings'
 import { data, save, content } from './main'
 import { speech } from './tts'
 export class Bonus extends Item {
@@ -11,7 +12,7 @@ export class Bonus extends Item {
         this.alive = false
         let bonusType = utils.randomInt(1, content.bonusTypes)
         switch (bonusType) {
-            default: break;
+
             case 1:
                 this.world.game.pool.playStatic("bonus/health", 0)
                 this.world.player.hp += 25
@@ -21,6 +22,7 @@ export class Bonus extends Item {
                 this.world.player.jumps++
                 data.jumps++
                 break;
+            default: break;
         }
         setTimeout(() => {
             speech.speak(strings.get("bonus" + bonusType))

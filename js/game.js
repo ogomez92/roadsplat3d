@@ -40,9 +40,10 @@ class Game {
 			this.world.player.slowDown(10)
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_D) && debug) {
-			let debugRoad = new Road(this.world, 1)
+			let debugRoad = new Road(this.world, 1, true)
 			let number = content.numberOfVehicles
 			debugRoad.generateCar(number)
+			debugRoad.generator = false
 			this.world.player.y = 0
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_UP)) {

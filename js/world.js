@@ -5,6 +5,7 @@ import { Objective } from './objective'
 import { Road } from './road'
 import { Bonus } from './bonus'
 import { utils } from './utilities'
+import {Car} from './car'
 import 'resonance-audio';
 const { ResonanceAudio } = require('resonance-audio')
 import { Player } from './player'
@@ -41,7 +42,8 @@ export class World {
 		let lastRoad = 0;
 		this.player.nearestRoad = lastStreet + 1
 		this.player.furthestStreet = lastStreet;
-		let generator = (this.player.nearestRoad + tiles) - tiles/2
+		//let generator = (this.player.nearestRoad + tiles) - tiles/2
+		let generator=this.player.nearestRoad
 		for (let i = lastStreet + 1; i <= lastStreet + tiles; i++) {
 			if (generator == i) this.tiles.push(new Road(this, i, true))
 			if (generator != i) this.tiles.push(new Road(this, i, false))

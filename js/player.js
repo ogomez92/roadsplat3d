@@ -9,7 +9,8 @@ export class Player extends GameObject {
     constructor(world) {
         super(world, "", 0, 0, 1.6, 1, 0.5, 1.6)
         this.playerHitSound = so.create("player/hit")
-        this.stepProgress=so.create("steps/progress")
+        this.forceSpeed = false
+        this.stepProgress = so.create("steps/progress")
         this.target = so.create("player/target")
         this.coins = 0
         if (data.coins) this.coins = data.coins;
@@ -25,9 +26,9 @@ export class Player extends GameObject {
         this.nearestStreet = 0
         this.nearestRoad = 0
         this.nearestObjective = 0
-        this.furthestStreet=0
-        this.furthestRoad=0
-        
+        this.furthestStreet = 0
+        this.furthestRoad = 0
+
         this.speedDownSound = so.create("ui/speedDown")
         this.speed = 650
         //speed 0 is unused, speeds 1 to 5 are manually attainable, speed 6 is a crawl and speed 7 is super speed.
@@ -61,6 +62,7 @@ export class Player extends GameObject {
         this.emit("x" + this.x)
     }
     speedUp(number = 1) {
+        if (this.forceSpeed) return;
         if (this.unableToMove) return;
         if (this.currentSpeed == 0) {
             this.speedUpSound.pitch = utils.getProportion(1, 1, 5, 0.8, 1.2)
@@ -74,6 +76,7 @@ export class Player extends GameObject {
         speech.speak(this.currentSpeed)
     }
     slowDown(number = 1) {
+        if (this.forceSpeed) return;
         if (this.unableToMove) return;
         this.currentSpeed -= number;
         //we don't want the player to be able to stop with the down arrow key, but if some item is forcing the player to stop, we can allow it.
@@ -181,5 +184,12 @@ export class Player extends GameObject {
             }
             this.world.scene.setListenerPosition(this.x, this.y, this.z)
         }, this.fallTime * 1.2)
+    }
+    scoreDeduct() {
+        this.world.game.tick.replay()
+        this.world.game.score -= (100 * this.world.game.level)
+        if (this.world.game.score < 0) this.world.game.score = 0
+        this.levelCap = this.world.game.level
+        if (this.levelCap > 15) this.levelCap = 15
     }
 }

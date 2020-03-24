@@ -9,3 +9,6 @@ stop at objectives, but code score decrease
 remove key 0 to stop (debug only)
 fix spawnTime shouldn't be 0 deal
 road and street proportion beeps using nearest and furthest street and road
+code a scoring system
+new bonus: slippery ground, slip in a random direciton when step on tile
+bonus: drunken stumble, and for each beer, for the duration of the entire game you have a random percentage to trip and fall down. Set a maximum for this. Just set speed to 0 and play a sound.
