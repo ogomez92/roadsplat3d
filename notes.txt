@@ -1,0 +1,52 @@
+Note: Some of these will/might be implemented in a future version of death on the road made with entirely different *cough3d* technologies. The new death on the road concept will not involve crossing over and over is all I can say.
+You can only get a lucky cross when crossing the road forward, not backward.
+Ammo in your gun doesn't reset when you start a new game
+if you get run over by a car, it is still there. So if you are impatient and hold the up arrow to keep moving, you'll get run over. You can also hold the control key down when it is telling you your health to get a guaranteed hit on the car that hit you.
+You can increase your lucky cross chance percentage to over 100%. Just for kicks I increased mine to 109%.
+The shop needs some really really expensive items, like that costs 250000 road coins. I played a game, gained 183000 road coins and bought 30 seconds of bomb time, and incrased my starting health to 370.
+Suggestions for items (These will probably be really over the top/random/wild):
+sledgehammer cane (400000 rc): if you are crossing the street and a car is about to hit you you can press the enter key and if the car is panned at least to -50 in the stereo field, I E halfway on your left, the sledgehammer will smash and destroy it. Destroying the car with a sledgehammer should not give points though.
+caffiine rush (75000 rc): you can store these up for later. When you hit c, your movement speed will be doubled for 9 seconds.
+Free bomb disarm (35000 rc): if you get a bomb item, you can use this to instantly disarm it, so that you don't lose health. You do not gain points or rc when you disarm a bomb.
+traffic jam (200000 rc): causes a traffic jam for 12 seconds allowing you to cross the street as many times as possible unimpeded.
+I second the addition of right to left cars.
+
+Easter eggs and possibly cheats.
+
+More cool powerups, such as being able to fly or jump over cars for a short time, making a big distraction like a bright light or a bunch of fog so that cars crash together, one where the cars slow down and get less numerous for a bit, etc.
+
+More bad items, like one that makes everything muffled, sort of like what happens in mainstream FPS's when a grenade goes off close by or maybe something that makes a loud distracting sound like a cellphone ringing or construction or something, one where the cars get way faster and more numerous for a few seconds, one where the curb is dangerous for some reason so you can't stay very long or either your hp goes down allot or you die.
+
+More mini games, like running out to save a person or animal and dragging them back in time for extra points, and if you don't you lose some, tripping while running across the road and having to get back up real fast for extra points with a key, short traffic jam sequences where you don't know when they will end but you can rack up points if your careful, one where you can jump from car roof to car roof for extra points but if you fall you die, one where you avoid stuff that's falling or try to catch it or something, one where you can lift a manhole cover and run down the street in a straight line that takes a bit, but along the way there are rats you have to hit with your cane for extra points or they will bite you and you can lose HP, or maybe you just hold out as long as you can for points, one where you have to run away from a big truck or something with single presses of a key and you have to either reach a goal or last as long as possible, one where you can get on a bus but you have to jump out when it gets slow enough, or a stop comes up with an audio cue of some kind or something, and if you miss you die, could also work with a helicopter you can jump and grab for extra insanity, etc.
+
+Special Cars, like ones that do drive bys and you only get a small audio warning just before they pass, like a window quickly rolling down and a gun cocking or something, and you can duck with a key, but if enough bullets hit you, you die, an ambulence you can jump in the back of with a key and it will fully heal you before you automatically jump out, an ice cream truck that you can press a key on to buy a ice cream cone, that will make you speed up allot for a bit, possibly as a replacement to the speed boost, some kind of really long prosession, a train, a motorcycle gang, a bunch of big rigs, a parade, a car that destroys the car up next with a rocket launcher or something so you have extra time to cross, and just some amusing ones like in the burb game, etc.
+
+New shop items, like something that will let you flag down a taxi or get on a bus and skip the level, something that will stop or slow down time for an instant if you know your about to get hit so you can move in time, something that will let you solve bombs instantly, something that collects items so you don't have to risk your self,all with limits on how many you can have at once, of course, which could also open up the ability to increase how much you can have for allot of cash.
+
+Just some amusing ideas, but yes, I love Road Splat, I hope it's farther developed.
+Other suggestions.
+A manhole cover that takes time to pry up but once it's up you can jump in and cross the street under it but need to come up on the other side pushing another cover up in the road.
+In the tunnel the traffic will be muffled and echo.
+An electric car that zooms by with just a quiet buzzing sound.
+Manual bicycles in a bike lane that could crash into you.
+If this happens, you would hear the bicyclist crying out in pain too.
+A Pizza delivery truck which if passed by close enough, you could grabb a passing pizza from it.
+A helicopter traffic drone which you would have to duck to avoid
+A person in an electric wheelchair.
+A group of police on horseback.
+Rain and thunder.
+Deep snow drifts.
+Potholes.
+A wild dog chasing you.
+
+I like the coins system, but think it needs to be adjusted somewhat.
+After playing 3 or 4 times, I had enough coins to max out movement and get to 600 health with 101 percent magic cross. So either the coins should be harder to get, the costs should be more, or perhaps some combination of the two. I'd also suggest a maximum health bonus at maybe 300 and maximum magic cross. The time after that, I ended up with 5 million coins and could get up to 10,000 health. Of course this makes the game a bit silly to play at this point. BTW, numbers beyond a million don't read properly.
+Some other minor things.
+If you are killed and try to press up arrow immediately after that, sometimes you are killed again. It seems as if all of the pointers aren't being reset fast enough.
+After level 30 or 40, the cars stop getting faster. If it's possible to keep getting move and other bonuses, I think the cars should still get faster as well, or have less time between them. Otherwise, it's possible to get to an infinite number of levels. By the time I was at level 100, I was moving across within a quarter of a second or so.
+Same goes for bombs. Would be cool to see them more difficult beyond 8 numbers at some insanely high level.
+How about a few more items in the shop, like extra seconds for the shield when it appears?
+Love the new cars, including the new cheesy music cars. Rick Astley is still my favorite though.
+If you're just going for points, you could just sit around and let all of the cars go by and collect bonuses as they appear. Perhaps bonuses should only appear after you successfully cross?
+Had one time where I started the game and was at drunk slow speed for the entire game. The drunk bonus actually slowed me down even more. Obviously that particular game didn't last long.
+I know this message ended up long, but hope it helps out some. Thanks for bringing back this timewasting classic.
