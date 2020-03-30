@@ -46,6 +46,16 @@ class Game {
 			debugRoad.generator = false
 			this.world.player.y = 0
 		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_I)) {
+			let nothing = true
+			if (data.jumps > 0) {
+				nothing = false
+				speech.speak(strings.get("iJumps", [data.jumps]))
+			}
+			if (nothing) {
+				speech.speak(strings.get("emptyInventory"))
+			}
+		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_UP)) {
 			this.world.player.speedUp()
 		}

@@ -1,9 +1,10 @@
 export const debug = false
 import { strings } from './strings'
+import { so } from './soundObject'
 export let _
 export let content = {
 	numberOfVehicles: 7,
-	bonusTypes: 2,
+	bonusTypes: 3,
 }
 export var gameID = "road";
 export let parsedCars = []
@@ -15,6 +16,9 @@ export var version = "1.0";
 export let data = {
 	coins: 0,
 	jumps: 0,
+	unlocks: {
+		hyperjump: false,
+	},
 }
 export var version2 = "";
 
@@ -22,7 +26,8 @@ export var lang = 0;
 export var ttsVoice;
 export var ttsRate = 1;
 import $ from 'jquery';
-
+import { Menu } from './menu';
+import { MenuItem, MenuTypes } from './menuItem'
 document.addEventListener('DOMContentLoaded', setup);
 async function setup() {
 	document.getElementById("app").focus();
@@ -65,13 +70,26 @@ async function setup() {
 				resolve(data); //resolve promise let go.
 			});
 	});
-	let langs = new LanguageSelector("langSelect", (result) => {
+	let langs = new LanguageSelector("langSelect", async (result) => {
 		lang = result;
 		speech.setLanguage(lang);
 		_ = strings.get
-		const game = new Game();
-		game.start();
-		console.log("Success!");
+		let music = so.create("music/menu")
+		music.volume = 0.4
+		music.play()
+		let items = []
+		items.push(new MenuItem(0, strings.get("mStart")))
+		items.push(new MenuItem(1, strings.get("mShop", [data.coins])))
+		let menu = new Menu(strings.get("mainMenu"), items)
+		let selection = await menu.runSync()
+		await music.fade(0)
+		switch (selection) {
+			case 0:
+				let game = new Game()
+				game.start()
+				break;
+			default: break;
+		}
 	});
 }
 export function save() {

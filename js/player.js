@@ -70,7 +70,7 @@ export class Player extends GameObject {
             this.move()
         }
         this.currentSpeed += (number - 1);
-        if (this.currentSpeed > 5) this.currentSpeed = 5
+        if (this.currentSpeed > 7) this.currentSpeed = 7
         this.speedUpSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
         this.speedUpSound.replay()
         speech.speak(this.currentSpeed)
@@ -155,6 +155,7 @@ export class Player extends GameObject {
                             this.jump = false
                             this.unableToMove = false;
                             heart.stop();
+                            if (this.forceSpeed) this.speedUp(this.forcedSpeed)
                         }
                         if (!jump) {
                             this.x = 0
@@ -162,22 +163,24 @@ export class Player extends GameObject {
                             this.z = 0
                             setTimeout(() => {
                                 stand.replay()
+                                heart.stop();
                                 stand.sound.on("ended", (() => {
                                     this.z = 1.6
-                                    speech.speak("stood up")
                                     this.jump = false
                                     this.unableToMove = false;
-                                    heart.stop();
+
                                     this.slowDown(10)
+                                    if (this.forceSpeed) this.speedUp(this.forcedSpeed)
                                 }))
                                 this.world.scene.setListenerPosition(this.x, this.y, this.z)
                             }, utils.randomInt(1000, 2000))
                         }
                         this.world.scene.setListenerPosition(this.x, this.y, this.z)
                         sound.stop()
-                        heart.stop()
+                        //heart.stop()
                         this.x = 0
                         this.emit("step" + this.y)
+                        //if (this.forceSpeed) this.speedUp(this.forcedSpeed)
                     }
                     this.world.scene.setListenerPosition(this.x, this.y, this.z)
                 }, this.fallTime)

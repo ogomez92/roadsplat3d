@@ -9,6 +9,11 @@ class Strings {
 		this.strings = {};
 		this.strings[1] = {
 			// New English
+			iJumps: "You have %1 hyperjumps",
+			emptyInventory: "Your inventory is empty",
+			mainMenu: "Use arrows to move, enter to continue.",
+			mStart: "Start Game",
+			mShop: "Item Shop (You have %1 coins)",
 			upArrowMove: "Press a number between 1 and 5 to start moving, 1 being the slowest speed possible. Letter s to check your score, h checks your health, l to check level.",
 			bonus1: "Health bonus!",
 			bonus2: "Hyper jump!",
@@ -18,7 +23,6 @@ class Strings {
 			newUpdate: 'There is a new version available! You have version %1, version %2 is available.',
 			mSapi: 'Use text to speech for the game',
 			mReader: 'Use your screen reader for the game',
-
 			newRate: 'This is a text to speech rate test. Please press enter when done',
 			rating: 'Press right and left arrow keys to change the rate. Press enter when done',
 			mRate: 'Change speech rate',
@@ -34,7 +38,6 @@ class Strings {
 			dq: 'This is a game of risk. You will risk losing %1 beatcoins. Continue?',
 			lang: 'English',
 			langs: 'Select your language',
-			mainmenu: 'main menu: arrow keys to select options, page up and page down raise and lower the music volume. You can also use the first letter of an option to move to it',
 			mSelect: 'Please select',
 			mBack: 'go back',
 			mStart: 'Start Game',
@@ -44,7 +47,9 @@ class Strings {
 		};
 		this.strings[2] = {
 			// New Spanish
-
+			mStart: "Empezar juego",
+			mShop: "Tienda (Tienes %1 monedas)",
+			mainMenu: "Menú Principal. Flechas para navegar, enter para continuar.",
 		};
 	}
 
