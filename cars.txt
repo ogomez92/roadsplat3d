@@ -5,7 +5,6 @@ rickroll, 0.25, 1, 1
 gasolina, 0.60, 1, 1
 train1, 0.35, 1, 2
 train2, 0.18, 1, 2
-
 overme, 0.45, 0, 1
 french, 0.45, 0, 1
 whatever, 0.75, 1, 1
@@ -22,3 +21,4 @@ slowCar, 0.30, 0, 1
 mediumCar, 0.55, 0, 1
 sportscar, 0.60, 0, 1
 slowerCar, 0.35, 0, 1
+astronauts, 0.35, 0, 1

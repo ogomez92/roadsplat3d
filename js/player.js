@@ -155,7 +155,12 @@ export class Player extends GameObject {
                             this.jump = false
                             this.unableToMove = false;
                             heart.stop();
-                            if (this.forceSpeed) this.speedUp(this.forcedSpeed)
+                            if (this.forceSpeed) {
+                                speech.speak("Speeding up to "+this.forcedSpeed)
+                                this.forceSpeed = false
+                                this.speedUp(this.forcedSpeed)
+                                this.forceSpeed = true
+                            }
                         }
                         if (!jump) {
                             this.x = 0
