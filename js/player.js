@@ -156,7 +156,7 @@ export class Player extends GameObject {
                             this.unableToMove = false;
                             heart.stop();
                             if (this.forceSpeed) {
-                                speech.speak("Speeding up to "+this.forcedSpeed)
+                                speech.speak("Speeding up to " + this.forcedSpeed)
                                 this.forceSpeed = false
                                 this.speedUp(this.forcedSpeed)
                                 this.forceSpeed = true
@@ -173,9 +173,16 @@ export class Player extends GameObject {
                                     this.z = 1.6
                                     this.jump = false
                                     this.unableToMove = false;
-
-                                    this.slowDown(10)
-                                    if (this.forceSpeed) this.speedUp(this.forcedSpeed)
+                                    if (this.forceSpeed) {
+                                        this.forceSpeed = false
+                                        this.slowDown(10)
+                                    } else {
+                                        this.slowDown(10)
+                                    }
+                                    if (this.forceSpeed) {
+                                        this.forceSpeed = false
+                                        this.speedUp(this.forcedSpeed)
+                                    }
                                 }))
                                 this.world.scene.setListenerPosition(this.x, this.y, this.z)
                             }, utils.randomInt(1000, 2000))
