@@ -1,5 +1,6 @@
 import "babel-polyfill";
 const { app } = require('electron').remote;
+	const { exec } = require("child_process");
 import { report } from './main';
 
 'use strict';
@@ -61,12 +62,16 @@ class TTS {
 
 		if (sr) this.webTTS = false;
 		if (!sr) this.webTTS = true;
+		if (process.platform == 'darwin') this.webTTS=true
 		if (this.webTTS) {
 			try {
 				if (typeof text == "number") {
 					text = text + ".";
 					//we need this because some voices fail to process numbers. Why? Don't ask me.
 				}
+				if (process.platform == 'darwin') {
+					this.speakUnthreaded(text)
+				} else {
 				this.synth.speak({
 					text: text,
 					queue: queue,
@@ -83,7 +88,9 @@ class TTS {
 						},
 					}
 				})
-			} catch {
+				}
+			} catch(e) {
+				console.error(e)
 			}
 
 		}
@@ -202,7 +209,23 @@ class TTS {
 		this.ducking = false;
 		if (typeof this.ducker !== "undefined") this.ducker.unduck();
 	}
-
+speakUnthreaded(text) {
+	let rate=this.rate*100
+if (this.childProcess) this.childProcess.kill()
+this.duck()
+	this.childProcess=exec('say "'+text+'" -r '+rate, (error, stdout, stderr) => {
+		if (error) {
+			throw(`error: ${error.message}`);
+			return;
+		}
+		if (stderr) {
+			console.log(`stderr: ${stderr}`);
+			return;
+		}
+		console.log(`stdout: ${stdout}`);
+		this.unduck();
+	});
+}
 } // End class
 const speech = new TTS(false);
 //if (process.platform == 'darwin') {

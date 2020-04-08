@@ -77,6 +77,7 @@ async function setup() {
 		let music = so.create("music/menu")
 		music.volume = 0.4
 		music.play()
+		speech.ducker=music
 		let items = []
 		items.push(new MenuItem(0, strings.get("mStart")))
 		items.push(new MenuItem(1, strings.get("mShop", [data.coins])))

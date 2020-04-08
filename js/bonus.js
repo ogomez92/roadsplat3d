@@ -9,6 +9,7 @@ export class Bonus extends Item {
         super(world, x, y, "loop/bonus")
     }
     step() {
+        if (!this.alive) return;
         this.alive = false
         let bonusType = utils.randomInt(1, content.bonusTypes)
         bonusType = content.bonusTypes
