@@ -22,18 +22,35 @@ class TTS {
 		if (lang == 2) this.lang = "es";
 		this.webTTS = webTTS;
 		this.synth = new Speech()
-		this.rate = 2;
+		this.rate = 3;
 		this.speechController.justPressedEventCallback = (key) => {
 			if (this.interrupt) this.speak("", false);
-			if (key == KeyEvent.VK_CONTROL || key == KeyEvent.DOM_VK_ESCAPE) {
+			if (key == KeyEvent.VK_SHIFT || key == KeyEvent.DOM_VK_ESCAPE) {
 				this.speak("", false);
+				if (this.childProcess) this.childProcess.kill()
+				this.unduck()
 			}
+			if (key == KeyEvent.VK_UP && this.speechController.isDown(KeyEvent.DOM_VK_SHIFT)) {
+//rate here
+this.setRate(this.rate+1)
+strings.speak('newRate');
+			}
+			if (key == KeyEvent.VK_DOWN && this.speechController.isDown(KeyEvent.DOM_VK_CONTROL)) {
+//rate here
+this.setRate(this.rate+1)
+strings.speak('newRate');
+			}
+			
+			
 		};
 
 		this.synth.init({
 			lang: this.lang,
 			rate: this.rate,
 			splitSentences: false,
+			'listeners': {
+			}
+
 		})
 			.then((data) => {
 				this.voices = data.voices;
@@ -42,10 +59,14 @@ class TTS {
 			})
 	}
 	setLanguage(lang) {
+
 		try {
 			if (lang == 1) this.lang = "en";
 			if (lang == 2) this.lang = "es";
 			this.synth.setLanguage(this.lang)
+			if (process.platform=='darwin') this.setVoice(null,true)
+								console.log("default voice ",this.voice)
+
 		} catch (err) {
 			report(err);
 		}
@@ -65,8 +86,9 @@ class TTS {
 		if (process.platform == 'darwin') this.webTTS=true
 		if (this.webTTS) {
 			try {
+				let oldText=text;
 				if (typeof text == "number") {
-					text = text + ".";
+					text = " "+text + ".";
 					//we need this because some voices fail to process numbers. Why? Don't ask me.
 				}
 				if (process.platform == 'darwin') {
@@ -141,6 +163,7 @@ class TTS {
 		}
 		if (voiceArray.includes(name)) {
 			speech.synth.setVoice(name);
+			this.voice=name
 		}
 
 	}
@@ -192,10 +215,12 @@ class TTS {
 		else {
 			try {
 				this.synth.setVoice(voiceArray[0]);
+				this.voice=voiceArray[0]
 				return voiceArray[0];
 			} catch (err) {
 				report(err);
 				this.synth.setVoice(voiceArray[1]);
+				this.voice=voiceArray[1]
 				return voiceArray[1];
 			} // catch block
 		}//else
@@ -213,7 +238,7 @@ speakUnthreaded(text) {
 	let rate=this.rate*100
 if (this.childProcess) this.childProcess.kill()
 this.duck()
-	this.childProcess=exec('say "'+text+'" -r '+rate, (error, stdout, stderr) => {
+	this.childProcess=exec('say "'+text+'" -r '+rate+ ' -v '+this.voice, (error, stdout, stderr) => {
 		if (error) {
 			throw(`error: ${error.message}`);
 			return;
@@ -228,7 +253,4 @@ this.duck()
 }
 } // End class
 const speech = new TTS(false);
-//if (process.platform == 'darwin') {
-//	speech.webTTS = true;
-//}
 export { TTS, speech };

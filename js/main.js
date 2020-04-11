@@ -75,7 +75,8 @@ async function setup() {
 		speech.setLanguage(lang);
 		_ = strings.get
 		let music = so.create("music/menu")
-		music.volume = 0.4
+		music.volume = 0.6
+		music.loop=true;
 		music.play()
 		speech.ducker=music
 		let items = []

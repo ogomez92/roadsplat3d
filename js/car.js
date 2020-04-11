@@ -75,11 +75,11 @@ export class Car extends GameObject {
           ) {
             this.passed = true;
             this.tile.hasSomething = false;
-            let score = Math.round(this.speed * (1000 * this.world.game.level));
-            if (this.world.player.tileType != 2) {
-              this.world.game.score += score;
-              speech.speak(score);
-            }
+            //let score = Math.round(this.speed * (1000 * this.world.game.level));
+            //if (this.world.player.tileType != 2) {
+//              this.world.game.score += score;
+//              speech.speak(score);
+            //}
             if (typeof this.tile.timeout !== "undefined") {
               clearTimeout(this.tile.timeout);
             }

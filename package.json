@@ -18,7 +18,7 @@
     "copy-to-clipboard": "^3.2.0",
     "hammerjs": "^2.0.8",
     "http-server": "^0.12.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "number-words": "^1.1.0",
     "parcel-bundler": "^1.12.4",
     "resonance-audio": "^1.0.0",
@@ -28,6 +28,6 @@
     "unique-random": "^2.1.0"
   },
   "devDependencies": {
-    "electron": "^8.2.0"
+    "electron": "^8.2.1"
   }
 }

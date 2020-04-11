@@ -11,8 +11,10 @@ export class Bonus extends Item {
     step() {
         if (!this.alive) return;
         this.alive = false
-        let bonusType = utils.randomInt(1, content.bonusTypes)
-        bonusType = content.bonusTypes
+        let bonuses=[1,4]
+        if (data.unlocks.jumps) bonuses.push(2)
+        if (!this.world.player.forceSpeed) bonuses.push(3)
+let        bonusType=utils.randomElement(bonuses)
         switch (bonusType) {
 
             case 1:
@@ -25,9 +27,6 @@ export class Bonus extends Item {
                 data.jumps++
                 break;
             case 3:
-                if (this.world.player.forceSpeed) {
-                    this.world.game.pool.playStatic("bonus/fake", 0)
-                } else {
                     let crawl = new Effect(this.world, "crawl", 20000, (() => {
                         this.oldSpeed = this.world.player.currentSpeed
                         this.world.player.slowDown(10)
@@ -38,9 +37,10 @@ export class Bonus extends Item {
                         this.world.player.speedUp(this.oldSpeed)
                         this.world.player.forceSpeed = false
                     }))
-                }
                 break;
-            default: break;
+                default:
+                this.world.game.pool.playStatic("bonus/fake", 0)
+break;
         }
         setTimeout(() => {
             speech.speak(strings.get("bonus" + bonusType))

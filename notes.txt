@@ -1,9 +1,18 @@
-Note: Some of these will/might be implemented in a future version of death on the road made with entirely different *cough3d* technologies. The new death on the road concept will not involve crossing over and over is all I can say.
-You can only get a lucky cross when crossing the road forward, not backward.
-Ammo in your gun doesn't reset when you start a new game
-if you get run over by a car, it is still there. So if you are impatient and hold the up arrow to keep moving, you'll get run over. You can also hold the control key down when it is telling you your health to get a guaranteed hit on the car that hit you.
-You can increase your lucky cross chance percentage to over 100%. Just for kicks I increased mine to 109%.
-The shop needs some really really expensive items, like that costs 250000 road coins. I played a game, gained 183000 road coins and bought 30 seconds of bomb time, and incrased my starting health to 370.
+effects for getting hit temporary reverb
+Bonuses
+health (found in epic stock media one of the advanced game bonuses I think, was very good
+expansion (considered a good bonus, only attainable on higher levels to expand the world back to original 80 squares)
+shrink (bad bonus because it speeds everything up)
+jukebox (spawns some loud music a few squares away and to the right or left). Times out after a few seconds but does not die with the tile generation.
+reverse targetting
+stop at objectives, but code score decrease
+remove key 0 to stop (debug only)
+fix spawnTime shouldn't be 0 deal
+road and street proportion beeps using nearest and furthest street and road
+code a scoring system
+new bonus: slippery ground, slip in a random direciton when step on tile
+bonus: drunken stumble, and for each beer, for the duration of the entire game you have a random percentage to trip and fall down. Set a maximum for this. Just set speed to 0 and play a sound.
+
 Suggestions for items (These will probably be really over the top/random/wild):
 sledgehammer cane (400000 rc): if you are crossing the street and a car is about to hit you you can press the enter key and if the car is panned at least to -50 in the stereo field, I E halfway on your left, the sledgehammer will smash and destroy it. Destroying the car with a sledgehammer should not give points though.
 caffiine rush (75000 rc): you can store these up for later. When you hit c, your movement speed will be doubled for 9 seconds.

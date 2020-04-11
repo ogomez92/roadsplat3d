@@ -191,5 +191,8 @@ list.push(pf);
 });
 return list;
 }
+randomElement(arr) {
+	return arr[Math.floor(Math.random() * arr.length)];
+}
 }
 export var utils = new GameUtils();

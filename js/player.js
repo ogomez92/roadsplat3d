@@ -176,12 +176,15 @@ export class Player extends GameObject {
                                     if (this.forceSpeed) {
                                         this.forceSpeed = false
                                         this.slowDown(10)
+                                        this.forceSpeed=true
                                     } else {
                                         this.slowDown(10)
                                     }
+                                    
                                     if (this.forceSpeed) {
                                         this.forceSpeed = false
                                         this.speedUp(this.forcedSpeed)
+                                        this.forceSpeed=true
                                     }
                                 }))
                                 this.world.scene.setListenerPosition(this.x, this.y, this.z)
