@@ -2,7 +2,7 @@ import { Item } from './item'
 import { Effect } from './effect'
 import { utils } from './utilities'
 import { strings } from './strings'
-import { data, save, content } from './main'
+import { getUnlock, setUnlock, data, save, content } from './main'
 import { speech } from './tts'
 export class Bonus extends Item {
     constructor(world, x, y) {
@@ -12,7 +12,7 @@ export class Bonus extends Item {
         if (!this.alive) return;
         this.alive = false
         let bonuses=[1,4]
-        if (data.unlocks.jumps) bonuses.push(2)
+        if (getUnlock(hyperjump)) bonuses.push(2)
         if (!this.world.player.forceSpeed) bonuses.push(3)
 let        bonusType=utils.randomElement(bonuses)
         switch (bonusType) {
@@ -23,7 +23,6 @@ let        bonusType=utils.randomElement(bonuses)
                 break;
             case 2:
                 this.world.game.pool.playStatic("bonus/hyperjump", 0)
-                this.world.player.jumps++
                 data.jumps++
                 break;
             case 3:

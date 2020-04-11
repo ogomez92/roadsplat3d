@@ -15,6 +15,7 @@ export class Objective extends Tile {
             this.world.player.scoreDeduct()
         }, 1300 - (this.world.player.levelCap * 75))
         this.world.generateTiles()
+        this.world.game.score+=(100*this.world.game.level)
         this.world.player.slowDown(10)
     }
 }

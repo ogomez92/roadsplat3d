@@ -1,4 +1,5 @@
 import { GameObject } from "./gameObject";
+import {StationaryObject} from './stationaryObject'
 import { utils } from "./utilities";
 import { speech } from "./tts";
 import { data, content } from "./main";
@@ -16,9 +17,25 @@ export class Car extends GameObject {
     side,
     z = 1,
     canHorn = "",
-    name
+    name, blowUp=""
   ) {
     super(world, sound, x, y, z, width, height, depth);
+    this.blowUpSound=blowUp
+    this.world.player.on("blowup", (()=> {
+      if (!this.alive) return;
+      this.alive = false;
+      if (this.blowUpSound!="") new StationaryObject(this.world, this.y, "blowup/"+this.blowUpSound)
+            if (this.blowUpSound=="") new StationaryObject(this.world, this.y, "blowup/generic")
+            if (typeof data.bulletGallery==="undefined") {
+              data.bulletGallery={}
+            }
+              if (this.blowUpSound!="") data.bulletGallery[this.blowUpSound]=true
+save()
+      if (this.canHorn != "") this.hornSound.pause();
+      this.tile.hasSomething = false;
+      this.world.game.score+=(this.speed*1500)
+    }));
+
     this.name = name;
     this.speed = speed;
     this.passed = false;
@@ -95,12 +112,10 @@ export class Car extends GameObject {
             Math.round(this.x) == this.world.player.x &&
             this.world.player.tileType == 1
           ) {
-            if (this.world.player.jumps >= 1) {
+            if (data.jumps >= 1) {
               this.world.game.pool.playStatic("bonus/hyperjump", 0);
-              this.world.player.jumps--;
-              data.jumps = this.world.player.jumps;
-              this.world.player.flyTo(
-                this.world.player.nearestObjective,
+data.jumps--;
+              this.world.player.flyTo(this.world.player.nearestObjective,
                 3,
                 "air"
               );

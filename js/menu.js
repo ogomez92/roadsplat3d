@@ -272,7 +272,7 @@ document.addEventListener('keydown',this.kd);
 			this.sndName.play();
 		}
 		else {
-			speech.speak(this.name);
+			if (!this.silent) speech.speak(this.name);
 		}
 		if (!this.silent) this.sndOpen.play();
 	}

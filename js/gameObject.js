@@ -26,4 +26,9 @@ export class GameObject extends EventEmitter {
     update() {
 
     }
+    destroy() {
+        if (this.sound != "") {
+        this.sound.pause()
+        }
+    }
 }

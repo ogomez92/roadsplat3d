@@ -18,7 +18,6 @@ export class Tile {
         let scoreType = this.type
         if (this.type == 0) scoreType = 1;
         let score = scoreType * this.world.player.currentSpeed
-        this.world.game.score += score * this.world.game.level * 50
         if (this.type != 2) {
             clearInterval(this.world.player.scoreTimeout)
             this.world.player.levelCap = this.world.game.level

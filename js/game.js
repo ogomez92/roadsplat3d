@@ -46,6 +46,9 @@ class Game {
 			debugRoad.generator = false
 			this.world.player.y = 0
 		}
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_G)) {
+			this.world.player.throwBomb()
+		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_I)) {
 			let nothing = true
 			if (data.jumps > 0) {
@@ -69,8 +72,7 @@ class Game {
 			speech.speak(this.score + strings.get("points"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_X)) {
-			speech.speak(this.world.player.x + ", " + this.world.player.y + ", " + this.world.player.z)
-		}
+			speech.speak(this.world.player.nearestRoad+", "+this.world.player.furthestRoad)		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
 			speech.speak(strings.get("level") + this.level)
 		}

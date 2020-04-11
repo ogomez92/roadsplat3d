@@ -117,7 +117,132 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"utilities.js":[function(require,module,exports) {
+})({"keycodes.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.KeyEvent = void 0;
+const KeyEvent = {
+  DOM_VK_CANCEL: 3,
+  DOM_VK_HELP: 6,
+  DOM_VK_BACK_SPACE: 8,
+  DOM_VK_TAB: 9,
+  DOM_VK_CLEAR: 12,
+  DOM_VK_RETURN: 13,
+  DOM_VK_ENTER: 14,
+  DOM_VK_SHIFT: 16,
+  DOM_VK_CONTROL: 17,
+  DOM_VK_ALT: 18,
+  DOM_VK_PAUSE: 19,
+  DOM_VK_CAPS_LOCK: 20,
+  DOM_VK_ESCAPE: 27,
+  DOM_VK_SPACE: 32,
+  DOM_VK_PAGE_UP: 33,
+  DOM_VK_PAGE_DOWN: 34,
+  DOM_VK_END: 35,
+  DOM_VK_HOME: 36,
+  DOM_VK_LEFT: 37,
+  DOM_VK_UP: 38,
+  DOM_VK_RIGHT: 39,
+  DOM_VK_DOWN: 40,
+  DOM_VK_PRINTSCREEN: 44,
+  DOM_VK_INSERT: 45,
+  DOM_VK_DELETE: 46,
+  DOM_VK_0: 48,
+  DOM_VK_1: 49,
+  DOM_VK_2: 50,
+  DOM_VK_3: 51,
+  DOM_VK_4: 52,
+  DOM_VK_5: 53,
+  DOM_VK_6: 54,
+  DOM_VK_7: 55,
+  DOM_VK_8: 56,
+  DOM_VK_9: 57,
+  DOM_VK_SEMICOLON: 59,
+  DOM_VK_EQUALS: 61,
+  DOM_VK_A: 65,
+  DOM_VK_B: 66,
+  DOM_VK_C: 67,
+  DOM_VK_D: 68,
+  DOM_VK_E: 69,
+  DOM_VK_F: 70,
+  DOM_VK_G: 71,
+  DOM_VK_H: 72,
+  DOM_VK_I: 73,
+  DOM_VK_J: 74,
+  DOM_VK_K: 75,
+  DOM_VK_L: 76,
+  DOM_VK_M: 77,
+  DOM_VK_N: 78,
+  DOM_VK_O: 79,
+  DOM_VK_P: 80,
+  DOM_VK_Q: 81,
+  DOM_VK_R: 82,
+  DOM_VK_S: 83,
+  DOM_VK_T: 84,
+  DOM_VK_U: 85,
+  DOM_VK_V: 86,
+  DOM_VK_W: 87,
+  DOM_VK_X: 88,
+  DOM_VK_Y: 89,
+  DOM_VK_Z: 90,
+  DOM_VK_CONTEXT_MENU: 93,
+  DOM_VK_NUMPAD0: 96,
+  DOM_VK_NUMPAD1: 97,
+  DOM_VK_NUMPAD2: 98,
+  DOM_VK_NUMPAD3: 99,
+  DOM_VK_NUMPAD4: 100,
+  DOM_VK_NUMPAD5: 101,
+  DOM_VK_NUMPAD6: 102,
+  DOM_VK_NUMPAD7: 103,
+  DOM_VK_NUMPAD8: 104,
+  DOM_VK_NUMPAD9: 105,
+  DOM_VK_MULTIPLY: 106,
+  DOM_VK_ADD: 107,
+  DOM_VK_SEPARATOR: 108,
+  DOM_VK_SUBTRACT: 109,
+  DOM_VK_DECIMAL: 110,
+  DOM_VK_DIVIDE: 111,
+  DOM_VK_F1: 112,
+  DOM_VK_F2: 113,
+  DOM_VK_F3: 114,
+  DOM_VK_F4: 115,
+  DOM_VK_F5: 116,
+  DOM_VK_F6: 117,
+  DOM_VK_F7: 118,
+  DOM_VK_F8: 119,
+  DOM_VK_F9: 120,
+  DOM_VK_F10: 121,
+  DOM_VK_F11: 122,
+  DOM_VK_F12: 123,
+  DOM_VK_F13: 124,
+  DOM_VK_F14: 125,
+  DOM_VK_F15: 126,
+  DOM_VK_F16: 127,
+  DOM_VK_F17: 128,
+  DOM_VK_F18: 129,
+  DOM_VK_F19: 130,
+  DOM_VK_F20: 131,
+  DOM_VK_F21: 132,
+  DOM_VK_F22: 133,
+  DOM_VK_F23: 134,
+  DOM_VK_F24: 135,
+  DOM_VK_NUM_LOCK: 144,
+  DOM_VK_SCROLL_LOCK: 145,
+  DOM_VK_COMMA: 188,
+  DOM_VK_PERIOD: 190,
+  DOM_VK_SLASH: 191,
+  DOM_VK_BACK_QUOTE: 192,
+  DOM_VK_OPEN_BRACKET: 219,
+  DOM_VK_BACK_SLASH: 220,
+  DOM_VK_CLOSE_BRACKET: 221,
+  DOM_VK_QUOTE: 222,
+  DOM_VK_META: 224
+};
+exports.KeyEvent = KeyEvent;
+},{}],"utilities.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -160,7 +285,7 @@ class GameUtils {
 
   getProportion(current, min, max, minVolume, maxVolume) {
     if (current > max) {
-      return 0;
+      return 1;
     }
 
     return current / (min + max) * (maxVolume - minVolume) + minVolume;
@@ -333,7 +458,132 @@ class GameUtils {
 
 var utils = new GameUtils();
 exports.utils = utils;
-},{}],"input.js":[function(require,module,exports) {
+},{}],"strings.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.strings = void 0;
+
+var _main = require("./main");
+
+var _utilities = require("./utilities");
+
+var _tts = require("./tts");
+
+var _scrollingText = require("./scrollingText");
+
+class Strings {
+  constructor() {
+    this.strings = {};
+    this.strings[1] = {
+      // New English
+      coins: "coins",
+      mShopBack: "Leave shop (You have %1 coins)",
+      mShopIntro: "Welcome to the item shop! Press enter on any item to buy it.",
+      shophyperjump: "Hyper jumps: Allows collecting of hyperjump items, which save you from being hit by incoming cars",
+      shopgalleryMembership: "Explosions gallery lifetime membership",
+      shopshortfuse: "Short fuse: Halves the time it takes for bombs to explode.",
+      galleryLocked: "The explosions gallery will remain locked until you buy a membership from the store. Darn!",
+      mBullet: "Explosions gallery",
+      locked: "Locked!",
+      bulletIntro: "Welcome to the explosions gallery! You have unlocked %1 out of %2 possible explosions. Press enter on any of them to listen to it.",
+      iJumps: "You have %1 hyperjumps",
+      emptyInventory: "Your inventory is empty",
+      mainMenu: "Use arrows to move, enter to continue.",
+      mStart: "Start Game",
+      mShop: "Item Shop (You have %1 coins)",
+      upArrowMove: "Press a number between 1 and 5 to start moving, 1 being the slowest speed possible. Letter s to check your score, h checks your health, l to check level.",
+      bonus1: "Health bonus!",
+      bonus2: "Hyper jump!",
+      selectVoice: "%1 voices available, use the up and down arrows to select a voice, enter when you're done.",
+      mSelectVoice: "text to speech voice",
+      mLang: 'Change language',
+      newUpdate: 'There is a new version available! You have version %1, version %2 is available.',
+      mSapi: 'Use text to speech for the game',
+      mReader: 'Use your screen reader for the game',
+      newRate: 'This is a text to speech rate test. Please press enter when done',
+      rating: 'Press right and left arrow keys to change the rate. Press enter when done',
+      mRate: 'Change speech rate',
+      K: 'king',
+      Q: 'queen',
+      A: 'ace',
+      J: 'jack',
+      cspades: 'spades',
+      cdiamonds: 'diamonds',
+      cclubs: 'clubs',
+      chearts: 'hearts',
+      dq: 'This is a game of risk. You will risk losing %1 beatcoins. Continue?',
+      lang: 'English',
+      langs: 'Select your language',
+      mSelect: 'Please select',
+      mBack: 'go back',
+      mStart: 'Start Game',
+      yes: 'Yes',
+      no: 'no',
+      ok: 'ok'
+    };
+    this.strings[2] = {
+      // New Spanish
+      mStart: "Empezar juego",
+      mShop: "Tienda (Tienes %1 monedas)",
+      mainMenu: "Menú Principal. Flechas para navegar, enter para continuar."
+    };
+  }
+
+  get(what, rep = []) {
+    let str;
+
+    if (typeof this.strings[_main.lang][what] !== 'undefined') {
+      str = this.strings[_main.lang][what];
+    } else if (typeof this.strings[1][what] !== 'undefined') {
+      str = this.strings[1][what];
+    } else {
+      return what;
+    }
+
+    rep.forEach((v, i) => {
+      const i1 = Number(i) + 1;
+      str = str.replace('%' + i1, v);
+    });
+    return str;
+  }
+
+  speak(what, rep = []) {
+    let str;
+
+    if (typeof this.strings[_main.lang][what] !== 'undefined') {
+      str = this.strings[_main.lang][what];
+    } else if (typeof this.strings[1][what] !== 'undefined') {
+      str = this.strings[1][what];
+    } else {
+      _tts.speech.speak(what);
+    }
+
+    rep.forEach((v, i) => {
+      const i1 = Number(i) + 1;
+      str = str.replace('%' + i1, v);
+    });
+
+    _tts.speech.speak(str);
+  }
+
+  async check(lng) {
+    const len = _utilities.utils.objSize(this.strings) - 2;
+
+    for (const i in this.strings[1]) {
+      if (!this.strings[lng].hasOwnProperty(i)) {
+        await new _scrollingText.ScrollingText(i + ': ' + this.strings[1][i]);
+      }
+    }
+  }
+
+}
+
+var strings = new Strings();
+exports.strings = strings;
+},{"./main":"main.js","./utilities":"utilities.js","./tts":"tts.js","./scrollingText":"scrollingText.js"}],"input.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -495,131 +745,6 @@ class KeyboardInput extends EventEmitter {
 }
 
 exports.KeyboardInput = KeyboardInput;
-},{}],"keycodes.js":[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.KeyEvent = void 0;
-const KeyEvent = {
-  DOM_VK_CANCEL: 3,
-  DOM_VK_HELP: 6,
-  DOM_VK_BACK_SPACE: 8,
-  DOM_VK_TAB: 9,
-  DOM_VK_CLEAR: 12,
-  DOM_VK_RETURN: 13,
-  DOM_VK_ENTER: 14,
-  DOM_VK_SHIFT: 16,
-  DOM_VK_CONTROL: 17,
-  DOM_VK_ALT: 18,
-  DOM_VK_PAUSE: 19,
-  DOM_VK_CAPS_LOCK: 20,
-  DOM_VK_ESCAPE: 27,
-  DOM_VK_SPACE: 32,
-  DOM_VK_PAGE_UP: 33,
-  DOM_VK_PAGE_DOWN: 34,
-  DOM_VK_END: 35,
-  DOM_VK_HOME: 36,
-  DOM_VK_LEFT: 37,
-  DOM_VK_UP: 38,
-  DOM_VK_RIGHT: 39,
-  DOM_VK_DOWN: 40,
-  DOM_VK_PRINTSCREEN: 44,
-  DOM_VK_INSERT: 45,
-  DOM_VK_DELETE: 46,
-  DOM_VK_0: 48,
-  DOM_VK_1: 49,
-  DOM_VK_2: 50,
-  DOM_VK_3: 51,
-  DOM_VK_4: 52,
-  DOM_VK_5: 53,
-  DOM_VK_6: 54,
-  DOM_VK_7: 55,
-  DOM_VK_8: 56,
-  DOM_VK_9: 57,
-  DOM_VK_SEMICOLON: 59,
-  DOM_VK_EQUALS: 61,
-  DOM_VK_A: 65,
-  DOM_VK_B: 66,
-  DOM_VK_C: 67,
-  DOM_VK_D: 68,
-  DOM_VK_E: 69,
-  DOM_VK_F: 70,
-  DOM_VK_G: 71,
-  DOM_VK_H: 72,
-  DOM_VK_I: 73,
-  DOM_VK_J: 74,
-  DOM_VK_K: 75,
-  DOM_VK_L: 76,
-  DOM_VK_M: 77,
-  DOM_VK_N: 78,
-  DOM_VK_O: 79,
-  DOM_VK_P: 80,
-  DOM_VK_Q: 81,
-  DOM_VK_R: 82,
-  DOM_VK_S: 83,
-  DOM_VK_T: 84,
-  DOM_VK_U: 85,
-  DOM_VK_V: 86,
-  DOM_VK_W: 87,
-  DOM_VK_X: 88,
-  DOM_VK_Y: 89,
-  DOM_VK_Z: 90,
-  DOM_VK_CONTEXT_MENU: 93,
-  DOM_VK_NUMPAD0: 96,
-  DOM_VK_NUMPAD1: 97,
-  DOM_VK_NUMPAD2: 98,
-  DOM_VK_NUMPAD3: 99,
-  DOM_VK_NUMPAD4: 100,
-  DOM_VK_NUMPAD5: 101,
-  DOM_VK_NUMPAD6: 102,
-  DOM_VK_NUMPAD7: 103,
-  DOM_VK_NUMPAD8: 104,
-  DOM_VK_NUMPAD9: 105,
-  DOM_VK_MULTIPLY: 106,
-  DOM_VK_ADD: 107,
-  DOM_VK_SEPARATOR: 108,
-  DOM_VK_SUBTRACT: 109,
-  DOM_VK_DECIMAL: 110,
-  DOM_VK_DIVIDE: 111,
-  DOM_VK_F1: 112,
-  DOM_VK_F2: 113,
-  DOM_VK_F3: 114,
-  DOM_VK_F4: 115,
-  DOM_VK_F5: 116,
-  DOM_VK_F6: 117,
-  DOM_VK_F7: 118,
-  DOM_VK_F8: 119,
-  DOM_VK_F9: 120,
-  DOM_VK_F10: 121,
-  DOM_VK_F11: 122,
-  DOM_VK_F12: 123,
-  DOM_VK_F13: 124,
-  DOM_VK_F14: 125,
-  DOM_VK_F15: 126,
-  DOM_VK_F16: 127,
-  DOM_VK_F17: 128,
-  DOM_VK_F18: 129,
-  DOM_VK_F19: 130,
-  DOM_VK_F20: 131,
-  DOM_VK_F21: 132,
-  DOM_VK_F22: 133,
-  DOM_VK_F23: 134,
-  DOM_VK_F24: 135,
-  DOM_VK_NUM_LOCK: 144,
-  DOM_VK_SCROLL_LOCK: 145,
-  DOM_VK_COMMA: 188,
-  DOM_VK_PERIOD: 190,
-  DOM_VK_SLASH: 191,
-  DOM_VK_BACK_QUOTE: 192,
-  DOM_VK_OPEN_BRACKET: 219,
-  DOM_VK_BACK_SLASH: 220,
-  DOM_VK_CLOSE_BRACKET: 221,
-  DOM_VK_QUOTE: 222,
-  DOM_VK_META: 224
-};
-exports.KeyEvent = KeyEvent;
 },{}],"tts.js":[function(require,module,exports) {
 "use strict";
 
@@ -1626,185 +1751,7 @@ class ScrollingText {
 }
 
 exports.ScrollingText = ScrollingText;
-},{"./keycodes":"keycodes.js","./soundObject":"soundObject.js","./tts":"tts.js"}],"strings.js":[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.strings = void 0;
-
-var _main = require("./main");
-
-var _utilities = require("./utilities");
-
-var _tts = require("./tts");
-
-var _scrollingText = require("./scrollingText");
-
-class Strings {
-  constructor() {
-    this.strings = {};
-    this.strings[1] = {
-      // New English
-      iJumps: "You have %1 hyperjumps",
-      emptyInventory: "Your inventory is empty",
-      mainMenu: "Use arrows to move, enter to continue.",
-      mStart: "Start Game",
-      mShop: "Item Shop (You have %1 coins)",
-      upArrowMove: "Press a number between 1 and 5 to start moving, 1 being the slowest speed possible. Letter s to check your score, h checks your health, l to check level.",
-      bonus1: "Health bonus!",
-      bonus2: "Hyper jump!",
-      selectVoice: "%1 voices available, use the up and down arrows to select a voice, enter when you're done.",
-      mSelectVoice: "text to speech voice",
-      mLang: 'Change language',
-      newUpdate: 'There is a new version available! You have version %1, version %2 is available.',
-      mSapi: 'Use text to speech for the game',
-      mReader: 'Use your screen reader for the game',
-      newRate: 'This is a text to speech rate test. Please press enter when done',
-      rating: 'Press right and left arrow keys to change the rate. Press enter when done',
-      mRate: 'Change speech rate',
-      K: 'king',
-      Q: 'queen',
-      A: 'ace',
-      J: 'jack',
-      cspades: 'spades',
-      cdiamonds: 'diamonds',
-      cclubs: 'clubs',
-      chearts: 'hearts',
-      dq: 'This is a game of risk. You will risk losing %1 beatcoins. Continue?',
-      lang: 'English',
-      langs: 'Select your language',
-      mSelect: 'Please select',
-      mBack: 'go back',
-      mStart: 'Start Game',
-      yes: 'Yes',
-      no: 'no',
-      ok: 'ok'
-    };
-    this.strings[2] = {
-      // New Spanish
-      mStart: "Empezar juego",
-      mShop: "Tienda (Tienes %1 monedas)",
-      mainMenu: "Menú Principal. Flechas para navegar, enter para continuar."
-    };
-  }
-
-  get(what, rep = []) {
-    let str;
-
-    if (typeof this.strings[_main.lang][what] !== 'undefined') {
-      str = this.strings[_main.lang][what];
-    } else if (typeof this.strings[1][what] !== 'undefined') {
-      str = this.strings[1][what];
-    } else {
-      return what;
-    }
-
-    rep.forEach((v, i) => {
-      const i1 = Number(i) + 1;
-      str = str.replace('%' + i1, v);
-    });
-    return str;
-  }
-
-  speak(what, rep = []) {
-    let str;
-
-    if (typeof this.strings[_main.lang][what] !== 'undefined') {
-      str = this.strings[_main.lang][what];
-    } else if (typeof this.strings[1][what] !== 'undefined') {
-      str = this.strings[1][what];
-    } else {
-      _tts.speech.speak(what);
-    }
-
-    rep.forEach((v, i) => {
-      const i1 = Number(i) + 1;
-      str = str.replace('%' + i1, v);
-    });
-
-    _tts.speech.speak(str);
-  }
-
-  async check(lng) {
-    const len = _utilities.utils.objSize(this.strings) - 2;
-
-    for (const i in this.strings[1]) {
-      if (!this.strings[lng].hasOwnProperty(i)) {
-        await new _scrollingText.ScrollingText(i + ': ' + this.strings[1][i]);
-      }
-    }
-  }
-
-}
-
-var strings = new Strings();
-exports.strings = strings;
-},{"./main":"main.js","./utilities":"utilities.js","./tts":"tts.js","./scrollingText":"scrollingText.js"}],"languageSelector.js":[function(require,module,exports) {
-'use strict';
-
-var _soundObject = require("./soundObject");
-
-var _input = require("./input");
-
-var _keycodes = require("./keycodes");
-
-var _tts = require("./tts");
-
-class LanguageSelector {
-  constructor(element, callback) {
-    this.langs = [];
-    this.input = new _input.KeyboardInput();
-    this.input.init();
-    this.langs.push("select a language. Selecciona un idioma.");
-    this.langs.push("I want to play in English");
-    this.langs.push("Quiero jugar en español.");
-    this.id = document.getElementById(element);
-    this.callback = callback;
-    this.container = document.createElement('div');
-    this.buttons = [];
-    this.buttons[0] = document.createElement('div');
-    this.buttons[0].innerHTML = this.langs[0];
-    this.container.appendChild(this.buttons[0]);
-
-    for (let i = 1; i < this.langs.length; i++) {
-      this.buttons[i] = document.createElement('input');
-      this.buttons[i].type = 'button';
-      this.buttons[i].value = this.langs[i];
-      this.buttons[i].addEventListener('click', () => {
-        this.sound.stop();
-        this.callback(i);
-        this.container.innerHTML = '';
-        this.input.removeAllListeners();
-        document.getElementById("app").focus();
-      });
-      this.buttons[i].addEventListener('focus', () => {
-        this.sound.stop();
-
-        _tts.speech.setLanguage(i);
-
-        _tts.speech.speak(this.langs[i]);
-      });
-      this.container.appendChild(this.buttons[i]);
-      this.input.once("chr" + i, () => {
-        this.sound.stop();
-        this.callback(i);
-        this.container.innerHTML = '';
-        this.input.removeAllListeners();
-        document.getElementById("app").focus();
-      });
-    }
-
-    this.id.appendChild(this.container);
-    this.sound = _soundObject.so.create("ui/langSelect");
-    this.sound.play();
-  }
-
-}
-
-module.exports.LanguageSelector = LanguageSelector;
-},{"./soundObject":"soundObject.js","./input":"input.js","./keycodes":"keycodes.js","./tts":"tts.js"}],"soundSource.js":[function(require,module,exports) {
+},{"./keycodes":"keycodes.js","./soundObject":"soundObject.js","./tts":"tts.js"}],"soundSource.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2033,7 +1980,70 @@ class SoundItem {
   }
 
 }
-},{"./soundSource.js":"soundSource.js","./soundObject.js":"soundObject.js"}],"timer.js":[function(require,module,exports) {
+},{"./soundSource.js":"soundSource.js","./soundObject.js":"soundObject.js"}],"languageSelector.js":[function(require,module,exports) {
+'use strict';
+
+var _soundObject = require("./soundObject");
+
+var _input = require("./input");
+
+var _keycodes = require("./keycodes");
+
+var _tts = require("./tts");
+
+class LanguageSelector {
+  constructor(element, callback) {
+    this.langs = [];
+    this.input = new _input.KeyboardInput();
+    this.input.init();
+    this.langs.push("select a language. Selecciona un idioma.");
+    this.langs.push("I want to play in English");
+    this.langs.push("Quiero jugar en español.");
+    this.id = document.getElementById(element);
+    this.callback = callback;
+    this.container = document.createElement('div');
+    this.buttons = [];
+    this.buttons[0] = document.createElement('div');
+    this.buttons[0].innerHTML = this.langs[0];
+    this.container.appendChild(this.buttons[0]);
+
+    for (let i = 1; i < this.langs.length; i++) {
+      this.buttons[i] = document.createElement('input');
+      this.buttons[i].type = 'button';
+      this.buttons[i].value = this.langs[i];
+      this.buttons[i].addEventListener('click', () => {
+        this.sound.stop();
+        this.callback(i);
+        this.container.innerHTML = '';
+        this.input.removeAllListeners();
+        document.getElementById("app").focus();
+      });
+      this.buttons[i].addEventListener('focus', () => {
+        this.sound.stop();
+
+        _tts.speech.setLanguage(i);
+
+        _tts.speech.speak(this.langs[i]);
+      });
+      this.container.appendChild(this.buttons[i]);
+      this.input.once("chr" + i, () => {
+        this.sound.stop();
+        this.callback(i);
+        this.container.innerHTML = '';
+        this.input.removeAllListeners();
+        document.getElementById("app").focus();
+      });
+    }
+
+    this.id.appendChild(this.container);
+    this.sound = _soundObject.so.create("ui/langSelect");
+    this.sound.play();
+  }
+
+}
+
+module.exports.LanguageSelector = LanguageSelector;
+},{"./soundObject":"soundObject.js","./input":"input.js","./keycodes":"keycodes.js","./tts":"tts.js"}],"timer.js":[function(require,module,exports) {
 function Timer(callbacks, step) {
 	let last = 0;
 	let active = false;
@@ -2120,6 +2130,12 @@ class GameObject extends EventEmitter {
 
   update() {}
 
+  destroy() {
+    if (this.sound != "") {
+      this.sound.pause();
+    }
+  }
+
 }
 
 exports.GameObject = GameObject;
@@ -2187,7 +2203,7 @@ class Coin extends _item.Item {
   }
 
   step() {
-    this.world.player.coins++;
+    this.world.player.coins += this.world.game.level;
     this.world.game.pool.playStatic("player/getCoin", 0);
     _main.data.coins = this.world.player.coins;
     (0, _main.save)();
@@ -2228,7 +2244,6 @@ class Tile {
     let scoreType = this.type;
     if (this.type == 0) scoreType = 1;
     let score = scoreType * this.world.player.currentSpeed;
-    this.world.game.score += score * this.world.game.level * 50;
 
     if (this.type != 2) {
       clearInterval(this.world.player.scoreTimeout);
@@ -2268,8 +2283,6 @@ class Street extends _tile.Tile {
 
   step() {
     super.step();
-    this.world.player.stepProgress.pitch = _utilities.utils.getProportion(this.y, this.world.player.furthestStreet, this.world.player.nearestStreet, 0.7, 1.3);
-    this.world.player.stepProgress.replay();
   }
 
 }
@@ -2303,13 +2316,37 @@ class Objective extends _tile.Tile {
       this.world.player.scoreDeduct();
     }, 1300 - this.world.player.levelCap * 75);
     this.world.generateTiles();
+    this.world.game.score += 100 * this.world.game.level;
     this.world.player.slowDown(10);
   }
 
 }
 
 exports.Objective = Objective;
-},{"./gameObject":"gameObject.js","./tile":"tile.js","./tts":"tts.js"}],"car.js":[function(require,module,exports) {
+},{"./gameObject":"gameObject.js","./tile":"tile.js","./tts":"tts.js"}],"stationaryObject.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.StationaryObject = void 0;
+
+var _gameObject = require("./gameObject");
+
+var _utilities = require("./utilities");
+
+var _tts = require("./tts");
+
+class StationaryObject extends _gameObject.GameObject {
+  constructor(world, y, sound, loop = false, x = 0) {
+    super(world, sound, x, y, 0, 1, 1, 1);
+    this.sound.loop = loop;
+  }
+
+}
+
+exports.StationaryObject = StationaryObject;
+},{"./gameObject":"gameObject.js","./utilities":"utilities.js","./tts":"tts.js"}],"car.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2319,6 +2356,8 @@ exports.Car = void 0;
 
 var _gameObject = require("./gameObject");
 
+var _stationaryObject = require("./stationaryObject");
+
 var _utilities = require("./utilities");
 
 var _tts = require("./tts");
@@ -2326,8 +2365,25 @@ var _tts = require("./tts");
 var _main = require("./main");
 
 class Car extends _gameObject.GameObject {
-  constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name) {
+  constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name, blowUp = "") {
     super(world, sound, x, y, z, width, height, depth);
+    this.blowUpSound = blowUp;
+    this.world.player.on("blowup", () => {
+      if (!this.alive) return;
+      this.alive = false;
+      if (this.blowUpSound != "") new _stationaryObject.StationaryObject(this.world, this.y, "blowup/" + this.blowUpSound);
+      if (this.blowUpSound == "") new _stationaryObject.StationaryObject(this.world, this.y, "blowup/generic");
+
+      if (typeof _main.data.bulletGallery === "undefined") {
+        _main.data.bulletGallery = {};
+      }
+
+      if (this.blowUpSound != "") _main.data.bulletGallery[this.blowUpSound] = true;
+      save();
+      if (this.canHorn != "") this.hornSound.pause();
+      this.tile.hasSomething = false;
+      this.world.game.score += this.speed * 1500;
+    });
     this.name = name;
     this.speed = speed;
     this.passed = false;
@@ -2391,10 +2447,9 @@ class Car extends _gameObject.GameObject {
           }
 
           if (!this.passed && this.alive && Math.round(this.x) == this.world.player.x && this.world.player.tileType == 1) {
-            if (this.world.player.jumps >= 1) {
+            if (_main.data.jumps >= 1) {
               this.world.game.pool.playStatic("bonus/hyperjump", 0);
-              this.world.player.jumps--;
-              _main.data.jumps = this.world.player.jumps;
+              _main.data.jumps--;
               this.world.player.flyTo(this.world.player.nearestObjective, 3, "air");
             } else {
               let healthLoss = Math.round(this.speed * 45);
@@ -2422,7 +2477,7 @@ class Car extends _gameObject.GameObject {
 }
 
 exports.Car = Car;
-},{"./gameObject":"gameObject.js","./utilities":"utilities.js","./tts":"tts.js","./main":"main.js"}],"road.js":[function(require,module,exports) {
+},{"./gameObject":"gameObject.js","./stationaryObject":"stationaryObject.js","./utilities":"utilities.js","./tts":"tts.js","./main":"main.js"}],"road.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2467,7 +2522,7 @@ class Road extends _tile.Tile {
     let carType = force;
 
     try {
-      this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name));
+      this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name, _main.parsedCars[carType].blow));
     } catch (e) {
       _tts.speech.speak("Error generating car " + carType + ": " + e);
     }
@@ -2481,7 +2536,7 @@ class Road extends _tile.Tile {
 
   step() {
     super.step();
-    this.world.player.stepProgress.pitch = _utilities.utils.getProportion(this.y, this.world.player.nearestRoad, this.world.player.furthestRoad, 0.1, 2.0);
+    this.world.player.stepProgress.pitch = _utilities.utils.getProportion(this.y, this.world.player.nearestRoad, this.world.player.furthestRoad, 0.3, 1.7);
     this.world.player.stepProgress.replay();
   }
 
@@ -2539,7 +2594,7 @@ class Bonus extends _item.Item {
     if (!this.alive) return;
     this.alive = false;
     let bonuses = [1, 4];
-    if (_main.data.unlocks.jumps) bonuses.push(2);
+    if ((0, _main.getUnlock)(hyperjump)) bonuses.push(2);
     if (!this.world.player.forceSpeed) bonuses.push(3);
 
     let bonusType = _utilities.utils.randomElement(bonuses);
@@ -2552,7 +2607,6 @@ class Bonus extends _item.Item {
 
       case 2:
         this.world.game.pool.playStatic("bonus/hyperjump", 0);
-        this.world.player.jumps++;
         _main.data.jumps++;
         break;
 
@@ -2592,6 +2646,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.Player = void 0;
 
 var _gameObject = require("./gameObject");
+
+var _stationaryObject = require("./stationaryObject");
 
 var _keycodes = require("./keycodes.js");
 
@@ -2847,10 +2903,32 @@ class Player extends _gameObject.GameObject {
     if (this.levelCap > 15) this.levelCap = 15;
   }
 
+  throwBomb() {
+    try {
+      let sound = _soundObject.so.create("bomb_start");
+
+      sound.play();
+      setTimeout(() => {
+        sound.destroy();
+        new _stationaryObject.StationaryObject(this.world, this.nearestRoad, "bomb_drop");
+        let fuse = new _stationaryObject.StationaryObject(this.world, this.nearestRoad, "bomb_fuse", true);
+        let fusetime = 1500;
+        if ((0, _main.getUnlock)("shortfuse")) fusetime = fusetime / 2;
+        setTimeout(() => {
+          fuse.destroy();
+          new _stationaryObject.StationaryObject(this.world, this.nearestRoad, "bomb_explode");
+          this.emit("blowup");
+        }, fusetime);
+      }, 100);
+    } catch (e) {
+      _tts.speech.speak(e.message);
+    }
+  }
+
 }
 
 exports.Player = Player;
-},{"./gameObject":"gameObject.js","./keycodes.js":"keycodes.js","./soundObject":"soundObject.js","./tts":"tts.js","./utilities":"utilities.js","./main":"main.js"}],"world.js":[function(require,module,exports) {
+},{"./gameObject":"gameObject.js","./stationaryObject":"stationaryObject.js","./keycodes.js":"keycodes.js","./soundObject":"soundObject.js","./tts":"tts.js","./utilities":"utilities.js","./main":"main.js"}],"world.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3045,6 +3123,10 @@ class Game {
       this.world.player.y = 0;
     }
 
+    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_G)) {
+      this.world.player.throwBomb();
+    }
+
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_I)) {
       let nothing = true;
 
@@ -3076,7 +3158,7 @@ class Game {
     }
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_X)) {
-      _tts.speech.speak(this.world.player.x + ", " + this.world.player.y + ", " + this.world.player.z);
+      _tts.speech.speak(this.world.player.nearestRoad + ", " + this.world.player.furthestRoad);
     }
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_L)) {
@@ -3618,7 +3700,7 @@ class Menu {
       this.sndName = _soundObject.so.create(this.name);
       this.sndName.play();
     } else {
-      _tts.speech.speak(this.name);
+      if (!this.silent) _tts.speech.speak(this.name);
     }
 
     if (!this.silent) this.sndOpen.play();
@@ -3720,8 +3802,19 @@ exports.Menu = Menu;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.mainMenu = mainMenu;
 exports.save = save;
+exports.getUnlock = getUnlock;
+exports.setUnlock = setUnlock;
+exports.setData = setData;
+exports.getData = getData;
 exports.ttsRate = exports.ttsVoice = exports.lang = exports.version2 = exports.data = exports.version = exports.parsedCars = exports.gameID = exports.content = exports._ = exports.debug = void 0;
+
+var _scrollingText = require("./scrollingText");
+
+var _utilities = require("./utilities");
+
+var _soundHandler = require("./soundHandler");
 
 var _strings = require("./strings");
 
@@ -3749,7 +3842,12 @@ let _;
 exports._ = _;
 let content = {
   numberOfVehicles: 7,
-  bonusTypes: 3
+  bonusTypes: 3,
+  shopItems: {
+    hyperjump: 800,
+    galleryMembership: 75,
+    shortfuse: 450
+  }
 };
 exports.content = content;
 var gameID = "road";
@@ -3807,12 +3905,43 @@ async function setup() {
       }
 
       let z = Number(elements[3]);
+      let blowup = 0;
+      let blow = "generic";
+
+      if (typeof elements[4] !== "undefined") {
+        blowup = Number(elements[4]);
+        console.log(blowup);
+
+        switch (blowup) {
+          case 0:
+            blow = "generic";
+            break;
+
+          case 1:
+            blow = name;
+            break;
+
+          default:
+            blow = "generic";
+            break;
+        }
+
+        if (typeof data.bulletGallery === "undefined") {
+          data.bulletGallery = {};
+        }
+
+        if (typeof data.bulletGallery[blow] === "undefined") {
+          data.bulletGallery[blow] = false;
+        }
+      }
+
       parsedCars.push({
         sound: "vehicles/" + name,
         speed: speed,
         hornable: hornable,
         name: name,
-        z: z
+        z: z,
+        blowup: blow
       });
     });
     content.numberOfVehicles = parsedCars.length - 1;
@@ -3834,34 +3963,161 @@ async function setup() {
     _tts.speech.setLanguage(lang);
 
     exports._ = _ = _strings.strings.get;
-
-    let music = _soundObject.so.create("music/menu");
-
-    music.volume = 0.6;
-    music.loop = true;
-    music.play();
-    _tts.speech.ducker = music;
-    let items = [];
-    items.push(new _menuItem.MenuItem(0, _strings.strings.get("mStart")));
-    items.push(new _menuItem.MenuItem(1, _strings.strings.get("mShop", [data.coins])));
-    let menu = new _menu.Menu(_strings.strings.get("mainMenu"), items);
-    let selection = await menu.runSync();
-    await music.fade(0);
-
-    switch (selection) {
-      case 0:
-        let game = new _game.Game();
-        game.start();
-        break;
-
-      default:
-        break;
-    }
+    mainMenu();
   });
+}
+
+async function mainMenu() {
+  let music = _soundObject.so.create("music/menu");
+
+  music.volume = 0.6;
+  music.loop = true;
+  music.play();
+  _tts.speech.ducker = music;
+  let items = [];
+  items.push(new _menuItem.MenuItem(0, _strings.strings.get("mStart")));
+  items.push(new _menuItem.MenuItem(1, _strings.strings.get("mShop", [data.coins])));
+  items.push(new _menuItem.MenuItem(2, _strings.strings.get("mBullet")));
+  let menu = new _menu.Menu(_strings.strings.get("mainMenu"), items);
+  let selection = await menu.runSync();
+  await music.fade(0);
+
+  switch (selection) {
+    case 0:
+      let game = new _game.Game();
+      game.start();
+      break;
+
+    case 1:
+      await shop();
+      break;
+
+    case 2:
+      await browseGallery();
+      break;
+
+    default:
+      break;
+  }
 }
 
 function save() {
   localStorage.setItem("string_data", JSON.stringify(data));
 }
-},{"./strings":"strings.js","./soundObject":"soundObject.js","./tts":"tts.js","./languageSelector":"languageSelector.js","./game":"game.js","./menu":"menu.js","./menuItem":"menuItem.js"}]},{},["main.js"], null)
+
+async function browseGallery() {
+  if (!getUnlock("galleryMembership")) {
+    let sound = _soundObject.so.create("gallery_locked");
+
+    await sound.playSync();
+    await new _scrollingText.ScrollingText(_strings.strings.get("galleryLocked"));
+    mainMenu();
+    return;
+  }
+
+  let locked = 0,
+      unlocked = 0;
+  let pool = new _soundHandler.SoundHandler();
+  let items = [];
+  items.push(new _menuItem.MenuItem(-1, _strings.strings.get("mBack")));
+  let arr = Object.entries(data.bulletGallery);
+  arr.forEach(v => {
+    if (v[1] == false) {
+      items.push(new _menuItem.AudioItem(-1, "blowup/locked"));
+      locked++;
+    }
+
+    if (v[1] == true) {
+      items.push(new audioItem(-1, "blowup/" + v[0]));
+      unlocked++;
+    }
+  });
+
+  _tts.speech.speak(_strings.strings.get("bulletIntro", [unlocked, locked + unlocked]));
+
+  let menu = new _menu.Menu(" ", items);
+  menu.silent = true;
+  menu.run(s => {
+    menu.destroy();
+    mainMenu();
+    return;
+  });
+}
+
+function getUnlock(v) {
+  if (typeof data.unlocks === "undefined") data.unlocks = {};
+  if (typeof data.unlocks[v] === "undefined") data.unlocks[v] = false;
+  return data.unlocks[v];
+}
+
+function setUnlock(v, value = true) {
+  console.log(v);
+  if (typeof data.unlocks === "undefined") data.unlocks = {};
+  if (typeof data.unlocks[v] === "undefined") data.unlocks[v] = false;
+  data.unlocks[v] = value;
+  save();
+  return value;
+}
+
+function setData(v, value) {
+  if (typeof data[v] === "undefined") data[v] = value;
+  data[v] = value;
+  save();
+  return value;
+}
+
+function getData(v) {
+  if (typeof data[v] === "undefined") data[v] = 0;
+  return data[v];
+}
+
+async function shop() {
+  let shopAmbience = _soundObject.so.create("shop_ambience");
+
+  shopAmbience.volume = 0.6;
+  shopAmbience.loop = true;
+  shopAmbience.play();
+  let menu;
+  let result;
+
+  let buy = _soundObject.so.create("purchase_item");
+
+  let nobuy = _soundObject.so.create("no_cash");
+
+  data.coins = 100000;
+
+  _tts.speech.speak(_strings.strings.get("mShopIntro"));
+
+  while (result != 0) {
+    await _utilities.utils.sleep(5);
+    let items = [];
+    items.push(new _menuItem.MenuItem(0, _strings.strings.get("mShopBack", [data.coins])));
+
+    for (var k in content.shopItems) {
+      if (!getUnlock(k)) {
+        items.push(new _menuItem.MenuItem(k, _strings.strings.get("shop" + k) + ": " + content.shopItems[k] + " " + _strings.strings.get("coins")));
+      }
+    }
+
+    menu = new _menu.Menu(" ", items);
+    menu.silent = true;
+    result = await menu.runSync();
+
+    if (result != 0) {
+      if (data.coins >= content.shopItems[result]) {
+        data.coins -= content.shopItems[result];
+        setUnlock(result);
+        buy.replay();
+      } else {
+        nobuy.replay();
+      }
+    }
+  }
+
+  menu.destroy();
+  shopAmbience.destroy();
+  await mainMenu();
+  return;
+}
+},{"./scrollingText":"scrollingText.js","./utilities":"utilities.js","./soundHandler":"soundHandler.js","./strings":"strings.js","./soundObject":"soundObject.js","./tts":"tts.js","./languageSelector":"languageSelector.js","./game":"game.js","./menu":"menu.js","./menuItem":"menuItem.js"}]},{},["main.js"], null)
 //# sourceMappingURL=/main.js.map

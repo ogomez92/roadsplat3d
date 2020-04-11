@@ -26,7 +26,7 @@ export class Road extends Tile {
         if (side == 2) size = size * -1
         let carType = force
         try {
-            this.world.dynamicObjects.push(new Car(this.world, this, size, this.y, 2, 1, 2, parsedCars[carType].sound, parsedCars[carType].speed, side, parsedCars[carType].z, parsedCars[carType].hornable, parsedCars[carType].name))
+            this.world.dynamicObjects.push(new Car(this.world, this, size, this.y, 2, 1, 2, parsedCars[carType].sound, parsedCars[carType].speed, side, parsedCars[carType].z, parsedCars[carType].hornable, parsedCars[carType].name, parsedCars[carType].blow))
         } catch (e) {
             speech.speak("Error generating car " + carType + ": " + e)
         }
@@ -37,7 +37,7 @@ export class Road extends Tile {
     }
     step() {
         super.step()
-        this.world.player.stepProgress.pitch = utils.getProportion(this.y, this.world.player.nearestRoad, this.world.player.furthestRoad, 0.1, 2.0)
+        this.world.player.stepProgress.pitch = utils.getProportion(this.y, this.world.player.nearestRoad, this.world.player.furthestRoad, 0.3, 1.7)
         this.world.player.stepProgress.replay()
     }
 }

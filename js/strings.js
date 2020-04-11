@@ -9,6 +9,16 @@ class Strings {
 		this.strings = {};
 		this.strings[1] = {
 			// New English
+			coins: "coins",
+			mShopBack:"Leave shop (You have %1 coins)",
+			mShopIntro:"Welcome to the item shop! Press enter on any item to buy it.",
+			shophyperjump: "Hyper jumps: Allows collecting of hyperjump items, which save you from being hit by incoming cars",
+			shopgalleryMembership: "Explosions gallery lifetime membership",
+			shopshortfuse: "Short fuse: Halves the time it takes for bombs to explode.",
+			galleryLocked: "The explosions gallery will remain locked until you buy a membership from the store. Darn!",
+			mBullet:"Explosions gallery",
+			locked:"Locked!",
+			bulletIntro:"Welcome to the explosions gallery! You have unlocked %1 out of %2 possible explosions. Press enter on any of them to listen to it.",
 			iJumps: "You have %1 hyperjumps",
 			emptyInventory: "Your inventory is empty",
 			mainMenu: "Use arrows to move, enter to continue.",

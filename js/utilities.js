@@ -29,7 +29,7 @@ class GameUtils {
 
 	getProportion(current, min, max, minVolume, maxVolume) {
 		if (current > max) {
-			return 0;
+			return 1;
 		}
 
 		return (current / (min + max)) * (maxVolume - minVolume) + minVolume;

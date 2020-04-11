@@ -1,9 +1,10 @@
 import { GameObject } from './gameObject'
+import {StationaryObject} from './stationaryObject'
 import { KeyEvent } from './keycodes.js'
 import { so } from './soundObject'
 import { speech } from './tts';
 import { utils } from './utilities'
-import { data, debug } from './main'
+import {getUnlock,  data, debug } from './main'
 const EventEmitter = require('events');
 export class Player extends GameObject {
     constructor(world) {
@@ -209,5 +210,25 @@ export class Player extends GameObject {
         if (this.world.game.score < 0) this.world.game.score = 0
         this.levelCap = this.world.game.level
         if (this.levelCap > 15) this.levelCap = 15
+    }
+    throwBomb() {
+        try {
+let sound=so.create("bomb_start");
+sound.play();
+setTimeout(()=> {
+    sound.destroy()
+    new StationaryObject(this.world,this.nearestRoad, "bomb_drop")
+    let fuse=new StationaryObject(this.world, this.nearestRoad, "bomb_fuse", true)
+    let fusetime=1500
+    if (getUnlock("shortfuse")) fusetime=fusetime/2
+    setTimeout(()=> {
+        fuse.destroy()
+        new StationaryObject(this.world,this.nearestRoad, "bomb_explode")
+        this.emit("blowup")
+    },fusetime)
+},100)
+        } catch(e) {
+            speech.speak(e.message)
+        }
     }
 }
