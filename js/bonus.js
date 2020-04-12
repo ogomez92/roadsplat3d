@@ -36,6 +36,7 @@ let        bonusType=utils.randomElement(bonuses)
                         this.world.player.forcedSpeed = 6
                     }), (() => {
                         this.world.player.forceSpeed = false
+                        this.world.player.slowDown(10)
                         this.world.player.speedUp(this.oldSpeed)
                     }))
                 break;
@@ -45,7 +46,7 @@ let        bonusType=utils.randomElement(bonuses)
                 this.world.game.pool.playStatic("bonus/bomb",false)
                 break;
                 case 6: 
-                let speedUp = new Effect(this.world, "speed", 20000, this.coffeeOn, this.coffeeOff)
+                let speedUp = new Effect(this.world, "speed", 20000, this.coffeeOn(this), this.coffeeOff(this))
                 
                 break;
                 default:
@@ -57,16 +58,17 @@ break;
         }, 280)
         save()
     }
-    coffeeOn() {
-        this.oldSpeed = this.world.player.currentSpeed
-        this.world.player.slowDown(10)
-        this.world.player.speedUp(7)
-        this.world.player.forceSpeed = true
-        this.world.player.forcedSpeed = 7
+    coffeeOn(that) {
+        that.oldSpeed = that.world.player.currentSpeed
+        that.world.player.slowDown(10)
+        that.world.player.speedUp(7)
+        that.world.player.forceSpeed = true
+        that.world.player.forcedSpeed = 7
 
     }
-    coffeeOff() {
-        this.world.player.forceSpeed = false
-    this.world.player.speedUp(this.oldSpeed)
+    coffeeOff(that) {
+        that.world.player.forceSpeed = false
+        that.world.player.slowDown(10)
+    that.world.player.speedUp(that.oldSpeed)
     }
 }

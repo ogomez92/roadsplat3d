@@ -2663,6 +2663,7 @@ class Bonus extends _item.Item {
           this.world.player.forcedSpeed = 6;
         }, () => {
           this.world.player.forceSpeed = false;
+          this.world.player.slowDown(10);
           this.world.player.speedUp(this.oldSpeed);
         });
         break;
@@ -2674,7 +2675,7 @@ class Bonus extends _item.Item {
         break;
 
       case 6:
-        let speedUp = new _effect.Effect(this.world, "speed", 20000, this.coffeeOn, this.coffeeOff);
+        let speedUp = new _effect.Effect(this.world, "speed", 20000, this.coffeeOn(this), this.coffeeOff(this));
         break;
 
       default:
@@ -2688,17 +2689,18 @@ class Bonus extends _item.Item {
     (0, _main.save)();
   }
 
-  coffeeOn() {
-    this.oldSpeed = this.world.player.currentSpeed;
-    this.world.player.slowDown(10);
-    this.world.player.speedUp(7);
-    this.world.player.forceSpeed = true;
-    this.world.player.forcedSpeed = 7;
+  coffeeOn(that) {
+    that.oldSpeed = that.world.player.currentSpeed;
+    that.world.player.slowDown(10);
+    that.world.player.speedUp(7);
+    that.world.player.forceSpeed = true;
+    that.world.player.forcedSpeed = 7;
   }
 
-  coffeeOff() {
-    this.world.player.forceSpeed = false;
-    this.world.player.speedUp(this.oldSpeed);
+  coffeeOff(that) {
+    that.world.player.forceSpeed = false;
+    that.world.player.slowDown(10);
+    that.world.player.speedUp(that.oldSpeed);
   }
 
 }
@@ -3146,6 +3148,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 class Game {
   constructor() {
+    this.canChangeSpeed = true;
     this.tick = _soundObject.so.create("tick");
     this.scoreSound = _soundObject.so.create("scoreCounter");
     this.scoreSound.volume = 0.4;
@@ -3238,27 +3241,47 @@ class Game {
       _tts.speech.speak(this.world.player.hp + " " + _strings.strings.get("hp"));
     }
 
-    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_1)) {
+    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_1) && this.canChangeSpeed) {
+      this.canChangeSpeed = false;
+      setTimeout(() => {
+        this.canChangeSpeed = true;
+      }, 800);
       this.world.player.slowDown(10);
       this.world.player.speedUp(1);
     }
 
-    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_2)) {
+    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_2) && this.canChangeSpeed) {
+      this.canChangeSpeed = false;
+      setTimeout(() => {
+        this.canChangeSpeed = true;
+      }, 800);
       this.world.player.slowDown(10);
       this.world.player.speedUp(2);
     }
 
-    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_3)) {
+    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_3) && this.canChangeSpeed) {
+      this.canChangeSpeed = false;
+      setTimeout(() => {
+        this.canChangeSpeed = true;
+      }, 800);
       this.world.player.slowDown(10);
       this.world.player.speedUp(3);
     }
 
-    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_4)) {
+    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_4) && this.canChangeSpeed) {
+      this.canChangeSpeed = false;
+      setTimeout(() => {
+        this.canChangeSpeed = true;
+      }, 800);
       this.world.player.slowDown(10);
       this.world.player.speedUp(4);
     }
 
-    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_5)) {
+    if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_5) && this.canChangeSpeed) {
+      this.canChangeSpeed = false;
+      setTimeout(() => {
+        this.canChangeSpeed = true;
+      }, 800);
       this.world.player.slowDown(10);
       this.world.player.speedUp(5);
     }
