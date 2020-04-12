@@ -102,7 +102,7 @@ async function setup() {
 		lang = result;
 		speech.setLanguage(lang);
 		_ = strings.get
-		speech.setRate(2)
+		speech.setRate(3)
 		//await strings.check(2)
 		mainMenu();
 })

@@ -40,7 +40,7 @@ let        bonusType=utils.randomElement(bonuses)
                 break;
                 case 5:
                 data.bombs++;
-                this.world.pool.playStatic("bonus/bomb",false)
+                this.world.game.pool.playStatic("bonus/bomb",false)
                 break;
                 default:
                 this.world.game.pool.playStatic("bonus/fake", 0)
