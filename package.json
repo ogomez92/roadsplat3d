@@ -1,6 +1,6 @@
 {
   "name": "roadsplat",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Audio game",
   "main": "./index.js",
   "scripts": {
@@ -11,7 +11,6 @@
     "run": "npm run build && electron .",
     "git": "git add . && git commit -a -m 'auto commit' && npm version patch && git push",
     "v": "git add . && git commit -a -m 'auto commit' && npm version major && git push"
-
   },
   "author": "Oriol Gomez",
   "license": "GPL",
