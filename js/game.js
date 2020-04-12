@@ -47,7 +47,12 @@ class Game {
 			this.world.player.y = 0
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_G)) {
+			if (data.bombs>=1) {
 			this.world.player.throwBomb()
+			}
+			else {
+				speech.speak(strings.get("noBombs"))
+			}
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_I)) {
 			let nothing = true
@@ -75,7 +80,7 @@ class Game {
 			this.world.player.slowDown()
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_C)) {
-			speech.speak(this.world.player.coins + strings.get("coins"))
+			speech.speak(data.coins + strings.get("coins"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_S)) {
 			speech.speak(this.score + strings.get("points"))

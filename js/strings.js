@@ -9,6 +9,7 @@ class Strings {
 		this.strings = {};
 		this.strings[1] = {
 			// New English
+			noBombs: "You don't have any bombs!",
 			
 			shopbombs: "Bombs, to make cars explode. Also allows unlocking of explosion sounds in the explosions gallery",
 			bonus3: "Slowdown",
@@ -63,6 +64,7 @@ class Strings {
 		};
 		this.strings[2] = {
 			// New Spanish
+			noBombs: "No tienes bombas!",
 			shopbombs: "Bombas, para hacer explotar los coches con la tecla g. También podrás desbloquear los sonidos de las explosiones",
 			selectVoice: "%1 voces disponibles. Usa las flechas y enter para cambiar la voz",
 			mSelectVoice: "Voz de la tts",

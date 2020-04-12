@@ -74,7 +74,6 @@ export class Player extends GameObject {
         if (this.currentSpeed > 7) this.currentSpeed = 7
         this.speedUpSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
         this.speedUpSound.replay()
-        speech.speak(this.currentSpeed)
     }
     slowDown(number = 1) {
         if (this.forceSpeed) return;
@@ -88,7 +87,6 @@ export class Player extends GameObject {
         }
         if (number == 1) this.speedDownSound.pitch = utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2)
         if (number == 1) this.speedDownSound.replay()
-        speech.speak(this.currentSpeed)
     }
     hit() {
         this.playerHitSound.play()
@@ -157,7 +155,6 @@ export class Player extends GameObject {
                             this.unableToMove = false;
                             heart.stop();
                             if (this.forceSpeed) {
-                                speech.speak("Speeding up to " + this.forcedSpeed)
                                 this.forceSpeed = false
                                 this.speedUp(this.forcedSpeed)
                                 this.forceSpeed = true
@@ -213,20 +210,16 @@ export class Player extends GameObject {
     }
     throwBomb() {
         try {
-let sound=so.create("bomb_start");
-sound.play();
-setTimeout(()=> {
-    sound.destroy()
-    new StationaryObject(this.world,this.y+2, "bomb_drop")
-    let fuse=new StationaryObject(this.world, this.y+2, "bomb_fuse", true)
-    let fusetime=600
+    new StationaryObject(this.world,this.y+0.5, "bomb_drop")
+    let fusetime=1000     
     if (getUnlock("shortfuse")) fusetime=fusetime/3
+    let sound=so.create("bomb_start")
+    sound.play();
     setTimeout(()=> {
-        fuse.destroy()
-        new StationaryObject(this.world,this.y+2, "bomb_explode")
+        sound.destroy();
+        new StationaryObject(this.world,this.y+0.5, "bomb_explode")
         this.emit("blowup")
     },fusetime)
-},100)
         } catch(e) {
             speech.speak(e.message)
         }
