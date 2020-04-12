@@ -2,7 +2,7 @@ import { GameObject } from "./gameObject";
 import {StationaryObject} from './stationaryObject'
 import { utils } from "./utilities";
 import { speech } from "./tts";
-import { data, content } from "./main";
+import { save, data, content } from "./main";
 export class Car extends GameObject {
   constructor(
     world,
@@ -21,11 +21,13 @@ export class Car extends GameObject {
   ) {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound=blowUp
+    console.log(this.blowUpSound)
     this.world.player.on("blowup", (()=> {
-      if (!this.alive) return;
+      
+      if (!this.alive || (this.x<-10 && this.x>10)) return;
       this.alive = false;
-      if (this.blowUpSound!="") new StationaryObject(this.world, this.y, "blowup/"+this.blowUpSound)
-            if (this.blowUpSound=="") new StationaryObject(this.world, this.y, "blowup/generic")
+      if (this.blowUpSound!="") new StationaryObject(this.world, this.world.player.y+2, "blowup/"+this.blowUpSound, false, this.x)
+            if (this.blowUpSound=="") new StationaryObject(this.world, this.world.player.y+2, "blowup/generic", false, this.x)
             if (typeof data.bulletGallery==="undefined") {
               data.bulletGallery={}
             }

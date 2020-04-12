@@ -12,8 +12,9 @@ export class Bonus extends Item {
         if (!this.alive) return;
         this.alive = false
         let bonuses=[1,4]
-        if (getUnlock(hyperjump)) bonuses.push(2)
+        if (getUnlock("hyperjump")) bonuses.push(2)
         if (!this.world.player.forceSpeed) bonuses.push(3)
+        if (getUnlock("bombs")) bonuses.push(5)
 let        bonusType=utils.randomElement(bonuses)
         switch (bonusType) {
 
@@ -36,6 +37,10 @@ let        bonusType=utils.randomElement(bonuses)
                         this.world.player.speedUp(this.oldSpeed)
                         this.world.player.forceSpeed = false
                     }))
+                break;
+                case 5:
+                data.bombs++;
+                this.world.pool.playStatic("bonus/bomb",false)
                 break;
                 default:
                 this.world.game.pool.playStatic("bonus/fake", 0)

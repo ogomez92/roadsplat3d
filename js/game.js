@@ -51,12 +51,21 @@ class Game {
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_I)) {
 			let nothing = true
+			let str=""
 			if (data.jumps > 0) {
 				nothing = false
-				speech.speak(strings.get("iJumps", [data.jumps]))
+				str+=strings.get("iJumps", [data.jumps])+", "
 			}
+			if (data.bombs > 0) {
+				nothing = false
+				str+=strings.get("iBombs", [data.bombs])+", "
+			}
+			
 			if (nothing) {
 				speech.speak(strings.get("emptyInventory"))
+			}
+			else {
+				speech.speak(str)
 			}
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_UP)) {

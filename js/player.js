@@ -217,13 +217,13 @@ let sound=so.create("bomb_start");
 sound.play();
 setTimeout(()=> {
     sound.destroy()
-    new StationaryObject(this.world,this.nearestRoad, "bomb_drop")
-    let fuse=new StationaryObject(this.world, this.nearestRoad, "bomb_fuse", true)
-    let fusetime=1500
-    if (getUnlock("shortfuse")) fusetime=fusetime/2
+    new StationaryObject(this.world,this.y+2, "bomb_drop")
+    let fuse=new StationaryObject(this.world, this.y+2, "bomb_fuse", true)
+    let fusetime=600
+    if (getUnlock("shortfuse")) fusetime=fusetime/3
     setTimeout(()=> {
         fuse.destroy()
-        new StationaryObject(this.world,this.nearestRoad, "bomb_explode")
+        new StationaryObject(this.world,this.y+2, "bomb_explode")
         this.emit("blowup")
     },fusetime)
 },100)

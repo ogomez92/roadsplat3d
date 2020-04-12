@@ -9,7 +9,8 @@ export let content = {
 	numberOfVehicles: 7,
 	bonusTypes: 3,
 	shopItems:{
-	hyperjump: 800,
+	hyperjump: 500,
+	bombs: 250,
 	galleryMembership: 75,
 shortfuse: 450,
 	
@@ -101,6 +102,8 @@ async function setup() {
 		lang = result;
 		speech.setLanguage(lang);
 		_ = strings.get
+		speech.setRate(2)
+		//await strings.check(2)
 		mainMenu();
 })
 }
@@ -152,10 +155,11 @@ arr.forEach((v)=> {
 		locked++;
 	}
 	if (v[1]==true) {
-items.push(new audioItem(-1,"blowup/"+v[0]))
+items.push(new AudioItem(-1,"blowup/"+v[0]))
 		unlocked++;
 	}
 	})
+	
 	speech.speak(strings.get("bulletIntro",[unlocked,(locked+unlocked)]))
 	let menu=new Menu(" ",items)
 	menu.silent=true

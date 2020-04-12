@@ -479,16 +479,21 @@ class Strings {
     this.strings = {};
     this.strings[1] = {
       // New English
+      shopbombs: "Bombs, to make cars explode. Also allows unlocking of explosion sounds in the explosions gallery",
+      bonus3: "Slowdown",
+      bonus4: "Nothing!",
+      bonus5: "bomb",
       coins: "coins",
+      iBombs: "Bombs",
       mShopBack: "Leave shop (You have %1 coins)",
       mShopIntro: "Welcome to the item shop! Press enter on any item to buy it.",
       shophyperjump: "Hyper jumps: Allows collecting of hyperjump items, which save you from being hit by incoming cars",
       shopgalleryMembership: "Explosions gallery lifetime membership",
-      shopshortfuse: "Short fuse: Halves the time it takes for bombs to explode.",
+      shopshortfuse: "Short fuse: Divides the time it takes for bombs to explode by 3.",
       galleryLocked: "The explosions gallery will remain locked until you buy a membership from the store. Darn!",
       mBullet: "Explosions gallery",
       locked: "Locked!",
-      bulletIntro: "Welcome to the explosions gallery! You have unlocked %1 out of %2 possible explosions. Press enter on any of them to listen to it.",
+      bulletIntro: "Welcome to the explosions gallery! You have unlocked %1 out of %2 possible explosions. Press enter to go back to the main menu.",
       iJumps: "You have %1 hyperjumps",
       emptyInventory: "Your inventory is empty",
       mainMenu: "Use arrows to move, enter to continue.",
@@ -526,6 +531,40 @@ class Strings {
     };
     this.strings[2] = {
       // New Spanish
+      shopbombs: "Bombas, para hacer explotar los coches con la tecla g. También podrás desbloquear los sonidos de las explosiones",
+      selectVoice: "%1 voces disponibles. Usa las flechas y enter para cambiar la voz",
+      mSelectVoice: "Voz de la tts",
+      mLang: "Cambiar Idioma",
+      newUpdate: "Nueva versión disponible! Tienes la %1, la %2 está disponible",
+      mSapi: "Usar SAPI para el juego",
+      mReader: "Usar lector de pantalla",
+      newRate: "Prueba de la velocidad de la voz. Pulsa enter para dejarla así",
+      rating: "Pulsa las flechas izquierda y derecha para cambiar la velocidad y enter para aceptar",
+      mRate: "Cambiar velocidad de la voz.",
+      mSelect: "Por favor, selecciona",
+      mBack: "Volver",
+      yes: "sí",
+      no: "no",
+      ok: "aceptar",
+      coins: "Monedas",
+      iBombs: "Bombas",
+      mShopBack: "Salir de la tienda (tienes %1 monedas)",
+      mShopIntro: "Te doy la bienvenida a la tienda, donde puedes comprar mejoras para el juego. Pulsa énter en cualquier item para comprarlo.",
+      shophyperjump: "Hipersaltos: Permite obtener los bonus de hipersalto, que saltarán los autos automáticamente.",
+      shopgalleryMembership: "Pase de oro para la galería de explosiones",
+      shopshortfuse: "Mecha corta, divide el tiempo de explosión de las bombas por 3",
+      galleryLocked: "La galería de explosiones estará bloqueada hasta que compres el pase de oro. ¡Vaya!",
+      mBullet: "Galería de explosiones",
+      locked: "Bloqueado",
+      bulletIntro: "Te doy la bienvenida a la galería de explosiones! Has desbloqueado %1 de %2 explosiones posibles. Pulsa enter para volver al menú",
+      iJumps: "Tienes %1 hipersaltos",
+      emptyInventory: "Tu inventario está vacío.",
+      upArrowMove: "Pulsa un número del 1 al 5 para empezar a moverte, 1 el más lento. S para ver la puntuación, h para la energía, l para el nivel, i para el inventario.",
+      bonus1: "Bonus de energía",
+      bonus2: "Hipersalto",
+      bonus3: "Ralentizado",
+      bonus4: "Nada!",
+      bonus5: "bomba",
       mStart: "Empezar juego",
       mShop: "Tienda (Tienes %1 monedas)",
       mainMenu: "Menú Principal. Flechas para navegar, enter para continuar."
@@ -2368,18 +2407,19 @@ class Car extends _gameObject.GameObject {
   constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name, blowUp = "") {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp;
+    console.log(this.blowUpSound);
     this.world.player.on("blowup", () => {
-      if (!this.alive) return;
+      if (!this.alive || this.x < -10 && this.x > 10) return;
       this.alive = false;
-      if (this.blowUpSound != "") new _stationaryObject.StationaryObject(this.world, this.y, "blowup/" + this.blowUpSound);
-      if (this.blowUpSound == "") new _stationaryObject.StationaryObject(this.world, this.y, "blowup/generic");
+      if (this.blowUpSound != "") new _stationaryObject.StationaryObject(this.world, this.world.player.y + 2, "blowup/" + this.blowUpSound, false, this.x);
+      if (this.blowUpSound == "") new _stationaryObject.StationaryObject(this.world, this.world.player.y + 2, "blowup/generic", false, this.x);
 
       if (typeof _main.data.bulletGallery === "undefined") {
         _main.data.bulletGallery = {};
       }
 
       if (this.blowUpSound != "") _main.data.bulletGallery[this.blowUpSound] = true;
-      save();
+      (0, _main.save)();
       if (this.canHorn != "") this.hornSound.pause();
       this.tile.hasSomething = false;
       this.world.game.score += this.speed * 1500;
@@ -2522,7 +2562,7 @@ class Road extends _tile.Tile {
     let carType = force;
 
     try {
-      this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name, _main.parsedCars[carType].blow));
+      this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name, _main.parsedCars[carType].blowup));
     } catch (e) {
       _tts.speech.speak("Error generating car " + carType + ": " + e);
     }
@@ -2594,8 +2634,9 @@ class Bonus extends _item.Item {
     if (!this.alive) return;
     this.alive = false;
     let bonuses = [1, 4];
-    if ((0, _main.getUnlock)(hyperjump)) bonuses.push(2);
+    if ((0, _main.getUnlock)("hyperjump")) bonuses.push(2);
     if (!this.world.player.forceSpeed) bonuses.push(3);
+    if ((0, _main.getUnlock)("bombs")) bonuses.push(5);
 
     let bonusType = _utilities.utils.randomElement(bonuses);
 
@@ -2621,6 +2662,11 @@ class Bonus extends _item.Item {
           this.world.player.speedUp(this.oldSpeed);
           this.world.player.forceSpeed = false;
         });
+        break;
+
+      case 5:
+        _main.data.bombs++;
+        this.world.pool.playStatic("bonus/bomb", false);
         break;
 
       default:
@@ -2910,13 +2956,13 @@ class Player extends _gameObject.GameObject {
       sound.play();
       setTimeout(() => {
         sound.destroy();
-        new _stationaryObject.StationaryObject(this.world, this.nearestRoad, "bomb_drop");
-        let fuse = new _stationaryObject.StationaryObject(this.world, this.nearestRoad, "bomb_fuse", true);
-        let fusetime = 1500;
-        if ((0, _main.getUnlock)("shortfuse")) fusetime = fusetime / 2;
+        new _stationaryObject.StationaryObject(this.world, this.y + 2, "bomb_drop");
+        let fuse = new _stationaryObject.StationaryObject(this.world, this.y + 2, "bomb_fuse", true);
+        let fusetime = 600;
+        if ((0, _main.getUnlock)("shortfuse")) fusetime = fusetime / 3;
         setTimeout(() => {
           fuse.destroy();
-          new _stationaryObject.StationaryObject(this.world, this.nearestRoad, "bomb_explode");
+          new _stationaryObject.StationaryObject(this.world, this.y + 2, "bomb_explode");
           this.emit("blowup");
         }, fusetime);
       }, 100);
@@ -3129,15 +3175,22 @@ class Game {
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_I)) {
       let nothing = true;
+      let str = "";
 
       if (_main.data.jumps > 0) {
         nothing = false;
+        str += _strings.strings.get("iJumps", [_main.data.jumps]) + ", ";
+      }
 
-        _tts.speech.speak(_strings.strings.get("iJumps", [_main.data.jumps]));
+      if (_main.data.bombs > 0) {
+        nothing = false;
+        str += _strings.strings.get("iBombs", [_main.data.bombs]) + ", ";
       }
 
       if (nothing) {
         _tts.speech.speak(_strings.strings.get("emptyInventory"));
+      } else {
+        _tts.speech.speak(str);
       }
     }
 
@@ -3844,7 +3897,8 @@ let content = {
   numberOfVehicles: 7,
   bonusTypes: 3,
   shopItems: {
-    hyperjump: 800,
+    hyperjump: 500,
+    bombs: 250,
     galleryMembership: 75,
     shortfuse: 450
   }
@@ -3963,6 +4017,10 @@ async function setup() {
     _tts.speech.setLanguage(lang);
 
     exports._ = _ = _strings.strings.get;
+
+    _tts.speech.setRate(2); //await strings.check(2)
+
+
     mainMenu();
   });
 }
@@ -4028,7 +4086,7 @@ async function browseGallery() {
     }
 
     if (v[1] == true) {
-      items.push(new audioItem(-1, "blowup/" + v[0]));
+      items.push(new _menuItem.AudioItem(-1, "blowup/" + v[0]));
       unlocked++;
     }
   });
