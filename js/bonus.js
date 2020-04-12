@@ -14,6 +14,7 @@ export class Bonus extends Item {
         let bonuses=[1,4]
         if (getUnlock("hyperjump")) bonuses.push(2)
         if (!this.world.player.forceSpeed) bonuses.push(3)
+        if (!this.world.player.forceSpeed) bonuses.push(6)        
         if (getUnlock("bombs")) bonuses.push(5)
 let        bonusType=utils.randomElement(bonuses)
         switch (bonusType) {
@@ -34,13 +35,18 @@ let        bonusType=utils.randomElement(bonuses)
                         this.world.player.forceSpeed = true
                         this.world.player.forcedSpeed = 6
                     }), (() => {
-                        this.world.player.speedUp(this.oldSpeed)
                         this.world.player.forceSpeed = false
+                        this.world.player.speedUp(this.oldSpeed)
                     }))
                 break;
+                //case 4 is fake bonus so default
                 case 5:
                 data.bombs++;
                 this.world.game.pool.playStatic("bonus/bomb",false)
+                break;
+                case 6: 
+                let speedUp = new Effect(this.world, "speed", 20000, this.coffeeOn, this.coffeeOff)
+                
                 break;
                 default:
                 this.world.game.pool.playStatic("bonus/fake", 0)
@@ -50,5 +56,17 @@ break;
             speech.speak(strings.get("bonus" + bonusType))
         }, 280)
         save()
+    }
+    coffeeOn() {
+        this.oldSpeed = this.world.player.currentSpeed
+        this.world.player.slowDown(10)
+        this.world.player.speedUp(7)
+        this.world.player.forceSpeed = true
+        this.world.player.forcedSpeed = 7
+
+    }
+    coffeeOff() {
+        this.world.player.forceSpeed = false
+    this.world.player.speedUp(this.oldSpeed)
     }
 }

@@ -2638,6 +2638,7 @@ class Bonus extends _item.Item {
     let bonuses = [1, 4];
     if ((0, _main.getUnlock)("hyperjump")) bonuses.push(2);
     if (!this.world.player.forceSpeed) bonuses.push(3);
+    if (!this.world.player.forceSpeed) bonuses.push(6);
     if ((0, _main.getUnlock)("bombs")) bonuses.push(5);
 
     let bonusType = _utilities.utils.randomElement(bonuses);
@@ -2661,14 +2662,19 @@ class Bonus extends _item.Item {
           this.world.player.forceSpeed = true;
           this.world.player.forcedSpeed = 6;
         }, () => {
-          this.world.player.speedUp(this.oldSpeed);
           this.world.player.forceSpeed = false;
+          this.world.player.speedUp(this.oldSpeed);
         });
         break;
+      //case 4 is fake bonus so default
 
       case 5:
         _main.data.bombs++;
         this.world.game.pool.playStatic("bonus/bomb", false);
+        break;
+
+      case 6:
+        let speedUp = new _effect.Effect(this.world, "speed", 20000, this.coffeeOn, this.coffeeOff);
         break;
 
       default:
@@ -2680,6 +2686,19 @@ class Bonus extends _item.Item {
       _tts.speech.speak(_strings.strings.get("bonus" + bonusType));
     }, 280);
     (0, _main.save)();
+  }
+
+  coffeeOn() {
+    this.oldSpeed = this.world.player.currentSpeed;
+    this.world.player.slowDown(10);
+    this.world.player.speedUp(7);
+    this.world.player.forceSpeed = true;
+    this.world.player.forcedSpeed = 7;
+  }
+
+  coffeeOff() {
+    this.world.player.forceSpeed = false;
+    this.world.player.speedUp(this.oldSpeed);
   }
 
 }
@@ -2780,8 +2799,6 @@ class Player extends _gameObject.GameObject {
     if (this.currentSpeed > 7) this.currentSpeed = 7;
     this.speedUpSound.pitch = _utilities.utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2);
     this.speedUpSound.replay();
-
-    _tts.speech.speak(this.currentSpeed);
   }
 
   slowDown(number = 1) {
@@ -2798,8 +2815,6 @@ class Player extends _gameObject.GameObject {
 
     if (number == 1) this.speedDownSound.pitch = _utilities.utils.getProportion(this.currentSpeed, 1, 5, 0.8, 1.2);
     if (number == 1) this.speedDownSound.replay();
-
-    _tts.speech.speak(this.currentSpeed);
   }
 
   hit() {
@@ -2890,8 +2905,6 @@ class Player extends _gameObject.GameObject {
               heart.stop();
 
               if (this.forceSpeed) {
-                _tts.speech.speak("Speeding up to " + this.forcedSpeed);
-
                 this.forceSpeed = false;
                 this.speedUp(this.forcedSpeed);
                 this.forceSpeed = true;
