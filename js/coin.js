@@ -6,9 +6,8 @@ export class Coin extends Item {
         super(world, x, y, "loop/coin")
     }
     step() {
-        this.world.player.coins+=this.world.game.level
+        data.coins+=this.world.game.level
         this.world.game.pool.playStatic("player/getCoin",0)
-        data.coins = this.world.player.coins
         save()
         this.alive = false
     }

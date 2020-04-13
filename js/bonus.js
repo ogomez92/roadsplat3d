@@ -11,12 +11,12 @@ export class Bonus extends Item {
     step() {
         if (!this.alive) return;
         this.alive = false
-        let bonuses=[1,4]
+        let bonuses = [1, 4]
         if (getUnlock("hyperjump")) bonuses.push(2)
         if (!this.world.player.forceSpeed) bonuses.push(3)
-        if (!this.world.player.forceSpeed) bonuses.push(6)        
+        if (!this.world.player.forceSpeed) bonuses.push(6)
         if (getUnlock("bombs")) bonuses.push(5)
-let        bonusType=utils.randomElement(bonuses)
+        let bonusType = utils.randomElement(bonuses)
         switch (bonusType) {
 
             case 1:
@@ -28,30 +28,36 @@ let        bonusType=utils.randomElement(bonuses)
                 data.jumps++
                 break;
             case 3:
-                    let crawl = new Effect(this.world, "crawl", 20000, (() => {
-                        this.oldSpeed = this.world.player.currentSpeed
-                        this.world.player.slowDown(10)
-                        this.world.player.speedUp(6)
-                        this.world.player.forceSpeed = true
-                        this.world.player.forcedSpeed = 6
-                    }), (() => {
-                        this.world.player.forceSpeed = false
-                        this.world.player.slowDown(10)
-                        this.world.player.speedUp(this.oldSpeed)
-                    }))
+                let crawl = new Effect(this.world, "crawl", 20000, (() => {
+                    this.oldSpeed = this.world.player.currentSpeed
+                    this.world.player.slowDown(10)
+                    this.world.player.speedUp(6)
+                    this.world.player.forceSpeed = true
+                    this.world.player.forcedSpeed = 6
+                }), (() => {
+                    this.world.player.forceSpeed = false
+                    this.world.player.slowDown(10)
+                    this.world.player.speedUp(this.oldSpeed)
+                }))
                 break;
-                //case 4 is fake bonus so default
-                case 5:
+            //case 4 is fake bonus so default
+            case 5:
                 data.bombs++;
-                this.world.game.pool.playStatic("bonus/bomb",false)
+                this.world.game.pool.playStatic("bonus/bomb", false)
                 break;
-                case 6: 
-                let speedUp = new Effect(this.world, "speed", 20000, this.coffeeOn(this), this.coffeeOff(this))
-                
+            case 6:
+                let speedUp = new Effect(this.world, "crawl", 20000, (() => {
+                    this.oldSpeed = this.world.player.currentSpeed
+                    this.world.player.slowDown(10)
+                    this.world.player.speedUp(7)
+                    this.world.player.forceSpeed = true
+                    this.world.player.forcedSpeed = 7
+                }), (() => {
+                    this.world.player.forceSpeed = false
+                    this.world.player.slowDown(10)
+                    this.world.player.speedUp(this.oldSpeed)
+                }))
                 break;
-                default:
-                this.world.game.pool.playStatic("bonus/fake", 0)
-break;
         }
         setTimeout(() => {
             speech.speak(strings.get("bonus" + bonusType))
@@ -69,6 +75,6 @@ break;
     coffeeOff(that) {
         that.world.player.forceSpeed = false
         that.world.player.slowDown(10)
-    that.world.player.speedUp(that.oldSpeed)
+        that.world.player.speedUp(that.oldSpeed)
     }
 }

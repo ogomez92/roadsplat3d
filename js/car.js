@@ -1,5 +1,5 @@
 import { GameObject } from "./gameObject";
-import {StationaryObject} from './stationaryObject'
+import { StationaryObject } from './stationaryObject'
 import { utils } from "./utilities";
 import { speech } from "./tts";
 import { save, data, content } from "./main";
@@ -17,25 +17,25 @@ export class Car extends GameObject {
     side,
     z = 1,
     canHorn = "",
-    name, blowUp=""
+    name, blowUp = ""
   ) {
     super(world, sound, x, y, z, width, height, depth);
-    this.blowUpSound=blowUp
+    this.blowUpSound = blowUp
     console.log(this.blowUpSound)
-    this.world.player.on("blowup", (()=> {
-      
-      if (!this.alive || (this.x<-10 && this.x>10)) return;
+    this.world.player.on("blowup", (() => {
+
+      if (!this.alive || (this.x < -10 && this.x > 10)) return;
       this.alive = false;
-      if (this.blowUpSound!="") new StationaryObject(this.world, this.world.player.y+2, "blowup/"+this.blowUpSound, false, this.x)
-            if (this.blowUpSound=="") new StationaryObject(this.world, this.world.player.y+2, "blowup/generic", false, this.x)
-            if (typeof data.bulletGallery==="undefined") {
-              data.bulletGallery={}
-            }
-              if (this.blowUpSound!="") data.bulletGallery[this.blowUpSound]=true
-save()
+      if (this.blowUpSound != "") new StationaryObject(this.world, this.world.player.y + 2, "blowup/" + this.blowUpSound, false, this.x)
+      if (this.blowUpSound == "") new StationaryObject(this.world, this.world.player.y + 2, "blowup/generic", false, this.x)
+      if (typeof data.bulletGallery === "undefined") {
+        data.bulletGallery = {}
+      }
+      if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
+      save()
       if (this.canHorn != "") this.hornSound.pause();
       this.tile.hasSomething = false;
-      this.world.game.score+=(this.speed*1500)
+      this.world.game.score += (this.speed * 1500)
     }));
 
     this.name = name;
@@ -96,8 +96,8 @@ save()
             this.tile.hasSomething = false;
             //let score = Math.round(this.speed * (1000 * this.world.game.level));
             //if (this.world.player.tileType != 2) {
-//              this.world.game.score += score;
-//              speech.speak(score);
+            //              this.world.game.score += score;
+            //              speech.speak(score);
             //}
             if (typeof this.tile.timeout !== "undefined") {
               clearTimeout(this.tile.timeout);
@@ -116,7 +116,8 @@ save()
           ) {
             if (data.jumps >= 1) {
               this.world.game.pool.playStatic("bonus/hyperjump", 0);
-data.jumps--;
+              data.jumps--;
+              save();
               this.world.player.flyTo(this.world.player.nearestObjective,
                 3,
                 "air"

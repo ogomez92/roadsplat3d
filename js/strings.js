@@ -11,10 +11,11 @@ class Strings {
 			// New English
 			noBombs: "You don't have any bombs!",
 			
-			shopbombs: "Bombs, to make cars explode. Also allows unlocking of explosion sounds in the explosions gallery",
+			shopbombs: "Bombs, to make cars explode by pressing the b key. Also allows unlocking of explosion sounds in the explosions gallery",
 			bonus3: "Slowdown",
 			bonus4: "Nothing!",
 			bonus5: "bomb",
+			bonus6: "Coffee rush",
 			coins: "coins",
 			iBombs: "Bombs",
 			mShopBack:"Leave shop (You have %1 coins)",
@@ -65,7 +66,7 @@ class Strings {
 		this.strings[2] = {
 			// New Spanish
 			noBombs: "No tienes bombas!",
-			shopbombs: "Bombas, para hacer explotar los coches con la tecla g. También podrás desbloquear los sonidos de las explosiones",
+			shopbombs: "Bombas, para hacer explotar los coches con la tecla b. También podrás desbloquear los sonidos de las explosiones",
 			selectVoice: "%1 voces disponibles. Usa las flechas y enter para cambiar la voz",
 			mSelectVoice: "Voz de la tts",
 			mLang: "Cambiar Idioma",

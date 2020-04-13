@@ -13,7 +13,7 @@ import { World } from './world'
 import { Road } from './road';
 class Game {
 	constructor() {
-		this.canChangeSpeed=true
+		this.canChangeSpeed = true
 		this.tick = so.create("tick")
 		this.scoreSound = so.create("scoreCounter")
 		this.scoreSound.volume = 0.4
@@ -47,9 +47,11 @@ class Game {
 			debugRoad.generator = false
 			this.world.player.y = 0
 		}
-		if (this.input.isJustPressed(KeyEvent.DOM_VK_G)) {
-			if (data.bombs>=1) {
-			this.world.player.throwBomb()
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_B)) {
+			if (data.bombs >= 1) {
+				this.world.player.throwBomb()
+				data.bombs--;
+				save();
 			}
 			else {
 				speech.speak(strings.get("noBombs"))
@@ -57,16 +59,16 @@ class Game {
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_I)) {
 			let nothing = true
-			let str=""
+			let str = ""
 			if (data.jumps > 0) {
 				nothing = false
-				str+=strings.get("iJumps", [data.jumps])+", "
+				str += strings.get("iJumps", [data.jumps]) + ", "
 			}
 			if (data.bombs > 0) {
 				nothing = false
-				str+=strings.get("iBombs", [data.bombs])+", "
+				str += strings.get("iBombs", [data.bombs]) + ", "
 			}
-			
+
 			if (nothing) {
 				speech.speak(strings.get("emptyInventory"))
 			}
@@ -87,7 +89,8 @@ class Game {
 			speech.speak(this.score + strings.get("points"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_X)) {
-			speech.speak(this.world.player.nearestRoad+", "+this.world.player.furthestRoad)		}
+			speech.speak(this.world.player.nearestRoad + ", " + this.world.player.furthestRoad)
+		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
 			speech.speak(strings.get("level") + this.level)
 		}
@@ -95,30 +98,30 @@ class Game {
 			speech.speak(this.world.player.hp + " " + strings.get("hp"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_1) && this.canChangeSpeed) {
-			this.canChangeSpeed=false; setTimeout(()=> { this.canChangeSpeed=true},800)
+			this.canChangeSpeed = false; setTimeout(() => { this.canChangeSpeed = true }, 800)
 			this.world.player.slowDown(10)
 			this.world.player.speedUp(1)
 		}
-		if (this.input.isJustPressed(KeyEvent.DOM_VK_2)&& this.canChangeSpeed) {
-			this.canChangeSpeed=false; setTimeout(()=> { this.canChangeSpeed=true},800)
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_2) && this.canChangeSpeed) {
+			this.canChangeSpeed = false; setTimeout(() => { this.canChangeSpeed = true }, 800)
 
 			this.world.player.slowDown(10)
 			this.world.player.speedUp(2)
 		}
-		if (this.input.isJustPressed(KeyEvent.DOM_VK_3)&& this.canChangeSpeed) {
-			this.canChangeSpeed=false; setTimeout(()=> { this.canChangeSpeed=true},800)
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_3) && this.canChangeSpeed) {
+			this.canChangeSpeed = false; setTimeout(() => { this.canChangeSpeed = true }, 800)
 
 			this.world.player.slowDown(10)
 			this.world.player.speedUp(3)
 		}
-		if (this.input.isJustPressed(KeyEvent.DOM_VK_4)&& this.canChangeSpeed) {
-			this.canChangeSpeed=false; setTimeout(()=> { this.canChangeSpeed=true},800)
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_4) && this.canChangeSpeed) {
+			this.canChangeSpeed = false; setTimeout(() => { this.canChangeSpeed = true }, 800)
 
 			this.world.player.slowDown(10)
 			this.world.player.speedUp(4)
 		}
-		if (this.input.isJustPressed(KeyEvent.DOM_VK_5)&& this.canChangeSpeed) {
-			this.canChangeSpeed=false; setTimeout(()=> { this.canChangeSpeed=true},800)
+		if (this.input.isJustPressed(KeyEvent.DOM_VK_5) && this.canChangeSpeed) {
+			this.canChangeSpeed = false; setTimeout(() => { this.canChangeSpeed = true }, 800)
 
 			this.world.player.slowDown(10)
 			this.world.player.speedUp(5)
