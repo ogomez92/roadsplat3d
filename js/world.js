@@ -14,6 +14,7 @@ import { speech } from './tts';
 export class World {
 	constructor(game, size = 100) {
 		this.size = size;
+		this.greenLight=false
 		
 		this.game = game
 		this.dynamicObjects = []
@@ -70,7 +71,8 @@ export class World {
 		
 		for (let i = 0; i < this.dynamicObjects.length; i++) {
 			if (!this.dynamicObjects[i].alive) {
-				this.dynamicObjects[i].sound.pause()
+				this.dynamicObjects[i].sound.src=null
+				if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.src=null
 				this.dynamicObjects[i].removeAllListeners()
 				this.dynamicObjects.splice(i, 1)
 				i--;

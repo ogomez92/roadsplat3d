@@ -31,6 +31,5 @@ export class Tile {
 
     }
     destroy() {
-this.removeAllListeners()
     }
 }

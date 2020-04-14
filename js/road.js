@@ -15,7 +15,7 @@ export class Road extends Tile {
         }, utils.randomInt(0, this.world.game.spawnTime - (this.world.game.level * 100)))
     }
     generateCar(force) {
-        if (!this.generator || !this.alive) return;
+        if (!this.generator || !this.alive || this.world.greenLight) return;
         if (typeof this.timeout !== "undefined") clearTimeout(this.timeout)
         this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))

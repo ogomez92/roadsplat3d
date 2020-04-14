@@ -2183,7 +2183,7 @@ class GameObject extends EventEmitter {
     this.removeAllListeners();
 
     if (this.sound != "") {
-      this.sound.pause();
+      this.sound.src = null;
     }
   }
 
@@ -2308,9 +2308,7 @@ class Tile {
 
   update() {}
 
-  destroy() {
-    this.removeAllListeners();
-  }
+  destroy() {}
 
 }
 
@@ -2442,7 +2440,7 @@ class Car extends _gameObject.GameObject {
 
       if (this.blowUpSound != "") _main.data.bulletGallery[this.blowUpSound] = true;
       (0, _main.save)();
-      if (this.canHorn != "") this.hornSound.pause();
+      if (this.canHorn != "") this.hornSound.src = null;
       this.tile.hasSomething = false;
       this.world.game.score += this.speed * 550;
     });
@@ -2705,7 +2703,7 @@ class Road extends _tile.Tile {
   }
 
   generateCar(force) {
-    if (!this.generator || !this.alive) return;
+    if (!this.generator || !this.alive || this.world.greenLight) return;
     if (typeof this.timeout !== "undefined") clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (!_main.debug) this.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
@@ -2808,7 +2806,7 @@ class Bonus extends _item.Item {
     switch (bonusType) {
       case 1:
         this.world.game.pool.playStatic("bonus/health", 0);
-        this.world.player.hp += 25;
+        this.world.player.hp += 100;
         break;
 
       case 2:
@@ -2924,7 +2922,7 @@ class Player extends _gameObject.GameObject {
     this.fallTime = 55;
     this.world.scene.setListenerPosition(this.x, this.y, this.z);
     this.unableToMove = false;
-    this.hp = 100;
+    this.hp = 250;
     this.speedUpSound = _soundObject.so.create("ui/speedUp");
     this.nearestStreet = 0;
     this.nearestRoad = 0;
@@ -3218,6 +3216,7 @@ const {
 class World {
   constructor(game, size = 100) {
     this.size = size;
+    this.greenLight = false;
     this.game = game;
     this.dynamicObjects = [];
     this.tiles = [];
@@ -3289,7 +3288,8 @@ class World {
   update() {
     for (let i = 0; i < this.dynamicObjects.length; i++) {
       if (!this.dynamicObjects[i].alive) {
-        this.dynamicObjects[i].sound.pause();
+        this.dynamicObjects[i].sound.src = null;
+        if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.src = null;
         this.dynamicObjects[i].removeAllListeners();
         this.dynamicObjects.splice(i, 1);
         i--;

@@ -22,7 +22,7 @@ export class Player extends GameObject {
         this.fallTime = 55
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
         this.unableToMove = false
-        this.hp = 100
+        this.hp = 250
         this.speedUpSound = so.create("ui/speedUp")
         this.nearestStreet = 0
         this.nearestRoad = 0

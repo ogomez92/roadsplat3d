@@ -33,7 +33,7 @@ export class Car extends GameObject {
       }
       if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
       save()
-      if (this.canHorn != "") this.hornSound.pause();
+      if (this.canHorn != "") this.hornSound.src=null
       this.tile.hasSomething = false;
       this.world.game.score += (this.speed * 550)
     }));
@@ -64,7 +64,7 @@ export class Car extends GameObject {
     if (this.side == 1) this.x -= this.speed;
     if (this.x >= this.world.size / 2 || this.x <= (this.world.size / 2) * -1) {
       this.alive = false;
-      if (this.canHorn != "") this.hornSound.pause();
+      if (this.canHorn != "") this.hornSound.pause()
       this.tile.hasSomething = false;
     } else {
       //ok, player spans the entire road. So the car sound should equally follow the player to make him feel trapped.
@@ -76,7 +76,7 @@ export class Car extends GameObject {
         this.passed ||
         (this.canHorn != "" && this.y != this.world.player.y)
       ) {
-        if (this.canHorn != "") this.hornSound.pause();
+        if (this.canHorn != "") this.hornSound.pause()
       }
       if (
         !this.passed &&

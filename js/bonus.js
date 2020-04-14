@@ -21,7 +21,7 @@ export class Bonus extends Item {
 
             case 1:
                 this.world.game.pool.playStatic("bonus/health", 0)
-                this.world.player.hp += 25
+                this.world.player.hp += 100
                 break;
             case 2:
                 this.world.game.pool.playStatic("bonus/hyperjump", 0)
