@@ -183,6 +183,27 @@ export function setUnlock(v, value=true) {
 	return value;
 
 }
+export function increase(v,value=1) {
+	if (typeof data[v]==="undefined") {
+		data[v]=value
+	} else {
+		data[v]+=value;
+	}
+		save()
+	return value;
+	
+}
+export function decrease(v,value=1) {
+	if (typeof data[v]==="undefined") {
+		data[v]=0-value
+	} else {
+		data[v]-=value;
+	}
+		save()
+	return value;
+	
+}
+
 export function setData(v, value) {
 	if (typeof data[v]==="undefined") data[v]=value
 		data[v] = value

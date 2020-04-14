@@ -34,7 +34,7 @@ export class Player extends GameObject {
         this.speed = 650
         //speed 0 is unused, speeds 1 to 5 are manually attainable, speed 6 is a crawl and speed 7 is super speed.
         this.speeds = [
-            0, 650, 530, 420, 350, 235, 890, 120
+            0, 650, 530, 420, 350, 235, 675, 120
         ]
         this.speedModifier = 0
         this.currentSpeed = 0
@@ -93,7 +93,7 @@ export class Player extends GameObject {
         this.world.game.pool.playStatic("player/impact/" + utils.randomInt(1, 4), 0)
 
     }
-    flyTo(y, side, snd) {
+    flyTo(y, side, snd,landsound="player/land") {
         if (this.unableToMove) return;
         this.tileType = -1
         this.unableToMove = true
@@ -102,7 +102,7 @@ export class Player extends GameObject {
         let sound = so.create(snd)
         sound.loop = true
         sound.volume = 0.3
-        let land = so.create("player/land")
+        let land = so.create(landsound)
         let fall = so.create("player/fall" + utils.randomInt(1, 4))
         let stand = so.create("player/stand")
         sound.pitch = 0.7
@@ -156,9 +156,19 @@ export class Player extends GameObject {
                             heart.stop();
                             if (this.forceSpeed) {
                                 this.forceSpeed = false
-                                this.speedUp(this.forcedSpeed)
-                                this.forceSpeed = true
+                                this.slowDown(10)
+                                this.forceSpeed=true
+                            } else {
+                                this.slowDown(10)
                             }
+                            
+                            if (this.forceSpeed) {
+                                this.forceSpeed = false
+                                this.speedUp(this.forcedSpeed)
+                                this.forceSpeed=true
+                            }
+                        
+
                         }
                         if (!jump) {
                             this.x = 0
@@ -203,15 +213,18 @@ export class Player extends GameObject {
     }
     scoreDeduct() {
         this.world.game.tick.replay()
-        this.world.game.score -= (100 * this.world.game.level)
-        if (this.world.game.score < 0) this.world.game.score = 0
+        this.world.game.score -= (25 * this.world.game.level)
+        if (this.world.game.score < this.world.game.bankedScore) {
+            this.world.game.score = this.world.game.bankedScore
+            this.world.game.tick.stop()
+        }
         this.levelCap = this.world.game.level
         if (this.levelCap > 15) this.levelCap = 15
     }
     throwBomb() {
         try {
-    new StationaryObject(this.world,this.y+0.5, "bomb_drop")
-    let fusetime=1000     
+//    new StationaryObject(this.world,this.y+0.5, "bomb_drop")
+    let fusetime=975
     if (getUnlock("shortfuse")) fusetime=fusetime/3
     let sound=so.create("bomb_start")
     sound.play();

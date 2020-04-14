@@ -10,12 +10,18 @@ export class Objective extends Tile {
     }
     step() {
         super.step()
+        if (this.world.game.canLevel) {
+            this.world.player.y=this.world.player.nearestStreet;
+            this.world.scene.setListenerPosition(this.world.player.x, this.world.player.y, this.world.player.z)
+            this.world.game.pool.playStatic("level_forcefield",false)
+            return;
+        }
         this.world.game.pool.playStatic("steps/objective", 0)
         this.world.player.scoreTimeout = setInterval(() => {
             this.world.player.scoreDeduct()
-        }, 1300 - (this.world.player.levelCap * 75))
+        }, 1100 - (this.world.player.levelCap * 50))
         this.world.generateTiles()
-        this.world.game.score+=(100*this.world.game.level)
+        this.world.game.score+=(250)
         this.world.player.slowDown(10)
     }
 }

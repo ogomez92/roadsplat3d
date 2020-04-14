@@ -1,9 +1,10 @@
 import { GameObject } from "./gameObject";
+import {strings} from './strings'
 import { StationaryObject } from './stationaryObject'
 import { utils } from "./utilities";
 import { speech } from "./tts";
 import { save, data, content } from "./main";
-export class Car extends GameObject {
+export class LevelPortal extends GameObject {
   constructor(
     world,
     tile,
@@ -33,9 +34,12 @@ export class Car extends GameObject {
       }
       if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
       save()
+      this.world.player.hp+=1000
+      this.world.game.score=this.world.game.bankedScore
+      this.world.game.canLevel=false
+      this.world.game.canLevelNotify=false
       if (this.canHorn != "") this.hornSound.pause();
       this.tile.hasSomething = false;
-      this.world.game.score += (this.speed * 550)
     }));
 
     this.name = name;
@@ -94,11 +98,6 @@ export class Car extends GameObject {
           ) {
             this.passed = true;
             this.tile.hasSomething = false;
-            //let score = Math.round(this.speed * (1000 * this.world.game.level));
-            //if (this.world.player.tileType != 2) {
-            //              this.world.game.score += score;
-            //              speech.speak(score);
-            //}
             if (typeof this.tile.timeout !== "undefined") {
               clearTimeout(this.tile.timeout);
             }
@@ -114,29 +113,25 @@ export class Car extends GameObject {
             Math.round(this.x) == this.world.player.x &&
             this.world.player.tileType == 1
           ) {
-            if (data.jumps >= 1) {
-              this.world.game.pool.playStatic("bonus/hyperjump", 0);
-              data.jumps--;
-              save();
-              this.world.player.flyTo(this.world.player.nearestObjective,
-                3,
-                "air"
-              );
-            } else {
-              let healthLoss = Math.round(this.speed * 45);
-              this.world.player.hp -= healthLoss;
-              this.world.player.hit();
-              this.world.player.flyTo(
-                utils.randomInt(
-                  this.world.player.nearestStreet,
-                  this.world.player.furthestStreet
-                ),
-                this.side,
-                "air"
-              );
-            }
             this.passed = true;
             this.tile.hasSomething = false;
+
+            //level here
+            this.world.game.canLevel=false
+            this.world.game.bankedScore=this.world.game.level*1500
+this.world.game.level++;
+setTimeout(()=> {
+  speech.speak(strings.get("level")+" "+this.world.game.level)
+},400)
+            this.world.player.flyTo(this.world.player.nearestObjective,
+              3,
+              "level_air", "level_land"
+            );
+                        this.world.game.canLevelNotify=false
+
+this.world.game.score+=(this.world.game.level*100)
+this.world.size-=Math.round((this.world.game.level/2));
+            //level code end
           }
           if (typeof this.tile.timeout !== "undefined") {
             clearTimeout(this.tile.timeout);

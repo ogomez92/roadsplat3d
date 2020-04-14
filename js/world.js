@@ -14,6 +14,7 @@ import { speech } from './tts';
 export class World {
 	constructor(game, size = 100) {
 		this.size = size;
+		
 		this.game = game
 		this.dynamicObjects = []
 		this.tiles = []
@@ -66,14 +67,27 @@ export class World {
 		}
 	}
 	update() {
+		
 		for (let i = 0; i < this.dynamicObjects.length; i++) {
 			if (!this.dynamicObjects[i].alive) {
 				this.dynamicObjects[i].sound.pause()
+				this.dynamicObjects[i].removeAllListeners()
 				this.dynamicObjects.splice(i, 1)
 				i--;
 			} else {
 				this.dynamicObjects[i].update()
 			}
 		}
+		//leveling
+		this.levelScore=((this.game.level)*1500)
+		if (this.game.score>=this.levelScore) {
+			if (!this.game.canLevelNotify) {
+				this.game.pool.playStatic("level_notify",false)
+				this.game.canLevelNotify=true
+				
+			}
+			this.game.canLevel=true
+		}
+		
 	}
 }

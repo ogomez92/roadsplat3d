@@ -7,3 +7,7 @@ fix spawnTime shouldn't be 0 deal
 road and street proportion beeps using nearest and furthest street and road
 code a scoring system
 bonus: drunken stumble, and for each beer, for the duration of the entire game you have a random percentage to trip and fall down. Set a maximum for this. Just set speed to 0 and play a sound.
+
+levelling system
+level portal moves around and has an 85% chance to appear or something
+until it does and if they player tries to step into an objective without being hit by a level portal first, they will be zapped back a random number of squares like 3 to 5

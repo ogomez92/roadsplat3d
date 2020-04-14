@@ -27,6 +27,7 @@ export class GameObject extends EventEmitter {
 
     }
     destroy() {
+        this.removeAllListeners()
         if (this.sound != "") {
         this.sound.pause()
         }
