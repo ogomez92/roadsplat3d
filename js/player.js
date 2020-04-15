@@ -45,7 +45,7 @@ export class Player extends GameObject {
             this.move()
         }, this.speeds[this.currentSpeed] - this.speedModifier)
         if (this.currentSpeed == 0) this.currentSpeed = 1;
-        this.xLimit = Math.ceil(this.world.size / 8)
+        this.xLimit = Math.ceil(this.world.size / 5)
         this.y += 1
 
         this.emit("step" + this.y)

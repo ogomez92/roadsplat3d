@@ -2228,6 +2228,7 @@ class Item extends _gameObject.GameObject {
   destroy() {
     this.alive = false;
     this.removeAllListeners();
+    this.sound.src = null;
   }
 
   update() {}
@@ -2943,7 +2944,7 @@ class Player extends _gameObject.GameObject {
       this.move();
     }, this.speeds[this.currentSpeed] - this.speedModifier);
     if (this.currentSpeed == 0) this.currentSpeed = 1;
-    this.xLimit = Math.ceil(this.world.size / 8);
+    this.xLimit = Math.ceil(this.world.size / 5);
     this.y += 1;
     this.emit("step" + this.y);
 
@@ -3261,9 +3262,11 @@ class World {
 
     this.player.nearestObjective = lastRoad + 1;
     this.player.furthestRoad = lastRoad;
-    this.tiles.push(new _objective.Objective(this, lastRoad + 1)); //item spawning, one item chance per level, doesn't always spawn
+    this.tiles.push(new _objective.Objective(this, lastRoad + 1)); //item spawning
 
-    for (let i = 1; i <= this.game.level; i++) {
+    let chance = _utilities.utils.randomInt(1, 1);
+
+    for (let i = 1; i <= chance; i++) {
       let x = _utilities.utils.randomInt(0 - this.player.xLimit, 0 + this.player.xLimit);
 
       let random = _utilities.utils.randomInt(1, 2);

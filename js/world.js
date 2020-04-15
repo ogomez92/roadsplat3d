@@ -54,8 +54,9 @@ export class World {
 		this.player.nearestObjective = lastRoad + 1
 		this.player.furthestRoad = lastRoad;
 		this.tiles.push(new Objective(this, lastRoad + 1))
-		//item spawning, one item chance per level, doesn't always spawn
-		for (let i = 1; i <= this.game.level; i++) {
+		//item spawning
+		let chance=utils.randomInt(1,1)
+		for (let i = 1; i <= chance; i++) {
 			let x = utils.randomInt(0 - this.player.xLimit, 0 + this.player.xLimit)
 			let random = utils.randomInt(1, 2)
 			switch (random) {
