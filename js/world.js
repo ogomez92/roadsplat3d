@@ -5,7 +5,7 @@ import { Objective } from './objective'
 import { Road } from './road'
 import { Bonus } from './bonus'
 import { utils } from './utilities'
-import {Car} from './car'
+import { Car } from './car'
 import 'resonance-audio';
 const { ResonanceAudio } = require('resonance-audio')
 import { Player } from './player'
@@ -14,8 +14,8 @@ import { speech } from './tts';
 export class World {
 	constructor(game, size = 100) {
 		this.size = size;
-		this.greenLight=false
-		
+		this.greenLight = false
+
 		this.game = game
 		this.dynamicObjects = []
 		this.tiles = []
@@ -25,10 +25,13 @@ export class World {
 		this.convolution.connect(this.scene.output)
 		this.scene.output.connect(this.context.destination)
 		this.player = new Player(this)
+		this.player.setMaxListeners(1000)
 	}
 	generateTiles() {
+		this.player.removeAllListeners("step")
+		this.player.removeAllListeners("blowup")
 		for (let i = 0; i < this.tiles.length; i++) {
-			this.tiles[i].alive=false
+			this.tiles[i].alive = false
 			this.tiles[i].destroy();
 		}
 		this.tiles = []
@@ -40,12 +43,12 @@ export class World {
 			this.tiles.push(new Street(this, i))
 			lastStreet = i;
 		}
-		let tiles = Math.round(this.game.roadsPerLevel + (this.game.level/2))
+		let tiles = Math.round(this.game.roadsPerLevel + (this.game.level / 2))
 		let lastRoad = 0;
 		this.player.nearestRoad = lastStreet + 1
 		this.player.furthestStreet = lastStreet;
 		//let generator = (this.player.nearestRoad + tiles) - tiles/2
-		let generator=this.player.nearestRoad
+		let generator = this.player.nearestRoad
 		for (let i = lastStreet + 1; i <= lastStreet + tiles; i++) {
 			if (generator == i) this.tiles.push(new Road(this, i, true))
 			if (generator != i) this.tiles.push(new Road(this, i, false))
@@ -55,7 +58,7 @@ export class World {
 		this.player.furthestRoad = lastRoad;
 		this.tiles.push(new Objective(this, lastRoad + 1))
 		//item spawning
-		let chance=utils.randomInt(1,1)
+		let chance = utils.randomInt(1, 1)
 		for (let i = 1; i <= chance; i++) {
 			let x = utils.randomInt(0 - this.player.xLimit, 0 + this.player.xLimit)
 			let random = utils.randomInt(1, 2)
@@ -69,12 +72,14 @@ export class World {
 		}
 	}
 	update() {
-		
+
 		for (let i = 0; i < this.dynamicObjects.length; i++) {
 			if (!this.dynamicObjects[i].alive) {
-				this.dynamicObjects[i].sound.src=null
-				if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.src=null
-				this.dynamicObjects[i].removeAllListeners()
+				this.dynamicObjects[i].sound.removeAttribute("src")
+				this.dynamicObjects[i].sound.load()
+
+				if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.removeAttribute("src")
+				if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.load()
 				this.dynamicObjects.splice(i, 1)
 				i--;
 			} else {
@@ -82,15 +87,15 @@ export class World {
 			}
 		}
 		//leveling
-		this.levelScore=((this.game.level)*1500)
-		if (this.game.score>=this.levelScore) {
+		this.levelScore = ((this.game.level) * 1500)
+		if (this.game.score >= this.levelScore) {
 			if (!this.game.canLevelNotify) {
-				this.game.pool.playStatic("level_notify",false)
-				this.game.canLevelNotify=true
-				
+				this.game.pool.playStatic("level_notify", false)
+				this.game.canLevelNotify = true
+
 			}
-			this.game.canLevel=true
+			this.game.canLevel = true
 		}
-		
+
 	}
 }

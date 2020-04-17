@@ -1,5 +1,5 @@
 import { GameObject } from './gameObject'
-import {utils} from './utilities'
+import { utils } from './utilities'
 import { Tile } from './tile'
 export class Street extends Tile {
     constructor(world, pos) {

@@ -20,11 +20,6 @@ export class Item extends GameObject {
     }
     step() {
     }
-    destroy() {
-        this.alive = false;
-        this.removeAllListeners()
-this.sound.src=null
-    }
     update() {
 
     }

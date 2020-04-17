@@ -21,11 +21,11 @@ export class Car extends GameObject {
   ) {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp
-    console.log(this.blowUpSound)
     this.world.player.on("blowup", (() => {
 
       if (!this.alive || (this.x < -7 || this.x > 7)) return;
       this.alive = false;
+
       if (this.blowUpSound != "") new StationaryObject(this.world, this.world.player.y + 2, "blowup/" + this.blowUpSound, false, this.x)
       if (this.blowUpSound == "") new StationaryObject(this.world, this.world.player.y + 2, "blowup/generic", false, this.x)
       if (typeof data.bulletGallery === "undefined") {
@@ -33,7 +33,9 @@ export class Car extends GameObject {
       }
       if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
       save()
-      if (this.canHorn != "") this.hornSound.src=null
+      if (this.canHorn != "") { this.hornSound.removeAttribute("src")
+        this.hornSound.load()
+      }
       this.tile.hasSomething = false;
       this.world.game.score += (this.speed * 550)
     }));
@@ -64,6 +66,7 @@ export class Car extends GameObject {
     if (this.side == 1) this.x -= this.speed;
     if (this.x >= this.world.size / 2 || this.x <= (this.world.size / 2) * -1) {
       this.alive = false;
+
       if (this.canHorn != "") this.hornSound.pause()
       this.tile.hasSomething = false;
     } else {

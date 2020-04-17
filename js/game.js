@@ -1,6 +1,6 @@
 import { speech } from './tts';
 import { strings } from './strings'
-import {save, increase, decrease, debug, _, content, data } from './main'
+import { save, increase, decrease, debug, _, content, data } from './main'
 import { SoundHandler } from './soundHandler'
 import Timer from './timer';
 import $ from 'jquery';
@@ -14,9 +14,9 @@ import { Road } from './road';
 class Game {
 	constructor() {
 		this.canChangeSpeed = true
-		this.bankedScore=0
-		this.canLevel=false
-		this.canLevelNotify=false
+		this.bankedScore = 0
+		this.canLevel = false
+		this.canLevelNotify = false
 
 		this.tick = so.create("tick")
 		this.scoreSound = so.create("scoreCounter")
@@ -42,11 +42,11 @@ class Game {
 	}
 	update(dt) {
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_0)) {
-			if (data.stoppers>=1) {
-				this.world.game.pool.playStatic("use_stopper",false)
+			if (data.stoppers >= 1) {
+				this.world.game.pool.playStatic("use_stopper", false)
 				data.stoppers--;
 				save()
-			this.world.player.slowDown(10)
+				this.world.player.slowDown(10)
 			}
 			else {
 				speech.speak(strings.get("noStoppers"))
@@ -84,7 +84,7 @@ class Game {
 				nothing = false
 				str += strings.get("iStoppers", [data.stoppers]) + ", "
 			}
-			
+
 
 			if (nothing) {
 				speech.speak(strings.get("emptyInventory"))
@@ -103,13 +103,13 @@ class Game {
 			speech.speak(data.coins + strings.get("coins"))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_S)) {
-			speech.speak(this.score + strings.get("points"+", "+strings.get("bankedScore")+this.world.game.bankedScore))
+			speech.speak(this.score + strings.get("points" + ", " + strings.get("bankedScore") + this.world.game.bankedScore))
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_X)) {
 			speech.speak(this.world.player.nearestRoad + ", " + this.world.player.furthestRoad)
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
-			speech.speak(strings.get("level") + this.level+" "+strings.get("ws")+this.world.size)
+			speech.speak(strings.get("level") + this.level + " " + strings.get("ws") + this.world.size)
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_H)) {
 			speech.speak(this.world.player.hp + " " + strings.get("hp"))

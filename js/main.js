@@ -1,19 +1,19 @@
 export const debug = false
-import {ScrollingText} from './scrollingText'
-import {utils} from './utilities'
-import {SoundHandler} from './soundHandler'
+import { ScrollingText } from './scrollingText'
+import { utils } from './utilities'
+import { SoundHandler } from './soundHandler'
 import { strings } from './strings'
 import { so } from './soundObject'
 export let _
 export let content = {
 	numberOfVehicles: 7,
 	bonusTypes: 3,
-	shopItems:{
-	hyperjump: 500,
-	bombs: 250,
-	galleryMembership: 75,
-shortfuse: 450,
-	
+	shopItems: {
+		hyperjump: 500,
+		bombs: 250,
+		galleryMembership: 75,
+		shortfuse: 450,
+
 	}
 }
 export var gameID = "road";
@@ -65,25 +65,25 @@ async function setup() {
 				hornable = horning;
 			}
 			let z = Number(elements[3])
-			let blowup=0
-			let blow="generic";
+			let blowup = 0
+			let blow = "generic";
 
-			if (typeof elements[4]!=="undefined") {
-				blowup=Number(elements[4])
+			if (typeof elements[4] !== "undefined") {
+				blowup = Number(elements[4])
 				console.log(blowup)
-			switch(blowup) {
-				case 0: blow="generic"; break;
-				case 1: blow=name; break;
-				default: blow="generic"; break;
+				switch (blowup) {
+					case 0: blow = "generic"; break;
+					case 1: blow = name; break;
+					default: blow = "generic"; break;
+				}
+				if (typeof data.bulletGallery === "undefined") {
+					data.bulletGallery = {}
+				}
+				if (typeof data.bulletGallery[blow] === "undefined") {
+					data.bulletGallery[blow] = false
+				}
 			}
-			if (typeof data.bulletGallery==="undefined") {
-				data.bulletGallery={}
-			}
-			if (typeof data.bulletGallery[blow]==="undefined") {
-				data.bulletGallery[blow]=false
-			}
-			}
-			parsedCars.push({ sound: "vehicles/" + name, speed: speed, hornable: hornable, name: name, z: z, blowup: blow})
+			parsedCars.push({ sound: "vehicles/" + name, speed: speed, hornable: hornable, name: name, z: z, blowup: blow })
 		});
 		content.numberOfVehicles = parsedCars.length - 1
 	} catch (e) {
@@ -105,18 +105,18 @@ async function setup() {
 		speech.setRate(3)
 		//await strings.check(2)
 		mainMenu();
-})
+	})
 }
 export async function mainMenu() {
 	let music = so.create("music/menu")
 	music.volume = 0.6
-	music.loop=true;
+	music.loop = true;
 	music.play()
-	speech.ducker=music
+	speech.ducker = music
 	let items = []
 	items.push(new MenuItem(0, strings.get("mStart")))
 	items.push(new MenuItem(1, strings.get("mShop", [data.coins])))
-	items.push(new MenuItem(2, strings.get("mBullet")))	
+	items.push(new MenuItem(2, strings.get("mBullet")))
 	let menu = new Menu(strings.get("mainMenu"), items)
 	let selection = await menu.runSync()
 	await music.fade(0)
@@ -125,8 +125,8 @@ export async function mainMenu() {
 			let game = new Game()
 			game.start()
 			break;
-			case 1: await shop(); break;
-			case 2:
+		case 1: await shop(); break;
+		case 2:
 			await browseGallery()
 			break;
 		default: break;
@@ -138,119 +138,119 @@ export function save() {
 }
 async function browseGallery() {
 	if (!getUnlock("galleryMembership")) {
-		let sound=so.create("gallery_locked")
-await sound.playSync()
-await new ScrollingText(strings.get("galleryLocked"))
-mainMenu();
-return;
+		let sound = so.create("gallery_locked")
+		await sound.playSync()
+		await new ScrollingText(strings.get("galleryLocked"))
+		mainMenu();
+		return;
 	}
-	let locked=0,unlocked=0;
-	let pool=new SoundHandler()
-	let items=[]
-	items.push(new MenuItem(-1,strings.get("mBack")))
-let arr=Object.entries(data.bulletGallery)
-arr.forEach((v)=> {
-	if (v[1]==false) {
-		items.push(new AudioItem(-1, "blowup/locked"))
-		locked++;
-	}
-	if (v[1]==true) {
-items.push(new AudioItem(-1,"blowup/"+v[0]))
-		unlocked++;
-	}
+	let locked = 0, unlocked = 0;
+	let pool = new SoundHandler()
+	let items = []
+	items.push(new MenuItem(-1, strings.get("mBack")))
+	let arr = Object.entries(data.bulletGallery)
+	arr.forEach((v) => {
+		if (v[1] == false) {
+			items.push(new AudioItem(-1, "blowup/locked"))
+			locked++;
+		}
+		if (v[1] == true) {
+			items.push(new AudioItem(-1, "blowup/" + v[0]))
+			unlocked++;
+		}
 	})
-	
-	speech.speak(strings.get("bulletIntro",[unlocked,(locked+unlocked)]))
-	let menu=new Menu(" ",items)
-	menu.silent=true
-	menu.run((s)=> {
-			menu.destroy();
-			mainMenu()
-			return;
+
+	speech.speak(strings.get("bulletIntro", [unlocked, (locked + unlocked)]))
+	let menu = new Menu(" ", items)
+	menu.silent = true
+	menu.run((s) => {
+		menu.destroy();
+		mainMenu()
+		return;
 	})
 }
 export function getUnlock(v) {
-	if (typeof data.unlocks==="undefined") data.unlocks={}
-	if (typeof data.unlocks[v]==="undefined") data.unlocks[v]=false;
+	if (typeof data.unlocks === "undefined") data.unlocks = {}
+	if (typeof data.unlocks[v] === "undefined") data.unlocks[v] = false;
 	return data.unlocks[v]
 }
-export function setUnlock(v, value=true) {
+export function setUnlock(v, value = true) {
 	console.log(v)
-	if (typeof data.unlocks==="undefined") data.unlocks={}
-	if (typeof data.unlocks[v]==="undefined") data.unlocks[v]=false;
+	if (typeof data.unlocks === "undefined") data.unlocks = {}
+	if (typeof data.unlocks[v] === "undefined") data.unlocks[v] = false;
 	data.unlocks[v] = value
 	save()
 	return value;
 
 }
-export function increase(v,value=1) {
-	if (typeof data[v]==="undefined") {
-		data[v]=value
+export function increase(v, value = 1) {
+	if (typeof data[v] === "undefined") {
+		data[v] = value
 	} else {
-		data[v]+=value;
+		data[v] += value;
 	}
-		save()
+	save()
 	return value;
-	
+
 }
-export function decrease(v,value=1) {
-	if (typeof data[v]==="undefined") {
-		data[v]=0-value
+export function decrease(v, value = 1) {
+	if (typeof data[v] === "undefined") {
+		data[v] = 0 - value
 	} else {
-		data[v]-=value;
+		data[v] -= value;
 	}
-		save()
+	save()
 	return value;
-	
+
 }
 
 export function setData(v, value) {
-	if (typeof data[v]==="undefined") data[v]=value
-		data[v] = value
-		save()
+	if (typeof data[v] === "undefined") data[v] = value
+	data[v] = value
+	save()
 	return value;
-	
+
 }
 export function getData(v) {
-	if (typeof data[v]==="undefined") data[v]=0
-return data[v] 
+	if (typeof data[v] === "undefined") data[v] = 0
+	return data[v]
 }
 async function shop() {
-	let shopAmbience=so.create("shop_ambience")
-	shopAmbience.volume=0.6
-	shopAmbience.loop=true
+	let shopAmbience = so.create("shop_ambience")
+	shopAmbience.volume = 0.6
+	shopAmbience.loop = true
 	shopAmbience.play()
 	let menu;
 	let result;
-	let buy=so.create("purchase_item")
-	let nobuy=so.create("no_cash")
-	data.coins=100000
+	let buy = so.create("purchase_item")
+	let nobuy = so.create("no_cash")
+	data.coins = 100000
 	speech.speak(strings.get("mShopIntro"))
-	while (result!=0) {
+	while (result != 0) {
 		await utils.sleep(5)
-		let items=[]
-		items.push(new MenuItem(0,strings.get("mShopBack",[data.coins])))
+		let items = []
+		items.push(new MenuItem(0, strings.get("mShopBack", [data.coins])))
 		for (var k in content.shopItems) {
 			if (!getUnlock(k)) {
-				items.push(new MenuItem(k,strings.get("shop"+k)+": "+content.shopItems[k]+" "+strings.get("coins")))
+				items.push(new MenuItem(k, strings.get("shop" + k) + ": " + content.shopItems[k] + " " + strings.get("coins")))
+			}
 		}
+		menu = new Menu(" ", items)
+		menu.silent = true
+		result = await menu.runSync()
+		if (result != 0) {
+			if (data.coins >= content.shopItems[result]) {
+				data.coins -= content.shopItems[result]
+				setUnlock(result)
+				buy.replay();
+			} else {
+				nobuy.replay();
+			}
 		}
-menu=new Menu(" ",items)
-menu.silent=true
-		result=await menu.runSync()
-		if (result!=0) {
-		if (data.coins>=content.shopItems[result]) {
-			data.coins-=content.shopItems[result]
-			setUnlock(result)
-			buy.replay();
-		} else {
-			nobuy.replay();
-		}
-}
 	}
 
-menu.destroy()
-shopAmbience.destroy()
-await mainMenu()
-return;
+	menu.destroy()
+	shopAmbience.destroy()
+	await mainMenu()
+	return;
 }

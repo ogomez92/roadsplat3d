@@ -1,10 +1,10 @@
 import { GameObject } from './gameObject'
-import {StationaryObject} from './stationaryObject'
+import { StationaryObject } from './stationaryObject'
 import { KeyEvent } from './keycodes.js'
 import { so } from './soundObject'
 import { speech } from './tts';
 import { utils } from './utilities'
-import {getUnlock,  data, debug } from './main'
+import { getUnlock, data, debug } from './main'
 const EventEmitter = require('events');
 export class Player extends GameObject {
     constructor(world) {
@@ -52,12 +52,12 @@ export class Player extends GameObject {
         if (this.world.game.input.isDown(KeyEvent.DOM_VK_RIGHT)) {
             this.x++;
             if (this.x > 0 + this.xLimit) this.x = 0 + this.xLimit
-            if (this.x == this.world.size / 2) this.center.replay();
+            if (this.x == 0) this.center.replay();
         }
         if (this.world.game.input.isDown(KeyEvent.DOM_VK_LEFT)) {
             this.x--;
             if (this.x < 0 - this.xLimit) this.x = 0 - this.xLimit
-            if (this.x == this.world.size / 2) this.center.replay();
+            if (this.x == 0) this.center.replay();
         }
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
         this.emit("x" + this.x)
@@ -93,7 +93,7 @@ export class Player extends GameObject {
         this.world.game.pool.playStatic("player/impact/" + utils.randomInt(1, 4), 0)
 
     }
-    flyTo(y, side, snd,landsound="player/land") {
+    flyTo(y, side, snd, landsound = "player/land") {
         if (this.unableToMove) return;
         this.tileType = -1
         this.unableToMove = true
@@ -157,17 +157,17 @@ export class Player extends GameObject {
                             if (this.forceSpeed) {
                                 this.forceSpeed = false
                                 this.slowDown(10)
-                                this.forceSpeed=true
+                                this.forceSpeed = true
                             } else {
                                 this.slowDown(10)
                             }
-                            
+
                             if (this.forceSpeed) {
                                 this.forceSpeed = false
                                 this.speedUp(this.forcedSpeed)
-                                this.forceSpeed=true
+                                this.forceSpeed = true
                             }
-                        
+
 
                         }
                         if (!jump) {
@@ -184,15 +184,15 @@ export class Player extends GameObject {
                                     if (this.forceSpeed) {
                                         this.forceSpeed = false
                                         this.slowDown(10)
-                                        this.forceSpeed=true
+                                        this.forceSpeed = true
                                     } else {
                                         this.slowDown(10)
                                     }
-                                    
+
                                     if (this.forceSpeed) {
                                         this.forceSpeed = false
                                         this.speedUp(this.forcedSpeed)
-                                        this.forceSpeed=true
+                                        this.forceSpeed = true
                                     }
                                 }))
                                 this.world.scene.setListenerPosition(this.x, this.y, this.z)
@@ -223,18 +223,18 @@ export class Player extends GameObject {
     }
     throwBomb() {
         try {
-//    new StationaryObject(this.world,this.y+0.5, "bomb_drop")
-    let fusetime=975
-    if (getUnlock("shortfuse")) fusetime=fusetime/3
-    let sound=so.create("bomb_start")
-    sound.play();
-    setTimeout(()=> {
-        sound.destroy();
-        new StationaryObject(this.world,this.y+0.5, "bomb_explode")
-        this.emit("blowup")
-    },fusetime)
-        } catch(e) {
-            speech.speak(e.message)
+            //    new StationaryObject(this.world,this.y+0.5, "bomb_drop")
+            let fusetime = 975
+            if (getUnlock("shortfuse")) fusetime = fusetime / 3
+            let sound = so.create("bomb_start")
+            sound.play();
+            setTimeout(() => {
+                sound.destroy();
+                new StationaryObject(this.world, this.y + 0.5, "bomb_explode")
+                this.emit("blowup")
+            }, fusetime)
+        } catch (e) {
+            console.error(e)
         }
     }
 }

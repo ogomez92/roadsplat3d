@@ -1,5 +1,5 @@
 import { GameObject } from "./gameObject";
-import {strings} from './strings'
+import { strings } from './strings'
 import { StationaryObject } from './stationaryObject'
 import { utils } from "./utilities";
 import { speech } from "./tts";
@@ -22,7 +22,6 @@ export class LevelPortal extends GameObject {
   ) {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp
-    console.log(this.blowUpSound)
     this.world.player.on("blowup", (() => {
 
       if (!this.alive || (this.x < -7 || this.x > 7)) return;
@@ -34,10 +33,10 @@ export class LevelPortal extends GameObject {
       }
       if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
       save()
-      this.world.player.hp+=1000
-      this.world.game.score=this.world.game.bankedScore
-      this.world.game.canLevel=false
-      this.world.game.canLevelNotify=false
+      this.world.player.hp += 1000
+      this.world.game.score = this.world.game.bankedScore
+      this.world.game.canLevel = false
+      this.world.game.canLevelNotify = false
       if (this.canHorn != "") this.hornSound.pause();
       this.tile.hasSomething = false;
     }));
@@ -117,20 +116,20 @@ export class LevelPortal extends GameObject {
             this.tile.hasSomething = false;
 
             //level here
-            this.world.game.canLevel=false
-            this.world.game.bankedScore=this.world.game.level*1500
-this.world.game.level++;
-setTimeout(()=> {
-  speech.speak(strings.get("level")+" "+this.world.game.level)
-},400)
+            this.world.game.canLevel = false
+            this.world.game.bankedScore = this.world.game.level * 1500
+            this.world.game.level++;
+            setTimeout(() => {
+              speech.speak(strings.get("level") + " " + this.world.game.level)
+            }, 400)
             this.world.player.flyTo(this.world.player.nearestObjective,
               3,
               "level_air", "level_land"
             );
-                        this.world.game.canLevelNotify=false
+            this.world.game.canLevelNotify = false
 
-this.world.game.score+=(this.world.game.level*100)
-this.world.size-=Math.round((this.world.game.level/2));
+            this.world.game.score += (this.world.game.level * 100)
+            this.world.size -= Math.round((this.world.game.level / 2));
             //level code end
           }
           if (typeof this.tile.timeout !== "undefined") {

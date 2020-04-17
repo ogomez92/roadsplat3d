@@ -1,6 +1,6 @@
 import { GameObject } from './gameObject'
 import { Car } from './car'
-import {LevelPortal} from './levelPortal'
+import { LevelPortal } from './levelPortal'
 import { debug } from './main'
 import { parsedCars, content } from './main'
 import { utils } from './utilities'
@@ -27,14 +27,14 @@ export class Road extends Tile {
         if (side == 2) size = size * -1
         let carType = force
         try {
-            let chance=utils.randomInt(1,100)
-            if (this.world.game.canLevel && chance<=50) {
+            let chance = utils.randomInt(1, 100)
+            if (this.world.game.canLevel && chance <= 80) {
                 this.world.dynamicObjects.push(new LevelPortal(this.world, this, size, this.y, 2, 1, 2, "level_portal", 0.40, side, 1, "", "level_portal", "level_portal"))
             } else {
-            this.world.dynamicObjects.push(new Car(this.world, this, size, this.y, 2, 1, 2, parsedCars[carType].sound, parsedCars[carType].speed, side, parsedCars[carType].z, parsedCars[carType].hornable, parsedCars[carType].name, parsedCars[carType].blowup))
+                this.world.dynamicObjects.push(new Car(this.world, this, size, this.y, 2, 1, 2, parsedCars[carType].sound, parsedCars[carType].speed, side, parsedCars[carType].z, parsedCars[carType].hornable, parsedCars[carType].name, parsedCars[carType].blowup))
             }
         } catch (e) {
-            speech.speak("Error generating car " + carType + ": " + e)
+            console.error("Error generating car " + carType + ": " + e)
         }
         this.hasSomething = true
     }

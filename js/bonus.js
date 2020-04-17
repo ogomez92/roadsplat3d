@@ -2,7 +2,7 @@ import { Item } from './item'
 import { Effect } from './effect'
 import { utils } from './utilities'
 import { strings } from './strings'
-import {increase, decrease, getUnlock, setUnlock, data, save, content } from './main'
+import { increase, decrease, getUnlock, setUnlock, data, save, content } from './main'
 import { speech } from './tts'
 export class Bonus extends Item {
     constructor(world, x, y) {
@@ -11,7 +11,7 @@ export class Bonus extends Item {
     step() {
         if (!this.alive) return;
         this.alive = false
-        let bonuses = [1, 4,7]
+        let bonuses = [1, 4, 7]
         if (getUnlock("hyperjump")) bonuses.push(2)
         if (!this.world.player.forceSpeed) bonuses.push(3)
         if (!this.world.player.forceSpeed) bonuses.push(6)
@@ -25,8 +25,8 @@ export class Bonus extends Item {
                 break;
             case 2:
                 this.world.game.pool.playStatic("bonus/hyperjump", 0)
-                increase("jumps")        
-                        break;
+                increase("jumps")
+                break;
             case 3:
                 let crawl = new Effect(this.world, "crawl", 20000, (() => {
                     this.oldSpeed = this.world.player.currentSpeed
@@ -43,7 +43,7 @@ export class Bonus extends Item {
             //case 4 is fake bonus so default
             case 5:
                 increase("bombs")
-                                this.world.game.pool.playStatic("bonus/bomb", false)
+                this.world.game.pool.playStatic("bonus/bomb", false)
                 break;
             case 6:
                 let speedUp = new Effect(this.world, "speed", 20000, (() => {
@@ -58,13 +58,13 @@ export class Bonus extends Item {
                     this.world.player.speedUp(this.oldSpeed)
                 }))
                 break;
-                case 7:
+            case 7:
                 increase("stoppers")
                 save()
-                this.world.game.pool.playStatic("bonus/stopper",false)
+                this.world.game.pool.playStatic("bonus/stopper", false)
                 break;
-                default:
-                this.world.game.pool.playStatic("bonus/fake",false)
+            default:
+                this.world.game.pool.playStatic("bonus/fake", false)
                 break;
         }
         setTimeout(() => {

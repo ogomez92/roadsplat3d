@@ -2180,10 +2180,11 @@ class GameObject extends EventEmitter {
   update() {}
 
   destroy() {
-    this.removeAllListeners();
+    this.alive = false;
 
     if (this.sound != "") {
-      this.sound.src = null;
+      this.sound.removeAttribute("src");
+      this.sound.load();
     }
   }
 
@@ -2224,12 +2225,6 @@ class Item extends _gameObject.GameObject {
   }
 
   step() {}
-
-  destroy() {
-    this.alive = false;
-    this.removeAllListeners();
-    this.sound.src = null;
-  }
 
   update() {}
 
@@ -2428,7 +2423,6 @@ class Car extends _gameObject.GameObject {
   constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name, blowUp = "") {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp;
-    console.log(this.blowUpSound);
     this.world.player.on("blowup", () => {
       if (!this.alive || this.x < -7 || this.x > 7) return;
       this.alive = false;
@@ -2441,7 +2435,12 @@ class Car extends _gameObject.GameObject {
 
       if (this.blowUpSound != "") _main.data.bulletGallery[this.blowUpSound] = true;
       (0, _main.save)();
-      if (this.canHorn != "") this.hornSound.src = null;
+
+      if (this.canHorn != "") {
+        this.hornSound.removeAttribute("src");
+        this.hornSound.load();
+      }
+
       this.tile.hasSomething = false;
       this.world.game.score += this.speed * 550;
     });
@@ -2563,7 +2562,6 @@ class LevelPortal extends _gameObject.GameObject {
   constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name, blowUp = "") {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp;
-    console.log(this.blowUpSound);
     this.world.player.on("blowup", () => {
       if (!this.alive || this.x < -7 || this.x > 7) return;
       this.alive = false;
@@ -2721,13 +2719,13 @@ class Road extends _tile.Tile {
     try {
       let chance = _utilities.utils.randomInt(1, 100);
 
-      if (this.world.game.canLevel && chance <= 50) {
+      if (this.world.game.canLevel && chance <= 80) {
         this.world.dynamicObjects.push(new _levelPortal.LevelPortal(this.world, this, size, this.y, 2, 1, 2, "level_portal", 0.40, side, 1, "", "level_portal", "level_portal"));
       } else {
         this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name, _main.parsedCars[carType].blowup));
       }
     } catch (e) {
-      _tts.speech.speak("Error generating car " + carType + ": " + e);
+      console.error("Error generating car " + carType + ": " + e);
     }
 
     this.hasSomething = true;
@@ -2951,13 +2949,13 @@ class Player extends _gameObject.GameObject {
     if (this.world.game.input.isDown(_keycodes.KeyEvent.DOM_VK_RIGHT)) {
       this.x++;
       if (this.x > 0 + this.xLimit) this.x = 0 + this.xLimit;
-      if (this.x == this.world.size / 2) this.center.replay();
+      if (this.x == 0) this.center.replay();
     }
 
     if (this.world.game.input.isDown(_keycodes.KeyEvent.DOM_VK_LEFT)) {
       this.x--;
       if (this.x < 0 - this.xLimit) this.x = 0 - this.xLimit;
-      if (this.x == this.world.size / 2) this.center.replay();
+      if (this.x == 0) this.center.replay();
     }
 
     this.world.scene.setListenerPosition(this.x, this.y, this.z);
@@ -3171,7 +3169,7 @@ class Player extends _gameObject.GameObject {
         this.emit("blowup");
       }, fusetime);
     } catch (e) {
-      _tts.speech.speak(e.message);
+      console.error(e);
     }
   }
 
@@ -3227,9 +3225,13 @@ class World {
     this.convolution.connect(this.scene.output);
     this.scene.output.connect(this.context.destination);
     this.player = new _player.Player(this);
+    this.player.setMaxListeners(1000);
   }
 
   generateTiles() {
+    this.player.removeAllListeners("step");
+    this.player.removeAllListeners("blowup");
+
     for (let i = 0; i < this.tiles.length; i++) {
       this.tiles[i].alive = false;
       this.tiles[i].destroy();
@@ -3291,9 +3293,10 @@ class World {
   update() {
     for (let i = 0; i < this.dynamicObjects.length; i++) {
       if (!this.dynamicObjects[i].alive) {
-        this.dynamicObjects[i].sound.src = null;
-        if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.src = null;
-        this.dynamicObjects[i].removeAllListeners();
+        this.dynamicObjects[i].sound.removeAttribute("src");
+        this.dynamicObjects[i].sound.load();
+        if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.removeAttribute("src");
+        if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.load();
         this.dynamicObjects.splice(i, 1);
         i--;
       } else {

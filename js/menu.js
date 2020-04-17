@@ -10,12 +10,12 @@ import { KeyboardInput } from './input';
 
 class Menu {
 	constructor(name, menuData, music) {
-		this.kp=event => {
-this.handleInput(event);
-					};
-		this.kd=event => {
-this.handleKeys(event);
-							};
+		this.kp = event => {
+			this.handleInput(event);
+		};
+		this.kd = event => {
+			this.handleKeys(event);
+		};
 		this.fadeTime = 0.6;
 		this.menuData = menuData;
 		let audio = name.split(" ");
@@ -191,8 +191,8 @@ this.handleKeys(event);
 
 
 	destroy() {
-document.removeEventListener('keydown',this.kd);
-document.removeEventListener('keypress',this.kp);
+		document.removeEventListener('keydown', this.kd);
+		document.removeEventListener('keypress', this.kp);
 		this.hammer.destroy();
 		setTimeout(() => {
 			this.destroySounds();
@@ -260,7 +260,7 @@ document.removeEventListener('keypress',this.kp);
 		this.selectCallback = callback;
 		const that = this;
 		document.addEventListener('keypress', this.kp);
-document.addEventListener('keydown',this.kd);
+		document.addEventListener('keydown', this.kd);
 
 		this.hammer.on("swipeleft", function (event) { that.handleSwipe(0); });
 		this.hammer.on("swiperight", function (event) { that.handleSwipe(1); });
@@ -332,8 +332,8 @@ document.addEventListener('keydown',this.kd);
 			items
 		};
 		if (!this.silent) this.sndChoose.play();
-		document.removeEventListener('keydown',this.kd);
-		document.removeEventListener('keypress',this.kp);
+		document.removeEventListener('keydown', this.kd);
+		document.removeEventListener('keypress', this.kp);
 		if (this.isAudio) {
 			this.sndName.stop();
 			for (let i = 0; i < this.menuData.length; i++) {
