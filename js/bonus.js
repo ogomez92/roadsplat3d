@@ -13,8 +13,7 @@ export class Bonus extends Item {
         this.alive = false
         let bonuses = [1, 4, 7]
         if (getUnlock("hyperjump")) bonuses.push(2)
-        if (!this.world.player.forceSpeed) bonuses.push(3)
-        if (!this.world.player.forceSpeed) bonuses.push(6)
+
         if (getUnlock("bombs")) bonuses.push(5)
         let bonusType = utils.randomElement(bonuses)
         switch (bonusType) {
@@ -27,36 +26,10 @@ export class Bonus extends Item {
                 this.world.game.pool.playStatic("bonus/hyperjump", 0)
                 increase("jumps")
                 break;
-            case 3:
-                let crawl = new Effect(this.world, "crawl", 20000, (() => {
-                    this.oldSpeed = this.world.player.currentSpeed
-                    this.world.player.slowDown(10)
-                    this.world.player.speedUp(6)
-                    this.world.player.forceSpeed = true
-                    this.world.player.forcedSpeed = 6
-                }), (() => {
-                    this.world.player.forceSpeed = false
-                    this.world.player.slowDown(10)
-                    this.world.player.speedUp(this.oldSpeed)
-                }))
-                break;
             //case 4 is fake bonus so default
             case 5:
                 increase("bombs")
                 this.world.game.pool.playStatic("bonus/bomb", false)
-                break;
-            case 6:
-                let speedUp = new Effect(this.world, "speed", 20000, (() => {
-                    this.oldSpeed = this.world.player.currentSpeed
-                    this.world.player.slowDown(10)
-                    this.world.player.speedUp(7)
-                    this.world.player.forceSpeed = true
-                    this.world.player.forcedSpeed = 7
-                }), (() => {
-                    this.world.player.forceSpeed = false
-                    this.world.player.slowDown(10)
-                    this.world.player.speedUp(this.oldSpeed)
-                }))
                 break;
             case 7:
                 increase("stoppers")

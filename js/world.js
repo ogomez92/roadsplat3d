@@ -37,7 +37,7 @@ export class World {
 		this.tiles = []
 		let lastStreet = this.player.y;
 		//the below line will sound weird, but I want as many streets as x squares the player can move to either side, so as to have a fair chance at targetting bonuses
-		let lastStreetLimit = lastStreet + utils.randomInt(this.player.xLimit, this.player.xLimit + 4)
+		let lastStreetLimit = lastStreet + this.player.xLimit
 		this.player.nearestStreet = lastStreet + 1
 		for (let i = lastStreet + 1; i <= lastStreetLimit; i++) {
 			this.tiles.push(new Street(this, i))

@@ -18,7 +18,7 @@ export class Player extends GameObject {
         this.jumps = 0;
         if (data.jumps) this.jumps = data.jumps
         this.center = so.create("ui/center")
-        this.xLimit = Math.ceil(this.world.size / 10)
+        this.xLimit = Math.ceil(this.world.size / 13)
         this.fallTime = 55
         this.world.scene.setListenerPosition(this.x, this.y, this.z)
         this.unableToMove = false
@@ -45,7 +45,7 @@ export class Player extends GameObject {
             this.move()
         }, this.speeds[this.currentSpeed] - this.speedModifier)
         if (this.currentSpeed == 0) this.currentSpeed = 1;
-        this.xLimit = Math.ceil(this.world.size / 5)
+        this.xLimit = Math.ceil(this.world.size / 13)
         this.y += 1
 
         this.emit("step" + this.y)

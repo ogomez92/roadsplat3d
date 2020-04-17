@@ -2698,7 +2698,7 @@ class Road extends _tile.Tile {
     this.generator = generator;
     this.timeout = setTimeout(() => {
       if (!_main.debug) this.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-    }, _utilities.utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+    }, _utilities.utils.randomInt(this.world.game.spawnTime - this.world.game.level * 100, this.world.game.spawnTime + 300));
   }
 
   generateCar(force) {
@@ -2706,7 +2706,7 @@ class Road extends _tile.Tile {
     if (typeof this.timeout !== "undefined") clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (!_main.debug) this.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-    }, _utilities.utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+    }, _utilities.utils.randomInt(this.world.game.spawnTime - this.world.game.level * 100, this.world.game.spawnTime + 300));
     if (this.hasSomething) return;
 
     let side = _utilities.utils.randomInt(1, 2);
@@ -2796,8 +2796,6 @@ class Bonus extends _item.Item {
     this.alive = false;
     let bonuses = [1, 4, 7];
     if ((0, _main.getUnlock)("hyperjump")) bonuses.push(2);
-    if (!this.world.player.forceSpeed) bonuses.push(3);
-    if (!this.world.player.forceSpeed) bonuses.push(6);
     if ((0, _main.getUnlock)("bombs")) bonuses.push(5);
 
     let bonusType = _utilities.utils.randomElement(bonuses);
@@ -2812,39 +2810,11 @@ class Bonus extends _item.Item {
         this.world.game.pool.playStatic("bonus/hyperjump", 0);
         (0, _main.increase)("jumps");
         break;
-
-      case 3:
-        let crawl = new _effect.Effect(this.world, "crawl", 20000, () => {
-          this.oldSpeed = this.world.player.currentSpeed;
-          this.world.player.slowDown(10);
-          this.world.player.speedUp(6);
-          this.world.player.forceSpeed = true;
-          this.world.player.forcedSpeed = 6;
-        }, () => {
-          this.world.player.forceSpeed = false;
-          this.world.player.slowDown(10);
-          this.world.player.speedUp(this.oldSpeed);
-        });
-        break;
       //case 4 is fake bonus so default
 
       case 5:
         (0, _main.increase)("bombs");
         this.world.game.pool.playStatic("bonus/bomb", false);
-        break;
-
-      case 6:
-        let speedUp = new _effect.Effect(this.world, "speed", 20000, () => {
-          this.oldSpeed = this.world.player.currentSpeed;
-          this.world.player.slowDown(10);
-          this.world.player.speedUp(7);
-          this.world.player.forceSpeed = true;
-          this.world.player.forcedSpeed = 7;
-        }, () => {
-          this.world.player.forceSpeed = false;
-          this.world.player.slowDown(10);
-          this.world.player.speedUp(this.oldSpeed);
-        });
         break;
 
       case 7:
@@ -2917,7 +2887,7 @@ class Player extends _gameObject.GameObject {
     this.jumps = 0;
     if (_main.data.jumps) this.jumps = _main.data.jumps;
     this.center = _soundObject.so.create("ui/center");
-    this.xLimit = Math.ceil(this.world.size / 10);
+    this.xLimit = Math.ceil(this.world.size / 13);
     this.fallTime = 55;
     this.world.scene.setListenerPosition(this.x, this.y, this.z);
     this.unableToMove = false;
@@ -2942,7 +2912,7 @@ class Player extends _gameObject.GameObject {
       this.move();
     }, this.speeds[this.currentSpeed] - this.speedModifier);
     if (this.currentSpeed == 0) this.currentSpeed = 1;
-    this.xLimit = Math.ceil(this.world.size / 5);
+    this.xLimit = Math.ceil(this.world.size / 13);
     this.y += 1;
     this.emit("step" + this.y);
 
@@ -3240,8 +3210,7 @@ class World {
     this.tiles = [];
     let lastStreet = this.player.y; //the below line will sound weird, but I want as many streets as x squares the player can move to either side, so as to have a fair chance at targetting bonuses
 
-    let lastStreetLimit = lastStreet + _utilities.utils.randomInt(this.player.xLimit, this.player.xLimit + 4);
-
+    let lastStreetLimit = lastStreet + this.player.xLimit;
     this.player.nearestStreet = lastStreet + 1;
 
     for (let i = lastStreet + 1; i <= lastStreetLimit; i++) {
@@ -3374,7 +3343,7 @@ class Game {
     }, 1 / 45);
     this.score = 0;
     this.level = 1;
-    this.spawnTime = 3000 - this.level * 100;
+    this.spawnTime = 2500;
     this.roadsPerLevel = 5;
   }
 
@@ -3458,6 +3427,8 @@ class Game {
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_X)) {
       _tts.speech.speak(this.world.player.nearestRoad + ", " + this.world.player.furthestRoad);
+
+      _tts.speech.speak(this.world.player.x);
     }
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_L)) {

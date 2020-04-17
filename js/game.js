@@ -30,7 +30,7 @@ class Game {
 		}, 1 / 45);
 		this.score = 0
 		this.level = 1
-		this.spawnTime = 3000 - (this.level * 100)
+		this.spawnTime = 2500
 		this.roadsPerLevel = 5
 	}
 
@@ -107,6 +107,7 @@ class Game {
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_X)) {
 			speech.speak(this.world.player.nearestRoad + ", " + this.world.player.furthestRoad)
+			speech.speak(this.world.player.x)
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
 			speech.speak(strings.get("level") + this.level + " " + strings.get("ws") + this.world.size)
