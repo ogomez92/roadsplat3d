@@ -2420,9 +2420,10 @@ var _tts = require("./tts");
 var _main = require("./main");
 
 class Car extends _gameObject.GameObject {
-  constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name, blowUp = "") {
+  constructor(world, tile, x, y, width, height, depth, sound = "car", speed, side, z = 1, canHorn = "", name, blowUp = "", obj) {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp;
+    this.objective = obj;
     this.world.player.on("blowup", () => {
       if (!this.alive || this.x < -7 || this.x > 7) return;
       this.alive = false;
@@ -2475,14 +2476,14 @@ class Car extends _gameObject.GameObject {
       this.tile.hasSomething = false;
     } else {
       //ok, player spans the entire road. So the car sound should equally follow the player to make him feel trapped.
-      if (this.world.player.tileType != 1) this.source.setPosition(this.x, this.y, this.z);
-      if (this.world.player.tileType == 1) this.source.setPosition(this.x, this.world.player.y, this.z);
+      if (this.world.player.tileType != 1 || this.world.player.y > this.objective) this.source.setPosition(this.x, this.y, this.z);
+      if (this.world.player.tileType == 1 && this.world.player.y < this.objective) this.source.setPosition(this.x, this.world.player.y, this.z);
 
       if (this.passed || this.canHorn != "" && this.y != this.world.player.y) {
         if (this.canHorn != "") this.hornSound.pause();
       }
 
-      if (!this.passed && this.canHorn != "" && this.world.player.tileType == 1) {
+      if (!this.passed && this.canHorn != "" && this.world.player.tileType == 1 && this.world.player.y < this.objective) {
         this.hornResonanceSource.setPosition(this.x, this.y, this.z);
         this.hornSound.play();
       }
@@ -2503,10 +2504,10 @@ class Car extends _gameObject.GameObject {
 
             this.tile.timeout = setTimeout(() => {
               this.tile.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-            }, _utilities.utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+            }, _utilities.utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300));
           }
 
-          if (!this.passed && this.alive && Math.round(this.x) == this.world.player.x && this.world.player.tileType == 1) {
+          if (!this.passed && this.alive && Math.round(this.x) == this.world.player.x && this.world.player.tileType == 1 && this.world.player.y < this.objective) {
             if (_main.data.jumps >= 1) {
               this.world.game.pool.playStatic("bonus/hyperjump", 0);
               _main.data.jumps--;
@@ -2529,7 +2530,7 @@ class Car extends _gameObject.GameObject {
 
           this.tile.timeout = setTimeout(() => {
             this.tile.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-          }, _utilities.utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+          }, _utilities.utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300));
         }
       }
     }
@@ -2636,7 +2637,7 @@ class LevelPortal extends _gameObject.GameObject {
 
             this.tile.timeout = setTimeout(() => {
               this.tile.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-            }, _utilities.utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+            }, _utilities.utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300));
           }
 
           if (!this.passed && this.alive && Math.round(this.x) == this.world.player.x && this.world.player.tileType == 1) {
@@ -2646,13 +2647,15 @@ class LevelPortal extends _gameObject.GameObject {
             this.world.game.canLevel = false;
             this.world.game.bankedScore = this.world.game.level * 1500;
             this.world.game.level++;
+            this.world.game.spawnTime -= 150;
+            if (this.world.game.spawnTime < 200) this.world.game.spawnTime = 200;
             setTimeout(() => {
               _tts.speech.speak(_strings.strings.get("level") + " " + this.world.game.level);
             }, 400);
             this.world.player.flyTo(this.world.player.nearestObjective, 3, "level_air", "level_land");
             this.world.game.canLevelNotify = false;
             this.world.game.score += this.world.game.level * 100;
-            this.world.size -= Math.round(this.world.game.level / 2); //level code end
+            this.world.size -= Math.round(this.world.game.level); //level code end
           }
 
           if (typeof this.tile.timeout !== "undefined") {
@@ -2698,7 +2701,7 @@ class Road extends _tile.Tile {
     this.generator = generator;
     this.timeout = setTimeout(() => {
       if (!_main.debug) this.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-    }, _utilities.utils.randomInt(this.world.game.spawnTime - this.world.game.level * 100, this.world.game.spawnTime + 300));
+    }, _utilities.utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300));
   }
 
   generateCar(force) {
@@ -2706,7 +2709,7 @@ class Road extends _tile.Tile {
     if (typeof this.timeout !== "undefined") clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (!_main.debug) this.generateCar(_utilities.utils.randomInt(1, _main.content.numberOfVehicles));
-    }, _utilities.utils.randomInt(this.world.game.spawnTime - this.world.game.level * 100, this.world.game.spawnTime + 300));
+    }, _utilities.utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300));
     if (this.hasSomething) return;
 
     let side = _utilities.utils.randomInt(1, 2);
@@ -2719,10 +2722,12 @@ class Road extends _tile.Tile {
     try {
       let chance = _utilities.utils.randomInt(1, 100);
 
+      carType = _main.content.numberOfVehicles;
+
       if (this.world.game.canLevel && chance <= 80) {
         this.world.dynamicObjects.push(new _levelPortal.LevelPortal(this.world, this, size, this.y, 2, 1, 2, "level_portal", 0.40, side, 1, "", "level_portal", "level_portal"));
       } else {
-        this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name, _main.parsedCars[carType].blowup));
+        this.world.dynamicObjects.push(new _car.Car(this.world, this, size, this.y, 2, 1, 2, _main.parsedCars[carType].sound, _main.parsedCars[carType].speed, side, _main.parsedCars[carType].z, _main.parsedCars[carType].hornable, _main.parsedCars[carType].name, _main.parsedCars[carType].blowup, this.world.player.nearestObjective));
       }
     } catch (e) {
       console.error("Error generating car " + carType + ": " + e);
@@ -3205,6 +3210,8 @@ class World {
     for (let i = 0; i < this.tiles.length; i++) {
       this.tiles[i].alive = false;
       this.tiles[i].destroy();
+      this.tiles.splice(i, 1);
+      i--;
     }
 
     this.tiles = [];
@@ -3432,7 +3439,7 @@ class Game {
     }
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_L)) {
-      _tts.speech.speak(_strings.strings.get("level") + this.level + " " + _strings.strings.get("ws") + this.world.size);
+      _tts.speech.speak(_strings.strings.get("level") + this.level + " " + _strings.strings.get("ws") + this.world.size + " spawn time " + this.world.game.spawnTime);
     }
 
     if (this.input.isJustPressed(_keycodes.KeyEvent.DOM_VK_H)) {

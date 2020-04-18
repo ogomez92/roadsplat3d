@@ -104,7 +104,7 @@ export class LevelPortal extends GameObject {
               this.tile.generateCar(
                 utils.randomInt(1, content.numberOfVehicles)
               );
-            }, utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+            }, utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300))
           }
           if (
             !this.passed &&
@@ -119,6 +119,8 @@ export class LevelPortal extends GameObject {
             this.world.game.canLevel = false
             this.world.game.bankedScore = this.world.game.level * 1500
             this.world.game.level++;
+            this.world.game.spawnTime -= 150;
+            if (this.world.game.spawnTime < 200) this.world.game.spawnTime = 200;
             setTimeout(() => {
               speech.speak(strings.get("level") + " " + this.world.game.level)
             }, 400)
@@ -129,7 +131,7 @@ export class LevelPortal extends GameObject {
             this.world.game.canLevelNotify = false
 
             this.world.game.score += (this.world.game.level * 100)
-            this.world.size -= Math.round((this.world.game.level / 2));
+            this.world.size -= Math.round((this.world.game.level));
             //level code end
           }
           if (typeof this.tile.timeout !== "undefined") {

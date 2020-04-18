@@ -33,6 +33,8 @@ export class World {
 		for (let i = 0; i < this.tiles.length; i++) {
 			this.tiles[i].alive = false
 			this.tiles[i].destroy();
+			this.tiles.splice(i, 1)
+			i--;
 		}
 		this.tiles = []
 		let lastStreet = this.player.y;

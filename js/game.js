@@ -110,7 +110,7 @@ class Game {
 			speech.speak(this.world.player.x)
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_L)) {
-			speech.speak(strings.get("level") + this.level + " " + strings.get("ws") + this.world.size)
+			speech.speak(strings.get("level") + this.level + " " + strings.get("ws") + this.world.size+" spawn time "+this.world.game.spawnTime)
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_H)) {
 			speech.speak(this.world.player.hp + " " + strings.get("hp"))

@@ -17,10 +17,12 @@ export class Car extends GameObject {
     side,
     z = 1,
     canHorn = "",
-    name, blowUp = ""
+    name, blowUp = "",
+    obj
   ) {
     super(world, sound, x, y, z, width, height, depth);
     this.blowUpSound = blowUp
+    this.objective = obj;
     this.world.player.on("blowup", (() => {
 
       if (!this.alive || (this.x < -7 || this.x > 7)) return;
@@ -33,7 +35,8 @@ export class Car extends GameObject {
       }
       if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
       save()
-      if (this.canHorn != "") { this.hornSound.removeAttribute("src")
+      if (this.canHorn != "") {
+        this.hornSound.removeAttribute("src")
         this.hornSound.load()
       }
       this.tile.hasSomething = false;
@@ -71,9 +74,9 @@ export class Car extends GameObject {
       this.tile.hasSomething = false;
     } else {
       //ok, player spans the entire road. So the car sound should equally follow the player to make him feel trapped.
-      if (this.world.player.tileType != 1)
+      if (this.world.player.tileType != 1 || this.world.player.y>this.objective)
         this.source.setPosition(this.x, this.y, this.z);
-      if (this.world.player.tileType == 1)
+      if (this.world.player.tileType == 1 && this.world.player.y<this.objective)
         this.source.setPosition(this.x, this.world.player.y, this.z);
       if (
         this.passed ||
@@ -84,7 +87,7 @@ export class Car extends GameObject {
       if (
         !this.passed &&
         this.canHorn != "" &&
-        this.world.player.tileType == 1
+        this.world.player.tileType == 1 && this.world.player.y < this.objective
       ) {
         this.hornResonanceSource.setPosition(this.x, this.y, this.z);
         this.hornSound.play();
@@ -109,13 +112,13 @@ export class Car extends GameObject {
               this.tile.generateCar(
                 utils.randomInt(1, content.numberOfVehicles)
               );
-            }, utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+            }, utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300))
           }
           if (
             !this.passed &&
             this.alive &&
             Math.round(this.x) == this.world.player.x &&
-            this.world.player.tileType == 1
+            this.world.player.tileType == 1 && this.world.player.y < this.objective
           ) {
             if (data.jumps >= 1) {
               this.world.game.pool.playStatic("bonus/hyperjump", 0);
@@ -146,7 +149,7 @@ export class Car extends GameObject {
           }
           this.tile.timeout = setTimeout(() => {
             this.tile.generateCar(utils.randomInt(1, content.numberOfVehicles));
-          }, utils.randomInt(0, this.world.game.spawnTime - this.world.game.level * 100));
+          }, utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300))
         }
       }
     }

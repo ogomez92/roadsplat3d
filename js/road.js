@@ -12,14 +12,14 @@ export class Road extends Tile {
         this.generator = generator
         this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
-        }, utils.randomInt( this.world.game.spawnTime - (this.world.game.level * 100),this.world.game.spawnTime+300))
+        }, utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300))
     }
     generateCar(force) {
         if (!this.generator || !this.alive || this.world.greenLight) return;
         if (typeof this.timeout !== "undefined") clearTimeout(this.timeout)
         this.timeout = setTimeout(() => {
             if (!debug) this.generateCar(utils.randomInt(1, content.numberOfVehicles))
-        }, utils.randomInt( this.world.game.spawnTime - (this.world.game.level * 100),this.world.game.spawnTime+300))
+        }, utils.randomInt(this.world.game.spawnTime, this.world.game.spawnTime + 300))
         if (this.hasSomething) return;
         let side = utils.randomInt(1, 2)
         let size = this.world.size / 2
@@ -28,10 +28,12 @@ export class Road extends Tile {
         let carType = force
         try {
             let chance = utils.randomInt(1, 100)
+            carType=content.numberOfVehicles
+
             if (this.world.game.canLevel && chance <= 80) {
                 this.world.dynamicObjects.push(new LevelPortal(this.world, this, size, this.y, 2, 1, 2, "level_portal", 0.40, side, 1, "", "level_portal", "level_portal"))
             } else {
-                this.world.dynamicObjects.push(new Car(this.world, this, size, this.y, 2, 1, 2, parsedCars[carType].sound, parsedCars[carType].speed, side, parsedCars[carType].z, parsedCars[carType].hornable, parsedCars[carType].name, parsedCars[carType].blowup))
+                this.world.dynamicObjects.push(new Car(this.world, this, size, this.y, 2, 1, 2, parsedCars[carType].sound, parsedCars[carType].speed, side, parsedCars[carType].z, parsedCars[carType].hornable, parsedCars[carType].name, parsedCars[carType].blowup,this.world.player.nearestObjective))
             }
         } catch (e) {
             console.error("Error generating car " + carType + ": " + e)
