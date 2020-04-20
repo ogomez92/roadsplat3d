@@ -60,9 +60,9 @@ class Game {
 			this.world.player.y = 0
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_B)) {
-			if (data.bombs >= 1) {
+			if (data.bombs >= 1 || debug) {
 				this.world.player.throwBomb()
-				data.bombs--;
+				if (!debug) data.bombs--;
 				save();
 			}
 			else {
