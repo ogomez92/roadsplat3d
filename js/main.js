@@ -1,4 +1,4 @@
-export const debug = true
+export const debug = false
 import { ScrollingText } from './scrollingText'
 import { utils } from './utilities'
 import { SoundHandler } from './soundHandler'

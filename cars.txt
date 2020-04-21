@@ -1,25 +1,28 @@
-busfast, 0.63, 1, 2, 1
 bus, 0.35, 1, 2, 1
+slowerCar, 0.35, 0, 1
 biker, 0.45, 1, 0.5, 1
-rickroll, 0.25, 1, 1, 1
-gasolina, 0.60, 1, 1, 1
+excavator, 0.10, 0, 2, 1
+slowCar, 0.30, 0, 1
 train1, 0.35, 1, 2, 1
 train2, 0.18, 1, 2, 1
 overme, 0.45, 0, 1
 french, 0.45, 0, 1, 1
-whatever, 0.75, 1, 1, 1
-hungover, 0.70, 0, 1, 1
+astronauts, 0.35, 0, 1
 call911, 0.65, 0, 1
 coolBiker, 0.60, 0, 0.5, 1
-excavator, 0.10, 0, 2, 1
 hybrid1, 0.50, 0, 1
+donald, 0.28, 0, 1
+rickroll, 0.25, 1, 1, 1
 badDriver, 0.50, 0, 1
 superbiker, 0.85, 0, 1, 1
 fastHarley, 0.69, 0, 1, 1
-townCar, 0.74, 0, 1
-slowCar, 0.30, 0, 1
+spectre, 0.45, 0, 1
 mediumCar, 0.55, 0, 1
+townCar, 0.74, 0, 1
+hungover, 0.70, 0, 1, 1
 sportscar, 0.60, 0, 1
-slowerCar, 0.35, 0, 1
-astronauts, 0.35, 0, 1
-police, 0.30, 0, 1, 1
+busfast, 0.63, 1, 2, 1
+gasolina, 0.60, 1, 1, 1
+police, 0.60, 0, 1, 1
+whatever, 0.75, 1, 1, 1
+eager, 0.25, 0, 1, 1

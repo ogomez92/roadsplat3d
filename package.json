@@ -23,7 +23,7 @@
     "jquery": "^3.5.0",
     "number-words": "^1.1.1",
     "resonance-audio": "^1.0.0",
-    "s": "^0.1.1",
+    "s": "^1.0.0",
     "sono": "^2.1.6",
     "speak-tts": "^2.0.8",
     "unique-random": "^2.1.0"

@@ -53,7 +53,7 @@ class Game {
 			}
 		}
 		if (this.input.isJustPressed(KeyEvent.DOM_VK_D) && debug) {
-			let debugRoad = new Road(this.world, 1, true)
+			let debugRoad = new Road(this.world, this.world.player.y+1, true)
 			let number = content.numberOfVehicles
 			debugRoad.generateCar(number)
 			debugRoad.generator = false
