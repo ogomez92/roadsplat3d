@@ -26,3 +26,4 @@ gasolina, 0.60, 1, 1, 1
 police, 0.60, 0, 1, 1
 whatever, 0.75, 1, 1, 1
 eager, 0.25, 0, 1, 1
+jinglebells, 0.22, 0, 1

@@ -28,7 +28,7 @@ export class Road extends Tile {
         let carType = force
         try {
             let chance = utils.randomInt(1, 100)
-            carType=content.numberOfVehicles
+            //carType=content.numberOfVehicles
 
             if (this.world.game.canLevel && chance <= 80) {
                 this.world.dynamicObjects.push(new LevelPortal(this.world, this, size, this.y, 2, 1, 2, "level_portal", 0.40, side, 1, "", "level_portal", "level_portal"))
