@@ -20,9 +20,8 @@ export class World {
 		this.dynamicObjects = []
 		this.tiles = []
 		this.context = new AudioContext()
-		this.convolution = this.context.createConvolver()
-		this.scene = new ResonanceAudio(this.context);
-		this.convolution.connect(this.scene.output)
+				this.scene = new ResonanceAudio(this.context);
+this.scene.setAmbisonicOrder(3)
 		this.scene.output.connect(this.context.destination)
 		this.player = new Player(this)
 		this.player.setMaxListeners(1000)

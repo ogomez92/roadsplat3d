@@ -150,10 +150,12 @@ export class Player extends GameObject {
                         clearInterval(this.interval)
                         if (jump) {
                             land.play()
+                            land.sound.on("ended",()=> { land.destroy(); });
                             this.z = 1.6
                             this.jump = false
                             this.unableToMove = false;
                             heart.stop();
+                            heart.destroy();
                             if (this.forceSpeed) {
                                 this.forceSpeed = false
                                 this.slowDown(10)
@@ -177,8 +179,10 @@ export class Player extends GameObject {
                             setTimeout(() => {
                                 stand.replay()
                                 heart.stop();
+                                heart.destroy();
                                 stand.sound.on("ended", (() => {
                                     this.z = 1.6
+                                    stand.destroy();
                                     this.jump = false
                                     this.unableToMove = false;
                                     if (this.forceSpeed) {

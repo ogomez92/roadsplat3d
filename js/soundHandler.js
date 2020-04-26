@@ -23,6 +23,10 @@ class SoundHandler {
 		this.staticSounds[slot] = new SoundItem(file, this.directional, stream);
 		if (loop == 1) {
 			this.staticSounds[slot].sound.loop = true;
+		} else {
+		this.staticSounds[slot].sound.sound.on("ended",()=> { 
+		this.staticSounds[slot].destroy()
+		 })
 		}
 		this.staticSounds[slot].sound.play();
 		return slot;

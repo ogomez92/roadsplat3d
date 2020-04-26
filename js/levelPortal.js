@@ -114,7 +114,7 @@ export class LevelPortal extends GameObject {
           ) {
             this.passed = true;
             this.tile.hasSomething = false;
-
+this.alive=false
             //level here
             this.world.game.canLevel = false
             this.world.game.bankedScore = this.world.game.level * 1500
