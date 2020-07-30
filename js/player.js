@@ -97,14 +97,14 @@ export class Player extends GameObject {
         if (this.unableToMove) return;
         this.tileType = -1
         this.unableToMove = true
-        let heart = so.create("player/heart")
+        let heart = so.create("player/heart",false,"falling")
         heart.play()
-        let sound = so.create(snd)
+        let sound = so.create(snd,false,"falling")
         sound.loop = true
         sound.volume = 0.3
-        let land = so.create(landsound)
-        let fall = so.create("player/fall" + utils.randomInt(1, 4))
-        let stand = so.create("player/stand")
+        let land = so.create(landsound,false,"falling")
+        let fall = so.create("player/fall" + utils.randomInt(1, 4),false,"falling")
+        let stand = so.create("player/stand",false,"falling")
         sound.pitch = 0.7
         sound.play()
         sound.loop = true
@@ -156,6 +156,7 @@ export class Player extends GameObject {
                             this.unableToMove = false;
                             heart.stop();
                             heart.destroy();
+                            so.destroyWithTag("falling")
                             if (this.forceSpeed) {
                                 this.forceSpeed = false
                                 this.slowDown(10)
@@ -163,7 +164,6 @@ export class Player extends GameObject {
                             } else {
                                 this.slowDown(10)
                             }
-
                             if (this.forceSpeed) {
                                 this.forceSpeed = false
                                 this.speedUp(this.forcedSpeed)
@@ -185,6 +185,7 @@ export class Player extends GameObject {
                                     stand.destroy();
                                     this.jump = false
                                     this.unableToMove = false;
+                                    so.destroyWithTag("falling")
                                     if (this.forceSpeed) {
                                         this.forceSpeed = false
                                         this.slowDown(10)

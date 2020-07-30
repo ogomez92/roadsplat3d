@@ -14,9 +14,10 @@ panner.defaults = {
 sono.playInBackground = true;
 var playOnceTimer;
 class SoundObjectItem extends EventEmitter {
-	constructor(file, callback = 0, tag = 0, stream = false) {
+	constructor(file, callback = 0, tag = 0, stream = false, taggedAs = "") {
 		super();
 		this.duckingFirstTime = true;
+		this.taggedAs = taggedAs;
 		this.stream = stream;
 		this.panner = null;
 		this.fileName = file;
@@ -47,8 +48,6 @@ class SoundObjectItem extends EventEmitter {
 			this.tag = tag;
 			this.doneLoading();
 		}
-
-
 	}
 
 	get playbackRate() {
@@ -309,16 +308,16 @@ class SoundObject {
 
 
 
-	create(file, stream = false) {
+	create(file, stream = false, taggedAs = "general") {
 		file = this.directory + file + this.extension;
 		let found = -1;
 		found = this.findSound(file);
 		let returnObject = null;
 		if (found == -1 || found.sound.data == null) {
-			returnObject = new SoundObjectItem(file, () => { if (!stream) this.doneLoading(); }, 0, stream);
+			returnObject = new SoundObjectItem(file, () => { if (!stream) this.doneLoading(); }, 0, stream, taggedAs);
 			this.sounds.push(returnObject);
 		} else {
-			returnObject = new SoundObjectItem(found.sound.data, () => { if (!stream) this.doneLoading(); }, 0, stream);
+			returnObject = new SoundObjectItem(found.sound.data, () => { if (!stream) this.doneLoading(); }, 0, stream, taggedAs);
 			returnObject.fileName = found.fileName;
 		}
 		returnObject.fileName = file; //otherwise html element fileNames get fucked up.
@@ -332,18 +331,18 @@ class SoundObject {
 			so.loadQueue();
 		});
 	}
-	async createSync(file, stream = false) {
+	async createSync(file, stream = false, taggedAs = "general") {
 		return new Promise(resolve => {
 			file = this.directory + file + this.extension;
 			let found = -1;
 			found = this.findSound(file);
 			let returnObject = null;
 			if (found == -1 || found.sound.data == null) {
-				returnObject = new SoundObjectItem(file, () => { if (!stream) this.doneLoading(); }, 0, stream);
+				returnObject = new SoundObjectItem(file, () => { if (!stream) this.doneLoading(); }, 0, stream, taggedAs);
 				this.sounds.push(returnObject);
 				if (stream) resolve(returnObject);
 			} else {
-				returnObject = new SoundObjectItem(found.sound.data, () => { if (!stream) this.doneLoading(); }, 0, stream);
+				returnObject = new SoundObjectItem(found.sound.data, () => { if (!stream) this.doneLoading(); }, 0, stream, taggedAs);
 				resolve(returnObject);
 			}
 			returnObject.fileName = file; //otherwise html element fileNames get fucked up.
@@ -392,9 +391,10 @@ class SoundObject {
 				return;
 			}
 			let file = this.queue[0].file;
+			let taggedAs = this.queue[0].taggedAs;
 			let stream = this.queue[0].stream;
 			this.queue.splice(0, 1);
-			this.sounds.push(new SoundObjectItem(file, () => { this.handleQueue(); }, 1, stream));
+			this.sounds.push(new SoundObjectItem(file, () => { this.handleQueue(); }, 1, stream, taggedAs));
 
 		} else {
 			this.loadingQueue = false;
@@ -468,11 +468,18 @@ class SoundObject {
 		while (this.sounds.length > 0) {
 			this.sounds.splice(0, 1);
 		}
-
 		sono.destroyAll();
 		if (callback != 0) {
 			callback();
 		}
+	}
+	destroyWithTag(which) {
+		this.sounds.forEach((sound, index) => {
+			if (sound.taggedAs == which) {
+				this.sounds.splice(index, 1)
+				console.log("destroyed via tag")
+			}
+		})
 	}
 
 }
