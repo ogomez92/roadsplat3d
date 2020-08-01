@@ -26,6 +26,7 @@ class SoundHandler {
 		} else {
 		this.staticSounds[slot].sound.sound.on("ended",()=> { 
 		this.staticSounds[slot].destroy()
+		this.staticSounds.splice(slot,1)
 		 })
 		}
 		this.staticSounds[slot].sound.play();

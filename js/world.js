@@ -76,8 +76,13 @@ this.scene.setAmbisonicOrder(3)
 
 		for (let i = 0; i < this.dynamicObjects.length; i++) {
 			if (!this.dynamicObjects[i].alive) {
-				this.dynamicObjects[i].sound.removeAttribute("src")
+				if (this.dynamicObjects[i].sound!=null) {
+this.dynamicObjects[i].sound.removeAttribute("src")
 				this.dynamicObjects[i].sound.load()
+}
+            this.dynamicObjects[i].sound=null
+            this.dynamicObjects[i].mediaSource=null;
+            this.dynamicObjects[i].source=null;
 
 				if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.removeAttribute("src")
 				if (this.dynamicObjects[i].canHorn) this.dynamicObjects[i].hornSound.load()

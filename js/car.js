@@ -36,8 +36,13 @@ export class Car extends GameObject {
       if (this.blowUpSound != "") data.bulletGallery[this.blowUpSound] = true
       save()
       if (this.canHorn != "") {
+if (this.hornSound!=null) {
         this.hornSound.removeAttribute("src")
         this.hornSound.load()
+}
+this.hornSound=null;
+this.hornSource=null;
+this.hornResonanceSource=null;
       }
       this.tile.hasSomething = false;
       this.world.game.score += (this.speed * 550)

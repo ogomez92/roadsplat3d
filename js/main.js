@@ -120,6 +120,7 @@ export async function mainMenu() {
 	let menu = new Menu(strings.get("mainMenu"), items)
 	let selection = await menu.runSync()
 	await music.fade(0)
+	music.destroy()
 	switch (selection) {
 		case 0:
 			let game = new Game()
@@ -139,7 +140,8 @@ export function save() {
 async function browseGallery() {
 	if (!getUnlock("galleryMembership")) {
 		let sound = so.create("gallery_locked")
-		await sound.playSync()
+		await sound.playSync(true)
+
 		await new ScrollingText(strings.get("galleryLocked"))
 		mainMenu();
 		return;
@@ -251,6 +253,8 @@ async function shop() {
 
 	menu.destroy()
 	shopAmbience.destroy()
+	nobuy.destroy()
+	buy.destroy()
 	await mainMenu()
 	return;
 }

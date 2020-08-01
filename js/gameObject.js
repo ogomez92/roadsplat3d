@@ -28,9 +28,11 @@ export class GameObject extends EventEmitter {
     }
     destroy() {
 this.alive=false
-        if (this.sound != "") {
-            this.sound.removeAttribute("src");
+        if (this.sound != null) {
             this.sound.load()
-        }
-    }
+}
+            this.sound=null
+            this.mediaSource=null;
+            this.source=null;
+            }
 }
